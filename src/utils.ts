@@ -68,7 +68,7 @@ export async function uploadFile(owner: string, repo: string, releaseId: number,
 }
 
 // Function to upload the file
-export async function requestUploadFile(upload_url: string, filePath: string) {
+export async function requestUploadFile(uploadUrl: string, filePath: string) {
   const myToken = getInput('token')
   const octokit = getOctokit(myToken);
   const fileStream = fs.createReadStream(filePath);
@@ -80,14 +80,14 @@ export async function requestUploadFile(upload_url: string, filePath: string) {
   });
 
   const headers = { ...form.getHeaders(), 'Authorization': `token ${myToken}` };
+  const url = new URL(uploadUrl);
+  url.searchParams.append('name', fileName);
+  info(`URL: ${url.toString()}`);
   const response = await octokit.request({
     method: 'POST',
-    url: upload_url,
+    url: url.toString(),
     headers: headers,
-    data: form,
-    params: {
-      name: fileName
-    }
+    data: form
   });
 
   return response;

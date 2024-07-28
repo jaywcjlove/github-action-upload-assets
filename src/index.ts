@@ -1,7 +1,7 @@
 import { context } from '@actions/github';
-import { getInput, setOutput, setFailed, info } from '@actions/core';
+import { getInput, setFailed, info } from '@actions/core';
 import { glob } from 'glob';
-import { getAssetName, getReleaseURL, uploadFile, requestUploadFile } from './utils';
+import { getAssetName, getReleaseURL, requestUploadFile } from './utils';
 
 ;(async () => {
   /**
@@ -9,7 +9,6 @@ import { getAssetName, getReleaseURL, uploadFile, requestUploadFile } from './ut
    */
   const assetPath = getAssetName(getInput('asset-path', { required: true }));
   const tagName: string | undefined = getInput('tag') || undefined;
-  const myToken = getInput('token')
   try {
     if (!assetPath || assetPath.length === 0) {
       throw new Error('asset-path must contain a JSON array of quoted paths');
