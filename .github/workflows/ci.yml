@@ -90,6 +90,15 @@ jobs:
                 asset-path: test.*
             ```
 
+            ```yml
+            - name: Release Upload Assets
+              uses: jaywcjlove/github-action-upload-assets@main
+              continue-on-error: true
+              with:
+                tag: v0.3.0
+                asset-path: '["./target/release/sgo-*"]'
+            ```
+
       - run: echo "Hello World" > test.txt
       - name: Compress test Example.
         run: zip -r -y test.zip test.txt -x "node_modules/*"
