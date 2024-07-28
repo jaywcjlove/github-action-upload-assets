@@ -31,6 +31,9 @@ import { getAssetName, getReleaseURL, uploadFile } from './utils';
     }
     setOutput('browser_download_urls', JSON.stringify(downloadURLs));
   } catch (error) {
+    if (error instanceof Error) {
+      info(`Error: ${error.message}`);
+    }
     setFailed(error as Error);
   }
 })();
