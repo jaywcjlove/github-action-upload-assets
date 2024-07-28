@@ -24,7 +24,7 @@ import { getAssetName, getReleaseURL, requestUploadFile } from './utils';
       const assetFile = files[i];
       info(`Uploading asset(${context.repo.owner}/${context.repo.repo}): ${assetFile}`);
 
-      const requestUploadResponse = await requestUploadFile(release.upload_url, assetFile);
+      const requestUploadResponse = await requestUploadFile(release.id, assetFile);
       info(`requestUploadResponse: ${JSON.stringify(requestUploadResponse)}`);
       // const response = await uploadFile(context.repo.owner, context.repo.repo, release.id, assetFile);
       // downloadURLs.push(response.data.browser_download_url)
