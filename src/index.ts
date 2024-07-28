@@ -41,6 +41,32 @@ function getAssetName(assetPath: string): string | string[] | undefined {
   return undefined;
 }
 
+// Function to upload the file
+async function uploadFile(owner: string, repo: string, releaseId: number, filePath: string) {
+  const myToken = getInput('token')
+  const octokit = getOctokit(myToken);
+
+  const fileContent = fs.readFileSync(filePath); // Read file content as Buffer
+  const fileStat = fs.statSync(filePath);
+  const fileName = path.basename(filePath);
+
+  const headers = { 
+    'content-type': 'application/octet-stream',
+    'content-length': fileStat.size
+  };
+
+  const response = await octokit.rest.repos.uploadReleaseAsset({
+    owner: owner,
+    repo: repo,
+    release_id: releaseId,
+    headers,
+    name: fileName,
+    data: fileContent.toString() // Use file content directly
+  });
+
+  return response;
+}
+
 ;(async () => {
   /**
    * Get the path to the file to upload
@@ -56,33 +82,12 @@ function getAssetName(assetPath: string): string | string[] | undefined {
     if (files.length === 0) {
       throw new Error('No files found');
     }
-    const octokit = getOctokit(myToken);
     const release = await getReleaseURL(tagName)
     const downloadURLs = []
     for(let i = 0; i < files.length; i++) {
       const assetFile = files[i];
-      // Determine content-length for header to upload asset
-      const contentLength = (filePath: string) => fs.statSync(filePath).size;
-      const contentType = 'application/octet-stream';
-      //const contentType = "binary/octet-stream"
-      // Setup headers for API call, see Octokit Documentation: https://octokit.github.io/rest.js/v20#repos-update-release-asset for more information
-      const headers = { 
-        'content-type': contentType, 
-        'content-length': contentLength(assetFile)
-      };
-      const assetName = path.basename(assetFile);
-      const data = fs.readFileSync(assetFile);
-      // Upload a release asset
-      // API Documentation: https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#update-a-release
-      // Octokit Documentation: https://octokit.github.io/rest.js/v20#repos-update-release-asset
-      const response = await octokit.rest.repos.uploadReleaseAsset({
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        release_id: release.id,
-        headers,
-        name: assetName,
-        data: data.toString()
-      });
+      info(`Uploading asset(${context.repo.owner}/${context.repo.repo}): ${assetFile}`);
+      const response = await uploadFile(context.repo.owner, context.repo.repo, release.id, assetFile);
       downloadURLs.push(response.data.browser_download_url)
       if (response.status < 200 || response.status > 299) {
         new Error(`Asset upload failed "${assetPath}. Response:" ${response}`)
