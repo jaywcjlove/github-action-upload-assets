@@ -1623,7 +1623,7 @@ exports.getOctokitOptions = exports.GitHub = exports.defaults = exports.context 
 var Context = __importStar(__webpack_require__(4456));
 var Utils = __importStar(__webpack_require__(7628));
 // octokit + plugins
-var core_1 = __webpack_require__(8287);
+var core_1 = __webpack_require__(9073);
 var plugin_rest_endpoint_methods_1 = __webpack_require__(6463);
 var plugin_paginate_rest_1 = __webpack_require__(8292);
 exports.context = new Context.Context();
@@ -2927,7 +2927,7 @@ function isLoopbackAddress(host) {
 
 /***/ }),
 
-/***/ 8287:
+/***/ 9073:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2945,31 +2945,8 @@ var possibleConstructorReturn = __webpack_require__(388);
 var callSuper = __webpack_require__(9874);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inherits.js
 var inherits = __webpack_require__(5501);
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
-function _objectWithoutPropertiesLoose(r, e) {
-  if (null == r) return {};
-  var t = {};
-  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
-    if (e.includes(n)) continue;
-    t[n] = r[n];
-  }
-  return t;
-}
-
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
-
-function _objectWithoutProperties(e, t) {
-  if (null == e) return {};
-  var o,
-    r,
-    i = _objectWithoutPropertiesLoose(e, t);
-  if (Object.getOwnPropertySymbols) {
-    var s = Object.getOwnPropertySymbols(e);
-    for (r = 0; r < s.length; r++) o = s[r], t.includes(o) || {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
-  }
-  return i;
-}
-
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js + 1 modules
+var objectWithoutProperties = __webpack_require__(3986);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/regeneratorRuntime.js
 var regeneratorRuntime = __webpack_require__(675);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js
@@ -2992,8 +2969,8 @@ function getUserAgent() {
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: ./node_modules/before-after-hook/index.js
 var before_after_hook = __webpack_require__(4100);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 3 modules
-var slicedToArray = __webpack_require__(296);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 1 modules
+var slicedToArray = __webpack_require__(5544);
 ;// CONCATENATED MODULE: ./node_modules/@octokit/endpoint/dist-src/util/lowercase-keys.js
 function lowercaseKeys(object) {
   if (!object) {
@@ -3380,60 +3357,8 @@ function is_plain_object_isPlainObject(value) {
   return typeof Ctor === "function" && Ctor instanceof Ctor && Function.prototype.call(Ctor) === Function.prototype.call(value);
 }
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
-var getPrototypeOf = __webpack_require__(3954);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
-var setPrototypeOf = __webpack_require__(3662);
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/isNativeFunction.js
-function _isNativeFunction(t) {
-  try {
-    return -1 !== Function.toString.call(t).indexOf("[native code]");
-  } catch (n) {
-    return "function" == typeof t;
-  }
-}
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js
-var isNativeReflectConstruct = __webpack_require__(2176);
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/construct.js
-
-
-function _construct(t, e, r) {
-  if ((0,isNativeReflectConstruct/* default */.A)()) return Reflect.construct.apply(null, arguments);
-  var o = [null];
-  o.push.apply(o, e);
-  var p = new (t.bind.apply(t, o))();
-  return r && (0,setPrototypeOf/* default */.A)(p, r.prototype), p;
-}
-
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/wrapNativeSuper.js
-
-
-
-
-function _wrapNativeSuper(t) {
-  var r = "function" == typeof Map ? new Map() : void 0;
-  return _wrapNativeSuper = function _wrapNativeSuper(t) {
-    if (null === t || !_isNativeFunction(t)) return t;
-    if ("function" != typeof t) throw new TypeError("Super expression must either be null or a function");
-    if (void 0 !== r) {
-      if (r.has(t)) return r.get(t);
-      r.set(t, Wrapper);
-    }
-    function Wrapper() {
-      return _construct(t, arguments, (0,getPrototypeOf/* default */.A)(this).constructor);
-    }
-    return Wrapper.prototype = Object.create(t.prototype, {
-      constructor: {
-        value: Wrapper,
-        enumerable: !1,
-        writable: !0,
-        configurable: !0
-      }
-    }), (0,setPrototypeOf/* default */.A)(Wrapper, t);
-  }, _wrapNativeSuper(t);
-}
-
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/wrapNativeSuper.js + 2 modules
+var wrapNativeSuper = __webpack_require__(3437);
 ;// CONCATENATED MODULE: ./node_modules/deprecation/dist-web/index.js
 
 
@@ -3456,7 +3381,7 @@ var Deprecation = /*#__PURE__*/function (_Error) {
   }
   (0,inherits/* default */.A)(Deprecation, _Error);
   return (0,createClass/* default */.A)(Deprecation);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
+}( /*#__PURE__*/(0,wrapNativeSuper/* default */.A)(Error));
 
 // EXTERNAL MODULE: ./node_modules/once/once.js
 var once = __webpack_require__(2960);
@@ -3517,7 +3442,7 @@ var RequestError = /*#__PURE__*/function (_Error) {
   }
   (0,inherits/* default */.A)(RequestError, _Error);
   return (0,createClass/* default */.A)(RequestError);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
+}( /*#__PURE__*/(0,wrapNativeSuper/* default */.A)(Error));
 
 ;// CONCATENATED MODULE: ./node_modules/@octokit/request/dist-src/get-buffer-response.js
 function getBufferResponse(response) {
@@ -3827,7 +3752,7 @@ var GraphqlResponseError = /*#__PURE__*/function (_Error) {
   }
   (0,inherits/* default */.A)(GraphqlResponseError, _Error);
   return (0,createClass/* default */.A)(GraphqlResponseError);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
+}( /*#__PURE__*/(0,wrapNativeSuper/* default */.A)(Error));
 
 // pkg/dist-src/graphql.js
 var NON_VARIABLE_OPTIONS = ["method", "baseUrl", "url", "headers", "request", "query", "mediaType"];
@@ -4067,7 +3992,7 @@ var Octokit = (_Class = /*#__PURE__*/function () {
       }
     } else {
       var authStrategy = options.authStrategy,
-        otherOptions = _objectWithoutProperties(options, _excluded);
+        otherOptions = (0,objectWithoutProperties/* default */.A)(options, _excluded);
       var _auth = authStrategy(Object.assign({
         request: this.request,
         log: this.log,
@@ -4155,10 +4080,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   paginateRest: () => (/* binding */ paginateRest),
 /* harmony export */   paginatingEndpoints: () => (/* binding */ paginatingEndpoints)
 /* harmony export */ });
-/* harmony import */ var _Users_wangchujiang_git_project_actions_github_action_folder_tree_node_modules_babel_runtime_helpers_esm_defineProperty_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4467);
-/* harmony import */ var _Users_wangchujiang_git_project_actions_github_action_folder_tree_node_modules_babel_runtime_helpers_esm_regeneratorRuntime_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(675);
-/* harmony import */ var _Users_wangchujiang_git_project_actions_github_action_folder_tree_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(467);
-/* harmony import */ var _Users_wangchujiang_git_project_actions_github_action_folder_tree_node_modules_babel_runtime_helpers_esm_objectSpread2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9379);
+/* harmony import */ var _Users_wangchujiang_git_project_actions_github_action_upload_assets_node_modules_babel_runtime_helpers_esm_defineProperty_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4467);
+/* harmony import */ var _Users_wangchujiang_git_project_actions_github_action_upload_assets_node_modules_babel_runtime_helpers_esm_regeneratorRuntime_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(675);
+/* harmony import */ var _Users_wangchujiang_git_project_actions_github_action_upload_assets_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(467);
+/* harmony import */ var _Users_wangchujiang_git_project_actions_github_action_upload_assets_node_modules_babel_runtime_helpers_esm_objectSpread2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9379);
 
 
 
@@ -4169,7 +4094,7 @@ var VERSION = "9.2.1";
 // pkg/dist-src/normalize-paginated-list-response.js
 function normalizePaginatedListResponse(response) {
   if (!response.data) {
-    return (0,_Users_wangchujiang_git_project_actions_github_action_folder_tree_node_modules_babel_runtime_helpers_esm_objectSpread2_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)((0,_Users_wangchujiang_git_project_actions_github_action_folder_tree_node_modules_babel_runtime_helpers_esm_objectSpread2_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)({}, response), {}, {
+    return (0,_Users_wangchujiang_git_project_actions_github_action_upload_assets_node_modules_babel_runtime_helpers_esm_objectSpread2_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)((0,_Users_wangchujiang_git_project_actions_github_action_upload_assets_node_modules_babel_runtime_helpers_esm_objectSpread2_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)({}, response), {}, {
       data: []
     });
   }
@@ -4201,12 +4126,12 @@ function iterator(octokit, route, parameters) {
   var method = options.method;
   var headers = options.headers;
   var url = options.url;
-  return (0,_Users_wangchujiang_git_project_actions_github_action_folder_tree_node_modules_babel_runtime_helpers_esm_defineProperty_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({}, Symbol.asyncIterator, function () {
+  return (0,_Users_wangchujiang_git_project_actions_github_action_upload_assets_node_modules_babel_runtime_helpers_esm_defineProperty_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)({}, Symbol.asyncIterator, function () {
     return {
       next: function next() {
-        return (0,_Users_wangchujiang_git_project_actions_github_action_folder_tree_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)( /*#__PURE__*/(0,_Users_wangchujiang_git_project_actions_github_action_folder_tree_node_modules_babel_runtime_helpers_esm_regeneratorRuntime_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)().mark(function _callee() {
+        return (0,_Users_wangchujiang_git_project_actions_github_action_upload_assets_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A)( /*#__PURE__*/(0,_Users_wangchujiang_git_project_actions_github_action_upload_assets_node_modules_babel_runtime_helpers_esm_regeneratorRuntime_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)().mark(function _callee() {
           var response, normalizedResponse;
-          return (0,_Users_wangchujiang_git_project_actions_github_action_folder_tree_node_modules_babel_runtime_helpers_esm_regeneratorRuntime_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)().wrap(function _callee$(_context) {
+          return (0,_Users_wangchujiang_git_project_actions_github_action_upload_assets_node_modules_babel_runtime_helpers_esm_regeneratorRuntime_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)().wrap(function _callee$(_context) {
             while (1) switch (_context.prev = _context.next) {
               case 0:
                 if (url) {
@@ -4336,10 +4261,10 @@ var VERSION = "10.4.1";
 var defineProperty = __webpack_require__(4467);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
 var createForOfIteratorHelper = __webpack_require__(4765);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 3 modules
-var toConsumableArray = __webpack_require__(5458);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 3 modules
-var slicedToArray = __webpack_require__(296);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
+var toConsumableArray = __webpack_require__(436);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 1 modules
+var slicedToArray = __webpack_require__(5544);
 ;// CONCATENATED MODULE: ./node_modules/@octokit/plugin-rest-endpoint-methods/dist-src/generated/endpoints.js
 var Endpoints = {
   actions: {
@@ -33981,6 +33906,20 @@ function _arrayLikeToArray(r, a) {
 
 /***/ }),
 
+/***/ 6369:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ _arrayWithHoles)
+/* harmony export */ });
+function _arrayWithHoles(r) {
+  if (Array.isArray(r)) return r;
+}
+
+
+/***/ }),
+
 /***/ 467:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -34217,6 +34156,34 @@ function _isNativeReflectConstruct() {
 
 /***/ }),
 
+/***/ 3893:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ _iterableToArray)
+/* harmony export */ });
+function _iterableToArray(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
+}
+
+
+/***/ }),
+
+/***/ 6562:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (/* binding */ _nonIterableRest)
+/* harmony export */ });
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+
+/***/ }),
+
 /***/ 9379:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -34246,6 +34213,44 @@ function _objectSpread2(e) {
     });
   }
   return e;
+}
+
+
+/***/ }),
+
+/***/ 3986:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ _objectWithoutProperties)
+});
+
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (e.includes(n)) continue;
+    t[n] = r[n];
+  }
+  return t;
+}
+
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js
+
+function _objectWithoutProperties(e, t) {
+  if (null == e) return {};
+  var o,
+    r,
+    i = _objectWithoutPropertiesLoose(e, t);
+  if (Object.getOwnPropertySymbols) {
+    var s = Object.getOwnPropertySymbols(e);
+    for (r = 0; r < s.length; r++) o = s[r], t.includes(o) || {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
+  }
+  return i;
 }
 
 
@@ -34612,7 +34617,7 @@ function _setPrototypeOf(t, e) {
 
 /***/ }),
 
-/***/ 296:
+/***/ 5544:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34622,11 +34627,8 @@ __webpack_require__.d(__webpack_exports__, {
   A: () => (/* binding */ _slicedToArray)
 });
 
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
-function _arrayWithHoles(r) {
-  if (Array.isArray(r)) return r;
-}
-
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+var arrayWithHoles = __webpack_require__(6369);
 ;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
 function _iterableToArrayLimit(r, l) {
   var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
@@ -34658,24 +34660,21 @@ function _iterableToArrayLimit(r, l) {
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
 var unsupportedIterableToArray = __webpack_require__(5419);
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+var nonIterableRest = __webpack_require__(6562);
 ;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js
 
 
 
 
 function _slicedToArray(r, e) {
-  return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || (0,unsupportedIterableToArray/* default */.A)(r, e) || _nonIterableRest();
+  return (0,arrayWithHoles/* default */.A)(r) || _iterableToArrayLimit(r, e) || (0,unsupportedIterableToArray/* default */.A)(r, e) || (0,nonIterableRest/* default */.A)();
 }
 
 
 /***/ }),
 
-/***/ 5458:
+/***/ 436:
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34693,11 +34692,8 @@ function _arrayWithoutHoles(r) {
   if (Array.isArray(r)) return (0,arrayLikeToArray/* default */.A)(r);
 }
 
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
-function _iterableToArray(r) {
-  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
-}
-
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
+var iterableToArray = __webpack_require__(3893);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
 var unsupportedIterableToArray = __webpack_require__(5419);
 ;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
@@ -34711,7 +34707,7 @@ function _nonIterableSpread() {
 
 
 function _toConsumableArray(r) {
-  return _arrayWithoutHoles(r) || _iterableToArray(r) || (0,unsupportedIterableToArray/* default */.A)(r) || _nonIterableSpread();
+  return _arrayWithoutHoles(r) || (0,iterableToArray/* default */.A)(r) || (0,unsupportedIterableToArray/* default */.A)(r) || _nonIterableSpread();
 }
 
 
@@ -34791,6 +34787,73 @@ function _unsupportedIterableToArray(r, a) {
 }
 
 
+/***/ }),
+
+/***/ 3437:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ _wrapNativeSuper)
+});
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
+var getPrototypeOf = __webpack_require__(3954);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
+var setPrototypeOf = __webpack_require__(3662);
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/isNativeFunction.js
+function _isNativeFunction(t) {
+  try {
+    return -1 !== Function.toString.call(t).indexOf("[native code]");
+  } catch (n) {
+    return "function" == typeof t;
+  }
+}
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js
+var isNativeReflectConstruct = __webpack_require__(2176);
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/construct.js
+
+
+function _construct(t, e, r) {
+  if ((0,isNativeReflectConstruct/* default */.A)()) return Reflect.construct.apply(null, arguments);
+  var o = [null];
+  o.push.apply(o, e);
+  var p = new (t.bind.apply(t, o))();
+  return r && (0,setPrototypeOf/* default */.A)(p, r.prototype), p;
+}
+
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/wrapNativeSuper.js
+
+
+
+
+function _wrapNativeSuper(t) {
+  var r = "function" == typeof Map ? new Map() : void 0;
+  return _wrapNativeSuper = function _wrapNativeSuper(t) {
+    if (null === t || !_isNativeFunction(t)) return t;
+    if ("function" != typeof t) throw new TypeError("Super expression must either be null or a function");
+    if (void 0 !== r) {
+      if (r.has(t)) return r.get(t);
+      r.set(t, Wrapper);
+    }
+    function Wrapper() {
+      return _construct(t, arguments, (0,getPrototypeOf/* default */.A)(this).constructor);
+    }
+    return Wrapper.prototype = Object.create(t.prototype, {
+      constructor: {
+        value: Wrapper,
+        enumerable: !1,
+        writable: !0,
+        configurable: !0
+      }
+    }), (0,setPrototypeOf/* default */.A)(Wrapper, t);
+  }, _wrapNativeSuper(t);
+}
+
+
 /***/ })
 
 /******/ 	});
@@ -34829,6 +34892,36 @@ function _unsupportedIterableToArray(r, a) {
 /******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
 /******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/create fake namespace object */
+/******/ 	(() => {
+/******/ 		var getProto = Object.getPrototypeOf ? (obj) => (Object.getPrototypeOf(obj)) : (obj) => (obj.__proto__);
+/******/ 		var leafPrototypes;
+/******/ 		// create a fake namespace object
+/******/ 		// mode & 1: value is a module id, require it
+/******/ 		// mode & 2: merge all properties of value into the ns
+/******/ 		// mode & 4: return value when already ns object
+/******/ 		// mode & 16: return value when it's Promise-like
+/******/ 		// mode & 8|1: behave like require
+/******/ 		__webpack_require__.t = function(value, mode) {
+/******/ 			if(mode & 1) value = this(value);
+/******/ 			if(mode & 8) return value;
+/******/ 			if(typeof value === 'object' && value) {
+/******/ 				if((mode & 4) && value.__esModule) return value;
+/******/ 				if((mode & 16) && typeof value.then === 'function') return value;
+/******/ 			}
+/******/ 			var ns = Object.create(null);
+/******/ 			__webpack_require__.r(ns);
+/******/ 			var def = {};
+/******/ 			leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
+/******/ 			for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
+/******/ 				Object.getOwnPropertyNames(current).forEach((key) => (def[key] = () => (value[key])));
+/******/ 			}
+/******/ 			def['default'] = () => (value);
+/******/ 			__webpack_require__.d(ns, def);
+/******/ 			return ns;
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -34874,18 +34967,8 @@ var asyncToGenerator = __webpack_require__(467);
 var github = __webpack_require__(8340);
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __webpack_require__(3716);
-;// CONCATENATED MODULE: external "node:path"
-const external_node_path_namespaceObject = require("node:path");
-;// CONCATENATED MODULE: external "node:os"
-const external_node_os_namespaceObject = require("node:os");
-;// CONCATENATED MODULE: external "node:crypto"
-const external_node_crypto_namespaceObject = require("node:crypto");
-;// CONCATENATED MODULE: external "node:fs"
-const external_node_fs_namespaceObject = require("node:fs");
-;// CONCATENATED MODULE: external "node:fs/promises"
-const promises_namespaceObject = require("node:fs/promises");
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 3 modules
-var toConsumableArray = __webpack_require__(5458);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
+var toConsumableArray = __webpack_require__(436);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
 var createForOfIteratorHelper = __webpack_require__(4765);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
@@ -34898,8 +34981,8 @@ var createClass = __webpack_require__(2901);
 var callSuper = __webpack_require__(9874);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/inherits.js
 var inherits = __webpack_require__(5501);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 3 modules
-var slicedToArray = __webpack_require__(296);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 1 modules
+var slicedToArray = __webpack_require__(5544);
 // EXTERNAL MODULE: ./node_modules/brace-expansion/index.js
 var brace_expansion = __webpack_require__(763);
 ;// CONCATENATED MODULE: ./node_modules/minimatch/dist/esm/assert-valid-pattern.js
@@ -36908,7 +36991,15 @@ minimatch.Minimatch = Minimatch;
 minimatch.escape = escape_escape;
 minimatch.unescape = unescape_unescape;
 //# sourceMappingURL=index.js.map
-;// CONCATENATED MODULE: ./node_modules/dree/bundled/lib/esm/index.esm.js
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
+var objectSpread2 = __webpack_require__(9379);
+;// CONCATENATED MODULE: external "node:url"
+const external_node_url_namespaceObject = require("node:url");
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js + 1 modules
+var objectWithoutProperties = __webpack_require__(3986);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/wrapNativeSuper.js + 2 modules
+var wrapNativeSuper = __webpack_require__(3437);
+;// CONCATENATED MODULE: ./node_modules/path-scurry/node_modules/lru-cache/dist/esm/index.js
 
 
 
@@ -36917,981 +37008,7980 @@ minimatch.unescape = unescape_unescape;
 
 
 
-var re = function (n) {
-    return n.DIRECTORY = "directory", n.FILE = "file", n;
-  }(re || {}),
-  ne = function (a) {
-    return a.ALPHABETICAL = "alpha", a.ALPHABETICAL_REVERSE = "antialpha", a.ALPHABETICAL_INSENSITIVE = "alpha-insensitive", a.ALPHABETICAL_INSENSITIVE_REVERSE = "antialpha-insensitive", a;
-  }(ne || {}),
-  se = function (l) {
-    return l.ALPHABETICAL = "alpha", l.ALPHABETICAL_REVERSE = "antialpha", l.ALPHABETICAL_INSENSITIVE = "alpha-insensitive", l.ALPHABETICAL_INSENSITIVE_REVERSE = "antialpha-insensitive", l.FOLDERS_FIRST = "folders-first", l.FILES_FIRST = "files-first", l;
-  }(se || {}),
-  C = {
-    stat: !1,
-    normalize: !1,
-    symbolicLinks: !0,
-    followLinks: !1,
-    sizeInBytes: !0,
-    size: !0,
-    hash: !0,
-    hashAlgorithm: "md5",
-    hashEncoding: "hex",
-    showHidden: !0,
-    depth: void 0,
-    exclude: void 0,
-    matches: void 0,
-    extensions: void 0,
-    emptyDirectory: !1,
-    excludeEmptyDirectories: !1,
-    descendants: !1,
-    descendantsIgnoreDirectories: !1,
-    sorted: !1,
-    postSorted: !1,
-    homeShortcut: !1,
-    skipErrors: !0
-  },
-  B = {
-    symbolicLinks: !0,
-    followLinks: !1,
-    showHidden: !0,
-    depth: void 0,
-    exclude: void 0,
-    extensions: void 0,
-    sorted: !1,
-    postSorted: !1,
-    homeShortcut: !1,
-    skipErrors: !0
+
+
+
+
+
+
+
+
+
+
+var _excluded = ["context", "forceRefresh"];
+/**
+ * @module LRUCache
+ */
+var perf = typeof performance === 'object' && performance && typeof performance.now === 'function' ? performance : Date;
+var warned = new Set();
+/* c8 ignore start */
+var PROCESS = typeof process === 'object' && !!process ? process : {};
+/* c8 ignore start */
+var emitWarning = function emitWarning(msg, type, code, fn) {
+  typeof PROCESS.emitWarning === 'function' ? PROCESS.emitWarning(msg, type, code, fn) : console.error("[".concat(code, "] ").concat(type, ": ").concat(msg));
+};
+var AC = globalThis.AbortController;
+var AS = globalThis.AbortSignal;
+/* c8 ignore start */
+if (typeof AC === 'undefined') {
+  var _PROCESS$env;
+  //@ts-ignore
+  AS = /*#__PURE__*/function () {
+    function AbortSignal() {
+      (0,classCallCheck/* default */.A)(this, AbortSignal);
+      (0,defineProperty/* default */.A)(this, "onabort", void 0);
+      (0,defineProperty/* default */.A)(this, "_onabort", []);
+      (0,defineProperty/* default */.A)(this, "reason", void 0);
+      (0,defineProperty/* default */.A)(this, "aborted", false);
+    }
+    return (0,createClass/* default */.A)(AbortSignal, [{
+      key: "addEventListener",
+      value: function addEventListener(_, fn) {
+        this._onabort.push(fn);
+      }
+    }]);
+  }();
+  //@ts-ignore
+  AC = /*#__PURE__*/function () {
+    function AbortController() {
+      (0,classCallCheck/* default */.A)(this, AbortController);
+      (0,defineProperty/* default */.A)(this, "signal", new AS());
+      _warnACPolyfill();
+    }
+    return (0,createClass/* default */.A)(AbortController, [{
+      key: "abort",
+      value: function abort(reason) {
+        var _this$signal$onabort, _this$signal;
+        if (this.signal.aborted) return;
+        //@ts-ignore
+        this.signal.reason = reason;
+        //@ts-ignore
+        this.signal.aborted = true;
+        //@ts-ignore
+        var _iterator = (0,createForOfIteratorHelper/* default */.A)(this.signal._onabort),
+          _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var fn = _step.value;
+            fn(reason);
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+        (_this$signal$onabort = (_this$signal = this.signal).onabort) === null || _this$signal$onabort === void 0 || _this$signal$onabort.call(_this$signal, reason);
+      }
+    }]);
+  }();
+  var printACPolyfillWarning = ((_PROCESS$env = PROCESS.env) === null || _PROCESS$env === void 0 ? void 0 : _PROCESS$env.LRU_CACHE_IGNORE_AC_WARNING) !== '1';
+  var _warnACPolyfill = function warnACPolyfill() {
+    if (!printACPolyfillWarning) return;
+    printACPolyfillWarning = false;
+    emitWarning('AbortController is not defined. If using lru-cache in ' + 'node 14, load an AbortController polyfill from the ' + '`node-abort-controller` package. A minimal polyfill is ' + 'provided for use by LRUCache.fetch(), but it should not be ' + 'relied upon in other contexts (eg, passing it to other APIs that ' + 'use AbortController/AbortSignal might have undesirable effects). ' + 'You may disable this with LRU_CACHE_IGNORE_AC_WARNING=1 in the env.', 'NO_ABORT_CONTROLLER', 'ENOTSUP', _warnACPolyfill);
   };
-function D(r, t) {
-  return (0,external_node_path_namespaceObject.resolve)(t.homeShortcut ? r.replace(/^~($|\/|\\)/, (0,external_node_os_namespaceObject.homedir)() + "$1") : r);
 }
-function x(r) {
-  return (Array.isArray(r) ? r : [r]).map(function (t) {
-    return t instanceof RegExp ? t : makeRe(t, {
-      dot: !0
+/* c8 ignore stop */
+var shouldWarn = function shouldWarn(code) {
+  return !warned.has(code);
+};
+var TYPE = Symbol('type');
+var isPosInt = function isPosInt(n) {
+  return n && n === Math.floor(n) && n > 0 && isFinite(n);
+};
+/* c8 ignore start */
+// This is a little bit ridiculous, tbh.
+// The maximum array length is 2^32-1 or thereabouts on most JS impls.
+// And well before that point, you're caching the entire world, I mean,
+// that's ~32GB of just integers for the next/prev links, plus whatever
+// else to hold that many keys and values.  Just filling the memory with
+// zeroes at init time is brutal when you get that big.
+// But why not be complete?
+// Maybe in the future, these limits will have expanded.
+var getUintArray = function getUintArray(max) {
+  return !isPosInt(max) ? null : max <= Math.pow(2, 8) ? Uint8Array : max <= Math.pow(2, 16) ? Uint16Array : max <= Math.pow(2, 32) ? Uint32Array : max <= Number.MAX_SAFE_INTEGER ? ZeroArray : null;
+};
+/* c8 ignore stop */
+var ZeroArray = /*#__PURE__*/function (_Array) {
+  function ZeroArray(size) {
+    var _this;
+    (0,classCallCheck/* default */.A)(this, ZeroArray);
+    _this = (0,callSuper/* default */.A)(this, ZeroArray, [size]);
+    _this.fill(0);
+    return _this;
+  }
+  (0,inherits/* default */.A)(ZeroArray, _Array);
+  return (0,createClass/* default */.A)(ZeroArray);
+}( /*#__PURE__*/(0,wrapNativeSuper/* default */.A)(Array));
+var Stack = /*#__PURE__*/function () {
+  function Stack(max, HeapCls) {
+    (0,classCallCheck/* default */.A)(this, Stack);
+    (0,defineProperty/* default */.A)(this, "heap", void 0);
+    (0,defineProperty/* default */.A)(this, "length", void 0);
+    /* c8 ignore start */
+    if (!_constructing._) {
+      throw new TypeError('instantiate Stack using Stack.create(n)');
+    }
+    /* c8 ignore stop */
+    this.heap = new HeapCls(max);
+    this.length = 0;
+  }
+  return (0,createClass/* default */.A)(Stack, [{
+    key: "push",
+    value: function push(n) {
+      this.heap[this.length++] = n;
+    }
+  }, {
+    key: "pop",
+    value: function pop() {
+      return this.heap[--this.length];
+    }
+  }], [{
+    key: "create",
+    value: function create(max) {
+      var HeapCls = getUintArray(max);
+      if (!HeapCls) return [];
+      _constructing._ = true;
+      var s = new Stack(max, HeapCls);
+      _constructing._ = false;
+      return s;
+    }
+  }]);
+}();
+/**
+ * Default export, the thing you're using this module to get.
+ *
+ * The `K` and `V` types define the key and value types, respectively. The
+ * optional `FC` type defines the type of the `context` object passed to
+ * `cache.fetch()` and `cache.memo()`.
+ *
+ * Keys and values **must not** be `null` or `undefined`.
+ *
+ * All properties from the options object (with the exception of `max`,
+ * `maxSize`, `fetchMethod`, `memoMethod`, `dispose` and `disposeAfter`) are
+ * added as normal public members. (The listed options are read-only getters.)
+ *
+ * Changing any of these will alter the defaults for subsequent method calls.
+ */
+// private constructor
+var _constructing = {
+  _: false
+};
+var _max = /*#__PURE__*/new WeakMap();
+var _maxSize = /*#__PURE__*/new WeakMap();
+var _dispose = /*#__PURE__*/new WeakMap();
+var _disposeAfter = /*#__PURE__*/new WeakMap();
+var _fetchMethod = /*#__PURE__*/new WeakMap();
+var _memoMethod = /*#__PURE__*/new WeakMap();
+var _size = /*#__PURE__*/new WeakMap();
+var _calculatedSize = /*#__PURE__*/new WeakMap();
+var _keyMap = /*#__PURE__*/new WeakMap();
+var _keyList = /*#__PURE__*/new WeakMap();
+var _valList = /*#__PURE__*/new WeakMap();
+var _next = /*#__PURE__*/new WeakMap();
+var _prev = /*#__PURE__*/new WeakMap();
+var _head = /*#__PURE__*/new WeakMap();
+var _tail = /*#__PURE__*/new WeakMap();
+var _free = /*#__PURE__*/new WeakMap();
+var _disposed = /*#__PURE__*/new WeakMap();
+var _sizes = /*#__PURE__*/new WeakMap();
+var _starts = /*#__PURE__*/new WeakMap();
+var _ttls = /*#__PURE__*/new WeakMap();
+var _hasDispose = /*#__PURE__*/new WeakMap();
+var _hasFetchMethod = /*#__PURE__*/new WeakMap();
+var _hasDisposeAfter = /*#__PURE__*/new WeakMap();
+var _LRUCache_brand = /*#__PURE__*/new WeakSet();
+var _updateItemAge = /*#__PURE__*/new WeakMap();
+var _statusTTL = /*#__PURE__*/new WeakMap();
+var _setItemTTL = /*#__PURE__*/new WeakMap();
+var _isStale = /*#__PURE__*/new WeakMap();
+var _removeItemSize = /*#__PURE__*/new WeakMap();
+var _addItemSize = /*#__PURE__*/new WeakMap();
+var _requireSize = /*#__PURE__*/new WeakMap();
+var LRUCache = /*#__PURE__*/function () {
+  function LRUCache(_options) {
+    (0,classCallCheck/* default */.A)(this, LRUCache);
+    _classPrivateMethodInitSpec(this, _LRUCache_brand);
+    // options that cannot be changed without disaster
+    _classPrivateFieldInitSpec(this, _max, void 0);
+    _classPrivateFieldInitSpec(this, _maxSize, void 0);
+    _classPrivateFieldInitSpec(this, _dispose, void 0);
+    _classPrivateFieldInitSpec(this, _disposeAfter, void 0);
+    _classPrivateFieldInitSpec(this, _fetchMethod, void 0);
+    _classPrivateFieldInitSpec(this, _memoMethod, void 0);
+    /**
+     * {@link LRUCache.OptionsBase.ttl}
+     */
+    (0,defineProperty/* default */.A)(this, "ttl", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.ttlResolution}
+     */
+    (0,defineProperty/* default */.A)(this, "ttlResolution", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.ttlAutopurge}
+     */
+    (0,defineProperty/* default */.A)(this, "ttlAutopurge", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.updateAgeOnGet}
+     */
+    (0,defineProperty/* default */.A)(this, "updateAgeOnGet", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.updateAgeOnHas}
+     */
+    (0,defineProperty/* default */.A)(this, "updateAgeOnHas", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.allowStale}
+     */
+    (0,defineProperty/* default */.A)(this, "allowStale", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.noDisposeOnSet}
+     */
+    (0,defineProperty/* default */.A)(this, "noDisposeOnSet", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.noUpdateTTL}
+     */
+    (0,defineProperty/* default */.A)(this, "noUpdateTTL", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.maxEntrySize}
+     */
+    (0,defineProperty/* default */.A)(this, "maxEntrySize", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.sizeCalculation}
+     */
+    (0,defineProperty/* default */.A)(this, "sizeCalculation", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.noDeleteOnFetchRejection}
+     */
+    (0,defineProperty/* default */.A)(this, "noDeleteOnFetchRejection", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.noDeleteOnStaleGet}
+     */
+    (0,defineProperty/* default */.A)(this, "noDeleteOnStaleGet", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.allowStaleOnFetchAbort}
+     */
+    (0,defineProperty/* default */.A)(this, "allowStaleOnFetchAbort", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.allowStaleOnFetchRejection}
+     */
+    (0,defineProperty/* default */.A)(this, "allowStaleOnFetchRejection", void 0);
+    /**
+     * {@link LRUCache.OptionsBase.ignoreFetchAbort}
+     */
+    (0,defineProperty/* default */.A)(this, "ignoreFetchAbort", void 0);
+    // computed properties
+    _classPrivateFieldInitSpec(this, _size, void 0);
+    _classPrivateFieldInitSpec(this, _calculatedSize, void 0);
+    _classPrivateFieldInitSpec(this, _keyMap, void 0);
+    _classPrivateFieldInitSpec(this, _keyList, void 0);
+    _classPrivateFieldInitSpec(this, _valList, void 0);
+    _classPrivateFieldInitSpec(this, _next, void 0);
+    _classPrivateFieldInitSpec(this, _prev, void 0);
+    _classPrivateFieldInitSpec(this, _head, void 0);
+    _classPrivateFieldInitSpec(this, _tail, void 0);
+    _classPrivateFieldInitSpec(this, _free, void 0);
+    _classPrivateFieldInitSpec(this, _disposed, void 0);
+    _classPrivateFieldInitSpec(this, _sizes, void 0);
+    _classPrivateFieldInitSpec(this, _starts, void 0);
+    _classPrivateFieldInitSpec(this, _ttls, void 0);
+    _classPrivateFieldInitSpec(this, _hasDispose, void 0);
+    _classPrivateFieldInitSpec(this, _hasFetchMethod, void 0);
+    _classPrivateFieldInitSpec(this, _hasDisposeAfter, void 0);
+    // conditionally set private methods related to TTL
+    _classPrivateFieldInitSpec(this, _updateItemAge, function () {});
+    _classPrivateFieldInitSpec(this, _statusTTL, function () {});
+    _classPrivateFieldInitSpec(this, _setItemTTL, function () {});
+    /* c8 ignore stop */
+    _classPrivateFieldInitSpec(this, _isStale, function () {
+      return false;
     });
-  }).filter(function (t) {
-    return t instanceof RegExp;
-  });
-}
-function M(r) {
-  var t = {};
-  if (r) {
-    for (var n in C) t[n] = r[n] !== void 0 ? r[n] : C[n];
-    t.depth < 0 && (t.depth = 0);
-  } else t = C;
-  return t;
-}
-function p(r) {
-  var t = {};
-  if (r) {
-    for (var n in B) t[n] = r[n] !== void 0 ? r[n] : B[n];
-    t.depth < 0 && (t.depth = 0);
-  } else t = B;
-  return t;
-}
-function P(r) {
-  var t = ["B", "KB", "MB", "GB", "TB"],
-    n;
-  for (n = 0; n < t.length && r > 1e3; n++) r /= 1e3;
-  return Math.round(r * 100) / 100 + " " + t[n];
-}
-function L(r, t) {
-  return r.localeCompare(t);
-}
-function k(r, t) {
-  return r.toLowerCase().localeCompare(t.toLowerCase());
-}
-function A(r, t) {
-  if (!t) return r;
-  if (t === !0) return r.sort(L);
-  if (typeof t == "string") switch (t) {
-    case "alpha":
-      return r.sort(L);
-    case "antialpha":
-      return r.sort(L).reverse();
-    case "alpha-insensitive":
-      return r.sort(k);
-    case "antialpha-insensitive":
-      return r.sort(k).reverse();
-    default:
-      return r;
-  } else if (typeof t == "function") return r.sort(t);
-}
-function z(r, t) {
-  return L(r.name, t.name);
-}
-function Y(r, t) {
-  return k(r.name, t.name);
-}
-function ie(r, t) {
-  return r.type === "directory" && t.type === "file" ? -1 : r.type === "file" && t.type === "directory" ? 1 : 0;
-}
-function ae(r, t) {
-  return r.type === "file" && t.type === "directory" ? -1 : r.type === "directory" && t.type === "file" ? 1 : 0;
-}
-function $(r, t) {
-  if (!t) return r;
-  if (t === !0) return r.sort(z);
-  if (typeof t == "string") switch (t) {
-    case "alpha":
-      return r.sort(z);
-    case "antialpha":
-      return r.sort(z).reverse();
-    case "alpha-insensitive":
-      return r.sort(Y);
-    case "antialpha-insensitive":
-      return r.sort(Y).reverse();
-    case "folders-first":
-      return r.sort(ie);
-    case "files-first":
-      return r.sort(ae);
-    default:
-      return r;
-  } else if (typeof t == "function") return r.sort(t);
-}
-function q(r, t) {
-  if (!t) return r;
-  if (t === !0) return r.sort(function (n, e) {
-    return L(n.relativePath, e.relativePath);
-  });
-  if (typeof t == "string") switch (t) {
-    case "alpha":
-      return r.sort(function (n, e) {
-        return L(n.relativePath, e.relativePath);
-      });
-    case "antialpha":
-      return r.sort(function (n, e) {
-        return L(n.relativePath, e.relativePath);
-      }).reverse();
-    case "alpha-insensitive":
-      return r.sort(function (n, e) {
-        return k(n.relativePath, e.relativePath);
-      });
-    case "antialpha-insensitive":
-      return r.sort(function (n, e) {
-        return k(n.relativePath, e.relativePath);
-      }).reverse();
-    default:
-      return r;
-  } else if (typeof t == "function") return r.sort(function (n, e) {
-    return t(n.relativePath, e.relativePath);
-  });
-}
-function U(r, t, n, e, a, d) {
-  if (e.depth !== void 0 && n > e.depth) return null;
-  var l = r === t ? "." : w(r, t);
-  if (e.exclude && r !== t && x(e.exclude).some(function (g) {
-    return g.test("/".concat(l));
-  })) return null;
-  var s = b(t),
-    h;
-  try {
-    h = N(t);
-  } catch (c) {
-    if (e.skipErrors) return null;
-    throw c;
-  }
-  var i;
-  try {
-    i = v(t);
-  } catch (c) {
-    if (e.skipErrors) return null;
-    throw c;
-  }
-  var E = i.isSymbolicLink(),
-    I = h.isFile() ? "file" : "directory";
-  if (!e.showHidden && s.charAt(0) === "." || !e.symbolicLinks && E) return null;
-  var m;
-  if (e.hash) {
-    var c = e.hashAlgorithm;
-    m = V(c), m.update(s);
-  }
-  var o = {
-    name: s,
-    path: e.normalize ? t.replace(/\\/g, "/") : t,
-    relativePath: e.normalize ? l.replace(/\\/g, "/") : l,
-    type: I,
-    isSymbolicLink: E,
-    stat: e.followLinks ? h : i
-  };
-  switch (e.stat || delete o.stat, I) {
-    case "directory":
-      var _c = [],
-        g;
-      if (e.followLinks || !E) {
-        try {
-          g = O(t), g = A(g, e.sorted);
-        } catch (u) {
-          if (e.skipErrors) return null;
-          throw u;
-        }
-        if (e.emptyDirectory && (o.isEmpty = !g.length), g.forEach(function (u) {
-          var f = U(r, T(t, u), n + 1, e, a, d);
-          f !== null && _c.push(f);
-        }), e.excludeEmptyDirectories && !_c.length) return null;
+    _classPrivateFieldInitSpec(this, _removeItemSize, function (_i) {});
+    _classPrivateFieldInitSpec(this, _addItemSize, function (_i, _s, _st) {});
+    _classPrivateFieldInitSpec(this, _requireSize, function (_k, _v, size, sizeCalculation) {
+      if (size || sizeCalculation) {
+        throw new TypeError('cannot set size without setting maxSize or maxEntrySize on cache');
       }
-      if (e.matches && r !== t) {
-        var u = x(e.matches);
-        if (!_c.length && u.some(function (f) {
-          return !f.test("/".concat(l));
-        })) return null;
-      }
-      if (e.sizeInBytes || e.size) {
-        var _u = _c.reduce(function (f, y) {
-          return f + y.sizeInBytes;
-        }, 0);
-        o.sizeInBytes = _u, o.size = e.size ? P(_u) : void 0, e.sizeInBytes || _c.forEach(function (f) {
-          return f.sizeInBytes = void 0;
-        });
-      }
-      if (e.hash) {
-        _c.forEach(function (f) {
-          m.update(f.hash);
-        });
-        var _u2 = e.hashEncoding;
-        o.hash = m.digest(_u2);
-      }
-      e.descendants && (o.descendants = _c.reduce(function (u, f) {
-        var _f$descendants;
-        return u + (f.type === "directory" && e.descendantsIgnoreDirectories ? 0 : 1) + ((_f$descendants = f.descendants) !== null && _f$descendants !== void 0 ? _f$descendants : 0);
-      }, 0)), _c.length && (o.children = e.postSorted ? $(_c, e.postSorted) : _c);
-      break;
-    case "file":
-      if (o.extension = R(t).replace(".", ""), e.extensions && e.extensions.indexOf(o.extension) === -1 || e.matches && r !== t && x(e.matches).some(function (f) {
-        return !f.test("/".concat(l));
-      })) return null;
-      if (e.sizeInBytes || e.size) {
-        var _u3 = e.followLinks ? h.size : i.size;
-        o.sizeInBytes = _u3, o.size = e.size ? P(_u3) : void 0;
-      }
-      if (e.hash) {
-        var _u4;
-        try {
-          _u4 = Z(t);
-        } catch (y) {
-          if (e.skipErrors) return null;
-          throw y;
-        }
-        m.update(_u4);
-        var f = e.hashEncoding;
-        o.hash = m.digest(f);
-      }
-      break;
-    default:
-      return null;
-  }
-  return a && I === "file" ? a(o, e.followLinks ? h : i) : d && I === "directory" && d(o, e.followLinks ? h : i), o;
-}
-function G(_x, _x2, _x3, _x4, _x5, _x6) {
-  return _G.apply(this, arguments);
-}
-function _G() {
-  _G = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(r, t, n, e, a, d) {
-    var l, s, h, i, E, I, m, c, o, _c2, g, u, _u5, _u6, _u7, _u8, f;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
-        case 0:
-          if (!(e.depth !== void 0 && n > e.depth)) {
-            _context2.next = 2;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 2:
-          l = r === t ? "." : w(r, t);
-          if (!(e.exclude && r !== t && x(e.exclude).some(function (g) {
-            return g.test("/".concat(l));
-          }))) {
-            _context2.next = 5;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 5:
-          s = b(t);
-          _context2.prev = 6;
-          _context2.next = 9;
-          return F(t);
-        case 9:
-          h = _context2.sent;
-          _context2.next = 17;
-          break;
-        case 12:
-          _context2.prev = 12;
-          _context2.t0 = _context2["catch"](6);
-          if (!e.skipErrors) {
-            _context2.next = 16;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 16:
-          throw _context2.t0;
-        case 17:
-          _context2.prev = 17;
-          _context2.next = 20;
-          return H(t);
-        case 20:
-          i = _context2.sent;
-          _context2.next = 28;
-          break;
-        case 23:
-          _context2.prev = 23;
-          _context2.t1 = _context2["catch"](17);
-          if (!e.skipErrors) {
-            _context2.next = 27;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 27:
-          throw _context2.t1;
-        case 28:
-          E = i.isSymbolicLink(), I = h.isFile() ? "file" : "directory";
-          if (!(!e.showHidden && s.charAt(0) === "." || !e.symbolicLinks && E)) {
-            _context2.next = 31;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 31:
-          if (e.hash) {
-            c = e.hashAlgorithm;
-            m = V(c), m.update(s);
-          }
-          o = {
-            name: s,
-            path: e.normalize ? t.replace(/\\/g, "/") : t,
-            relativePath: e.normalize ? l.replace(/\\/g, "/") : l,
-            type: I,
-            isSymbolicLink: E,
-            stat: e.followLinks ? h : i
-          };
-          _context2.t2 = (e.stat || delete o.stat, I);
-          _context2.next = _context2.t2 === "directory" ? 36 : _context2.t2 === "file" ? 65 : 84;
-          break;
-        case 36:
-          _c2 = [];
-          if (!(e.followLinks || !E)) {
-            _context2.next = 57;
-            break;
-          }
-          _context2.prev = 38;
-          _context2.next = 41;
-          return _(t);
-        case 41:
-          g = _context2.sent;
-          g = A(g, e.sorted);
-          _context2.next = 50;
-          break;
-        case 45:
-          _context2.prev = 45;
-          _context2.t3 = _context2["catch"](38);
-          if (!e.skipErrors) {
-            _context2.next = 49;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 49:
-          throw _context2.t3;
-        case 50:
-          e.emptyDirectory && (o.isEmpty = !g.length);
-          _context2.next = 53;
-          return Promise.all(g.map( /*#__PURE__*/function () {
-            var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(u) {
-              return _regeneratorRuntime().wrap(function _callee$(_context) {
-                while (1) switch (_context.prev = _context.next) {
-                  case 0:
-                    _context.next = 2;
-                    return G(r, T(t, u), n + 1, e, a, d);
-                  case 2:
-                    return _context.abrupt("return", _context.sent);
-                  case 3:
-                  case "end":
-                    return _context.stop();
-                }
-              }, _callee);
-            }));
-            return function (_x24) {
-              return _ref.apply(this, arguments);
-            };
-          }()));
-        case 53:
-          _c2 = _context2.sent;
-          _c2 = _c2.filter(function (u) {
-            return u !== null;
-          });
-          if (!(e.excludeEmptyDirectories && !_c2.length)) {
-            _context2.next = 57;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 57:
-          if (!(e.matches && r !== t)) {
-            _context2.next = 61;
-            break;
-          }
-          u = x(e.matches);
-          if (!(!_c2.length && u.some(function (f) {
-            return !f.test("/".concat(l));
-          }))) {
-            _context2.next = 61;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 61:
-          if (e.sizeInBytes || e.size) {
-            _u5 = _c2.reduce(function (f, y) {
-              return f + y.sizeInBytes;
-            }, 0);
-            o.sizeInBytes = _u5, o.size = e.size ? P(_u5) : void 0, e.sizeInBytes || _c2.forEach(function (f) {
-              return f.sizeInBytes = void 0;
-            });
-          }
-          if (e.hash) {
-            _c2.forEach(function (f) {
-              m.update(f.hash);
-            });
-            _u6 = e.hashEncoding;
-            o.hash = m.digest(_u6);
-          }
-          e.descendants && (o.descendants = _c2.reduce(function (u, f) {
-            var _f$descendants2;
-            return u + (f.type === "directory" && e.descendantsIgnoreDirectories ? 0 : 1) + ((_f$descendants2 = f.descendants) !== null && _f$descendants2 !== void 0 ? _f$descendants2 : 0);
-          }, 0)), _c2.length && (o.children = e.postSorted ? $(_c2, e.postSorted) : _c2);
-          return _context2.abrupt("break", 85);
-        case 65:
-          if (!(o.extension = R(t).replace(".", ""), e.extensions && e.extensions.indexOf(o.extension) === -1 || e.matches && r !== t && x(e.matches).some(function (f) {
-            return !f.test("/".concat(l));
-          }))) {
-            _context2.next = 67;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 67:
-          if (e.sizeInBytes || e.size) {
-            _u7 = e.followLinks ? h.size : i.size;
-            o.sizeInBytes = _u7, o.size = e.size ? P(_u7) : void 0;
-          }
-          if (!e.hash) {
-            _context2.next = 83;
-            break;
-          }
-          _context2.prev = 69;
-          _context2.next = 72;
-          return ee(t);
-        case 72:
-          _u8 = _context2.sent;
-          _context2.next = 80;
-          break;
-        case 75:
-          _context2.prev = 75;
-          _context2.t4 = _context2["catch"](69);
-          if (!e.skipErrors) {
-            _context2.next = 79;
-            break;
-          }
-          return _context2.abrupt("return", null);
-        case 79:
-          throw _context2.t4;
-        case 80:
-          m.update(_u8);
-          f = e.hashEncoding;
-          o.hash = m.digest(f);
-        case 83:
-          return _context2.abrupt("break", 85);
-        case 84:
-          return _context2.abrupt("return", null);
-        case 85:
-          if (!(a && I === "file")) {
-            _context2.next = 90;
-            break;
-          }
-          _context2.next = 88;
-          return a(o, e.followLinks ? h : i);
-        case 88:
-          _context2.next = 94;
-          break;
-        case 90:
-          _context2.t5 = d && I === "directory";
-          if (!_context2.t5) {
-            _context2.next = 94;
-            break;
-          }
-          _context2.next = 94;
-          return d(o, e.followLinks ? h : i);
-        case 94:
-          return _context2.abrupt("return", o);
-        case 95:
-        case "end":
-          return _context2.stop();
-      }
-    }, _callee2, null, [[6, 12], [17, 23], [38, 45], [69, 75]]);
-  }));
-  return _G.apply(this, arguments);
-}
-function K(r, t, n) {
-  return !t.symbolicLinks && r.isSymbolicLink || !t.showHidden && r.name.charAt(0) === "." || t.extensions !== void 0 && r.type === "file" && t.extensions.indexOf(r.extension) === -1 || t.exclude && x(t.exclude).some(function (e) {
-    return e.test("/".concat(r.relativePath));
-  }) || t.depth !== void 0 && n > t.depth;
-}
-function j(r, t, n, e, a) {
-  var d = "";
-  return t.map(function (s, h) {
-    var i = "";
-    if (e.depth !== void 0 && a > e.depth || e.exclude && x(e.exclude).some(function (S) {
-      return S.test("/".concat((0,external_node_path_namespaceObject.relative)(r, s)));
-    })) return "";
-    var E = (0,external_node_path_namespaceObject.basename)(s),
-      I;
-    try {
-      I = (0,external_node_fs_namespaceObject.statSync)(s);
-    } catch (y) {
-      if (e.skipErrors) return null;
-      throw y;
+      return 0;
+    });
+    /**
+     * A String value that is used in the creation of the default string
+     * description of an object. Called by the built-in method
+     * `Object.prototype.toString`.
+     */
+    (0,defineProperty/* default */.A)(this, Symbol.toStringTag, 'LRUCache');
+    var _options$max = _options.max,
+      max = _options$max === void 0 ? 0 : _options$max,
+      _ttl = _options.ttl,
+      _options$ttlResolutio = _options.ttlResolution,
+      ttlResolution = _options$ttlResolutio === void 0 ? 1 : _options$ttlResolutio,
+      ttlAutopurge = _options.ttlAutopurge,
+      updateAgeOnGet = _options.updateAgeOnGet,
+      updateAgeOnHas = _options.updateAgeOnHas,
+      _allowStale = _options.allowStale,
+      dispose = _options.dispose,
+      disposeAfter = _options.disposeAfter,
+      noDisposeOnSet = _options.noDisposeOnSet,
+      noUpdateTTL = _options.noUpdateTTL,
+      _options$maxSize = _options.maxSize,
+      _maxSize2 = _options$maxSize === void 0 ? 0 : _options$maxSize,
+      _options$maxEntrySize = _options.maxEntrySize,
+      maxEntrySize = _options$maxEntrySize === void 0 ? 0 : _options$maxEntrySize,
+      _sizeCalculation = _options.sizeCalculation,
+      fetchMethod = _options.fetchMethod,
+      memoMethod = _options.memoMethod,
+      noDeleteOnFetchRejection = _options.noDeleteOnFetchRejection,
+      noDeleteOnStaleGet = _options.noDeleteOnStaleGet,
+      allowStaleOnFetchRejection = _options.allowStaleOnFetchRejection,
+      allowStaleOnFetchAbort = _options.allowStaleOnFetchAbort,
+      ignoreFetchAbort = _options.ignoreFetchAbort;
+    if (max !== 0 && !isPosInt(max)) {
+      throw new TypeError('max option must be a nonnegative integer');
     }
-    var m;
-    try {
-      m = (0,external_node_fs_namespaceObject.lstatSync)(s);
-    } catch (y) {
-      if (e.skipErrors) return null;
-      throw y;
+    var UintArray = max ? getUintArray(max) : Array;
+    if (!UintArray) {
+      throw new Error('invalid max value: ' + max);
     }
-    var o = m.isSymbolicLink(),
-      c = I.isFile() ? "file" : "directory";
-    if (!e.showHidden && E.charAt(0) === "." || !e.symbolicLinks && o) return "";
-    var g = (0,external_node_path_namespaceObject.extname)(s).replace(".", "");
-    if (e.extensions && c === "file" && e.extensions.indexOf(g) === -1) return "";
-    var u = o ? ">>" : c === "directory" ? "\u2500> " : "\u2500\u2500 ",
-      f = n + (h === t.length - 1 ? "    " : "\u2502   ");
-    if (i += u + E, (e.followLinks || !o) && c === "directory") {
-      var y;
+    _classPrivateFieldSet2(_max, this, max);
+    _classPrivateFieldSet2(_maxSize, this, _maxSize2);
+    this.maxEntrySize = maxEntrySize || classPrivateFieldGet2_classPrivateFieldGet2(_maxSize, this);
+    this.sizeCalculation = _sizeCalculation;
+    if (this.sizeCalculation) {
+      if (!classPrivateFieldGet2_classPrivateFieldGet2(_maxSize, this) && !this.maxEntrySize) {
+        throw new TypeError('cannot set sizeCalculation without setting maxSize or maxEntrySize');
+      }
+      if (typeof this.sizeCalculation !== 'function') {
+        throw new TypeError('sizeCalculation set to non-function');
+      }
+    }
+    if (memoMethod !== undefined && typeof memoMethod !== 'function') {
+      throw new TypeError('memoMethod must be a function if defined');
+    }
+    _classPrivateFieldSet2(_memoMethod, this, memoMethod);
+    if (fetchMethod !== undefined && typeof fetchMethod !== 'function') {
+      throw new TypeError('fetchMethod must be a function if specified');
+    }
+    _classPrivateFieldSet2(_fetchMethod, this, fetchMethod);
+    _classPrivateFieldSet2(_hasFetchMethod, this, !!fetchMethod);
+    _classPrivateFieldSet2(_keyMap, this, new Map());
+    _classPrivateFieldSet2(_keyList, this, new Array(max).fill(undefined));
+    _classPrivateFieldSet2(_valList, this, new Array(max).fill(undefined));
+    _classPrivateFieldSet2(_next, this, new UintArray(max));
+    _classPrivateFieldSet2(_prev, this, new UintArray(max));
+    _classPrivateFieldSet2(_head, this, 0);
+    _classPrivateFieldSet2(_tail, this, 0);
+    _classPrivateFieldSet2(_free, this, Stack.create(max));
+    _classPrivateFieldSet2(_size, this, 0);
+    _classPrivateFieldSet2(_calculatedSize, this, 0);
+    if (typeof dispose === 'function') {
+      _classPrivateFieldSet2(_dispose, this, dispose);
+    }
+    if (typeof disposeAfter === 'function') {
+      _classPrivateFieldSet2(_disposeAfter, this, disposeAfter);
+      _classPrivateFieldSet2(_disposed, this, []);
+    } else {
+      _classPrivateFieldSet2(_disposeAfter, this, undefined);
+      _classPrivateFieldSet2(_disposed, this, undefined);
+    }
+    _classPrivateFieldSet2(_hasDispose, this, !!classPrivateFieldGet2_classPrivateFieldGet2(_dispose, this));
+    _classPrivateFieldSet2(_hasDisposeAfter, this, !!classPrivateFieldGet2_classPrivateFieldGet2(_disposeAfter, this));
+    this.noDisposeOnSet = !!noDisposeOnSet;
+    this.noUpdateTTL = !!noUpdateTTL;
+    this.noDeleteOnFetchRejection = !!noDeleteOnFetchRejection;
+    this.allowStaleOnFetchRejection = !!allowStaleOnFetchRejection;
+    this.allowStaleOnFetchAbort = !!allowStaleOnFetchAbort;
+    this.ignoreFetchAbort = !!ignoreFetchAbort;
+    // NB: maxEntrySize is set to maxSize if it's set
+    if (this.maxEntrySize !== 0) {
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_maxSize, this) !== 0) {
+        if (!isPosInt(classPrivateFieldGet2_classPrivateFieldGet2(_maxSize, this))) {
+          throw new TypeError('maxSize must be a positive integer if specified');
+        }
+      }
+      if (!isPosInt(this.maxEntrySize)) {
+        throw new TypeError('maxEntrySize must be a positive integer if specified');
+      }
+      _assertClassBrand(_LRUCache_brand, this, _initializeSizeTracking).call(this);
+    }
+    this.allowStale = !!_allowStale;
+    this.noDeleteOnStaleGet = !!noDeleteOnStaleGet;
+    this.updateAgeOnGet = !!updateAgeOnGet;
+    this.updateAgeOnHas = !!updateAgeOnHas;
+    this.ttlResolution = isPosInt(ttlResolution) || ttlResolution === 0 ? ttlResolution : 1;
+    this.ttlAutopurge = !!ttlAutopurge;
+    this.ttl = _ttl || 0;
+    if (this.ttl) {
+      if (!isPosInt(this.ttl)) {
+        throw new TypeError('ttl must be a positive integer if specified');
+      }
+      _assertClassBrand(_LRUCache_brand, this, _initializeTTLTracking).call(this);
+    }
+    // do not allow completely unbounded caches
+    if (classPrivateFieldGet2_classPrivateFieldGet2(_max, this) === 0 && this.ttl === 0 && classPrivateFieldGet2_classPrivateFieldGet2(_maxSize, this) === 0) {
+      throw new TypeError('At least one of max, maxSize, or ttl is required');
+    }
+    if (!this.ttlAutopurge && !classPrivateFieldGet2_classPrivateFieldGet2(_max, this) && !classPrivateFieldGet2_classPrivateFieldGet2(_maxSize, this)) {
+      var code = 'LRU_CACHE_UNBOUNDED';
+      if (shouldWarn(code)) {
+        warned.add(code);
+        var msg = 'TTL caching without ttlAutopurge, max, or maxSize can ' + 'result in unbounded memory consumption.';
+        emitWarning(msg, 'UnboundedCacheWarning', code, LRUCache);
+      }
+    }
+  }
+  /**
+   * Return the number of ms left in the item's TTL. If item is not in cache,
+   * returns `0`. Returns `Infinity` if item is in cache without a defined TTL.
+   */
+  return (0,createClass/* default */.A)(LRUCache, [{
+    key: "max",
+    get:
+    // Protected read-only members
+    /**
+     * {@link LRUCache.OptionsBase.max} (read-only)
+     */
+    function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_max, this);
+    }
+    /**
+     * {@link LRUCache.OptionsBase.maxSize} (read-only)
+     */
+  }, {
+    key: "maxSize",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_maxSize, this);
+    }
+    /**
+     * The total computed size of items in the cache (read-only)
+     */
+  }, {
+    key: "calculatedSize",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_calculatedSize, this);
+    }
+    /**
+     * The number of items stored in the cache (read-only)
+     */
+  }, {
+    key: "size",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_size, this);
+    }
+    /**
+     * {@link LRUCache.OptionsBase.fetchMethod} (read-only)
+     */
+  }, {
+    key: "fetchMethod",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_fetchMethod, this);
+    }
+  }, {
+    key: "memoMethod",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_memoMethod, this);
+    }
+    /**
+     * {@link LRUCache.OptionsBase.dispose} (read-only)
+     */
+  }, {
+    key: "dispose",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_dispose, this);
+    }
+    /**
+     * {@link LRUCache.OptionsBase.disposeAfter} (read-only)
+     */
+  }, {
+    key: "disposeAfter",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_disposeAfter, this);
+    }
+  }, {
+    key: "getRemainingTTL",
+    value: function getRemainingTTL(key) {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).has(key) ? Infinity : 0;
+    }
+  }, {
+    key: "entries",
+    value:
+    /*#__PURE__*/
+    /**
+     * Return a generator yielding `[key, value]` pairs,
+     * in order from most recently used to least recently used.
+     */
+    (0,regeneratorRuntime/* default */.A)().mark(function entries() {
+      var _iterator2, _step2, i;
+      return (0,regeneratorRuntime/* default */.A)().wrap(function entries$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _iterator2 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _indexes).call(this));
+            _context.prev = 1;
+            _iterator2.s();
+          case 3:
+            if ((_step2 = _iterator2.n()).done) {
+              _context.next = 10;
+              break;
+            }
+            i = _step2.value;
+            if (!(classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i] !== undefined && classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i] !== undefined && !_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i]))) {
+              _context.next = 8;
+              break;
+            }
+            _context.next = 8;
+            return [classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i], classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i]];
+          case 8:
+            _context.next = 3;
+            break;
+          case 10:
+            _context.next = 15;
+            break;
+          case 12:
+            _context.prev = 12;
+            _context.t0 = _context["catch"](1);
+            _iterator2.e(_context.t0);
+          case 15:
+            _context.prev = 15;
+            _iterator2.f();
+            return _context.finish(15);
+          case 18:
+          case "end":
+            return _context.stop();
+        }
+      }, entries, this, [[1, 12, 15, 18]]);
+    })
+    /**
+     * Inverse order version of {@link LRUCache.entries}
+     *
+     * Return a generator yielding `[key, value]` pairs,
+     * in order from least recently used to most recently used.
+     */
+  }, {
+    key: "rentries",
+    value:
+    /*#__PURE__*/
+    (0,regeneratorRuntime/* default */.A)().mark(function rentries() {
+      var _iterator3, _step3, i;
+      return (0,regeneratorRuntime/* default */.A)().wrap(function rentries$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _iterator3 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _rindexes).call(this));
+            _context2.prev = 1;
+            _iterator3.s();
+          case 3:
+            if ((_step3 = _iterator3.n()).done) {
+              _context2.next = 10;
+              break;
+            }
+            i = _step3.value;
+            if (!(classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i] !== undefined && classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i] !== undefined && !_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i]))) {
+              _context2.next = 8;
+              break;
+            }
+            _context2.next = 8;
+            return [classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i], classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i]];
+          case 8:
+            _context2.next = 3;
+            break;
+          case 10:
+            _context2.next = 15;
+            break;
+          case 12:
+            _context2.prev = 12;
+            _context2.t0 = _context2["catch"](1);
+            _iterator3.e(_context2.t0);
+          case 15:
+            _context2.prev = 15;
+            _iterator3.f();
+            return _context2.finish(15);
+          case 18:
+          case "end":
+            return _context2.stop();
+        }
+      }, rentries, this, [[1, 12, 15, 18]]);
+    })
+    /**
+     * Return a generator yielding the keys in the cache,
+     * in order from most recently used to least recently used.
+     */
+  }, {
+    key: "keys",
+    value:
+    /*#__PURE__*/
+    (0,regeneratorRuntime/* default */.A)().mark(function keys() {
+      var _iterator4, _step4, i, k;
+      return (0,regeneratorRuntime/* default */.A)().wrap(function keys$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            _iterator4 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _indexes).call(this));
+            _context3.prev = 1;
+            _iterator4.s();
+          case 3:
+            if ((_step4 = _iterator4.n()).done) {
+              _context3.next = 11;
+              break;
+            }
+            i = _step4.value;
+            k = classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i];
+            if (!(k !== undefined && !_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i]))) {
+              _context3.next = 9;
+              break;
+            }
+            _context3.next = 9;
+            return k;
+          case 9:
+            _context3.next = 3;
+            break;
+          case 11:
+            _context3.next = 16;
+            break;
+          case 13:
+            _context3.prev = 13;
+            _context3.t0 = _context3["catch"](1);
+            _iterator4.e(_context3.t0);
+          case 16:
+            _context3.prev = 16;
+            _iterator4.f();
+            return _context3.finish(16);
+          case 19:
+          case "end":
+            return _context3.stop();
+        }
+      }, keys, this, [[1, 13, 16, 19]]);
+    })
+    /**
+     * Inverse order version of {@link LRUCache.keys}
+     *
+     * Return a generator yielding the keys in the cache,
+     * in order from least recently used to most recently used.
+     */
+  }, {
+    key: "rkeys",
+    value:
+    /*#__PURE__*/
+    (0,regeneratorRuntime/* default */.A)().mark(function rkeys() {
+      var _iterator5, _step5, i, k;
+      return (0,regeneratorRuntime/* default */.A)().wrap(function rkeys$(_context4) {
+        while (1) switch (_context4.prev = _context4.next) {
+          case 0:
+            _iterator5 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _rindexes).call(this));
+            _context4.prev = 1;
+            _iterator5.s();
+          case 3:
+            if ((_step5 = _iterator5.n()).done) {
+              _context4.next = 11;
+              break;
+            }
+            i = _step5.value;
+            k = classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i];
+            if (!(k !== undefined && !_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i]))) {
+              _context4.next = 9;
+              break;
+            }
+            _context4.next = 9;
+            return k;
+          case 9:
+            _context4.next = 3;
+            break;
+          case 11:
+            _context4.next = 16;
+            break;
+          case 13:
+            _context4.prev = 13;
+            _context4.t0 = _context4["catch"](1);
+            _iterator5.e(_context4.t0);
+          case 16:
+            _context4.prev = 16;
+            _iterator5.f();
+            return _context4.finish(16);
+          case 19:
+          case "end":
+            return _context4.stop();
+        }
+      }, rkeys, this, [[1, 13, 16, 19]]);
+    })
+    /**
+     * Return a generator yielding the values in the cache,
+     * in order from most recently used to least recently used.
+     */
+  }, {
+    key: "values",
+    value:
+    /*#__PURE__*/
+    (0,regeneratorRuntime/* default */.A)().mark(function values() {
+      var _iterator6, _step6, i, v;
+      return (0,regeneratorRuntime/* default */.A)().wrap(function values$(_context5) {
+        while (1) switch (_context5.prev = _context5.next) {
+          case 0:
+            _iterator6 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _indexes).call(this));
+            _context5.prev = 1;
+            _iterator6.s();
+          case 3:
+            if ((_step6 = _iterator6.n()).done) {
+              _context5.next = 11;
+              break;
+            }
+            i = _step6.value;
+            v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i];
+            if (!(v !== undefined && !_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i]))) {
+              _context5.next = 9;
+              break;
+            }
+            _context5.next = 9;
+            return classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i];
+          case 9:
+            _context5.next = 3;
+            break;
+          case 11:
+            _context5.next = 16;
+            break;
+          case 13:
+            _context5.prev = 13;
+            _context5.t0 = _context5["catch"](1);
+            _iterator6.e(_context5.t0);
+          case 16:
+            _context5.prev = 16;
+            _iterator6.f();
+            return _context5.finish(16);
+          case 19:
+          case "end":
+            return _context5.stop();
+        }
+      }, values, this, [[1, 13, 16, 19]]);
+    })
+    /**
+     * Inverse order version of {@link LRUCache.values}
+     *
+     * Return a generator yielding the values in the cache,
+     * in order from least recently used to most recently used.
+     */
+  }, {
+    key: "rvalues",
+    value:
+    /*#__PURE__*/
+    (0,regeneratorRuntime/* default */.A)().mark(function rvalues() {
+      var _iterator7, _step7, i, v;
+      return (0,regeneratorRuntime/* default */.A)().wrap(function rvalues$(_context6) {
+        while (1) switch (_context6.prev = _context6.next) {
+          case 0:
+            _iterator7 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _rindexes).call(this));
+            _context6.prev = 1;
+            _iterator7.s();
+          case 3:
+            if ((_step7 = _iterator7.n()).done) {
+              _context6.next = 11;
+              break;
+            }
+            i = _step7.value;
+            v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i];
+            if (!(v !== undefined && !_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i]))) {
+              _context6.next = 9;
+              break;
+            }
+            _context6.next = 9;
+            return classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i];
+          case 9:
+            _context6.next = 3;
+            break;
+          case 11:
+            _context6.next = 16;
+            break;
+          case 13:
+            _context6.prev = 13;
+            _context6.t0 = _context6["catch"](1);
+            _iterator7.e(_context6.t0);
+          case 16:
+            _context6.prev = 16;
+            _iterator7.f();
+            return _context6.finish(16);
+          case 19:
+          case "end":
+            return _context6.stop();
+        }
+      }, rvalues, this, [[1, 13, 16, 19]]);
+    })
+    /**
+     * Iterating over the cache itself yields the same results as
+     * {@link LRUCache.entries}
+     */
+  }, {
+    key: Symbol.iterator,
+    value: function value() {
+      return this.entries();
+    }
+  }, {
+    key: "find",
+    value:
+    /**
+     * Find a value for which the supplied fn method returns a truthy value,
+     * similar to `Array.find()`. fn is called as `fn(value, key, cache)`.
+     */
+    function find(fn) {
+      var getOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var _iterator8 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _indexes).call(this)),
+        _step8;
       try {
-        y = (0,external_node_fs_namespaceObject.readdirSync)(s).map(function (S) {
-          return (0,external_node_path_namespaceObject.resolve)(s, S);
-        }), y = A(y, e.sorted);
-      } catch (S) {
-        if (e.skipErrors) return null;
-        throw S;
+        for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+          var i = _step8.value;
+          var v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i];
+          var value = _assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v) ? v.__staleWhileFetching : v;
+          if (value === undefined) continue;
+          if (fn(value, classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i], this)) {
+            return this.get(classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i], getOptions);
+          }
+        }
+      } catch (err) {
+        _iterator8.e(err);
+      } finally {
+        _iterator8.f();
       }
-      i += y.length ? j(r, y, f, e, a + 1) : "";
     }
-    return i;
-  }).filter(function (s) {
-    return !!s;
-  }).forEach(function (s, h, i) {
-    d += n + (h === i.length - 1 ? "\u2514" + s : "\u251C" + s);
-  }), d;
+    /**
+     * Call the supplied function on each item in the cache, in order from most
+     * recently used to least recently used.
+     *
+     * `fn` is called as `fn(value, key, cache)`.
+     *
+     * If `thisp` is provided, function will be called in the `this`-context of
+     * the provided object, or the cache if no `thisp` object is provided.
+     *
+     * Does not update age or recenty of use, or iterate over stale values.
+     */
+  }, {
+    key: "forEach",
+    value: function forEach(fn) {
+      var thisp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this;
+      var _iterator9 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _indexes).call(this)),
+        _step9;
+      try {
+        for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+          var i = _step9.value;
+          var v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i];
+          var value = _assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v) ? v.__staleWhileFetching : v;
+          if (value === undefined) continue;
+          fn.call(thisp, value, classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i], this);
+        }
+      } catch (err) {
+        _iterator9.e(err);
+      } finally {
+        _iterator9.f();
+      }
+    }
+    /**
+     * The same as {@link LRUCache.forEach} but items are iterated over in
+     * reverse order.  (ie, less recently used items are iterated over first.)
+     */
+  }, {
+    key: "rforEach",
+    value: function rforEach(fn) {
+      var thisp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this;
+      var _iterator10 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _rindexes).call(this)),
+        _step10;
+      try {
+        for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+          var i = _step10.value;
+          var v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i];
+          var value = _assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v) ? v.__staleWhileFetching : v;
+          if (value === undefined) continue;
+          fn.call(thisp, value, classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i], this);
+        }
+      } catch (err) {
+        _iterator10.e(err);
+      } finally {
+        _iterator10.f();
+      }
+    }
+    /**
+     * Delete any stale entries. Returns true if anything was removed,
+     * false otherwise.
+     */
+  }, {
+    key: "purgeStale",
+    value: function purgeStale() {
+      var deleted = false;
+      var _iterator11 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _rindexes).call(this, {
+          allowStale: true
+        })),
+        _step11;
+      try {
+        for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+          var i = _step11.value;
+          if (classPrivateFieldGet2_classPrivateFieldGet2(_isStale, this).call(this, i)) {
+            _assertClassBrand(_LRUCache_brand, this, _delete).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i], 'expire');
+            deleted = true;
+          }
+        }
+      } catch (err) {
+        _iterator11.e(err);
+      } finally {
+        _iterator11.f();
+      }
+      return deleted;
+    }
+    /**
+     * Get the extended info about a given entry, to get its value, size, and
+     * TTL info simultaneously. Returns `undefined` if the key is not present.
+     *
+     * Unlike {@link LRUCache#dump}, which is designed to be portable and survive
+     * serialization, the `start` value is always the current timestamp, and the
+     * `ttl` is a calculated remaining time to live (negative if expired).
+     *
+     * Always returns stale values, if their info is found in the cache, so be
+     * sure to check for expirations (ie, a negative {@link LRUCache.Entry#ttl})
+     * if relevant.
+     */
+  }, {
+    key: "info",
+    value: function info(key) {
+      var i = classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).get(key);
+      if (i === undefined) return undefined;
+      var v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i];
+      var value = _assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v) ? v.__staleWhileFetching : v;
+      if (value === undefined) return undefined;
+      var entry = {
+        value: value
+      };
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_ttls, this) && classPrivateFieldGet2_classPrivateFieldGet2(_starts, this)) {
+        var ttl = classPrivateFieldGet2_classPrivateFieldGet2(_ttls, this)[i];
+        var start = classPrivateFieldGet2_classPrivateFieldGet2(_starts, this)[i];
+        if (ttl && start) {
+          var remain = ttl - (perf.now() - start);
+          entry.ttl = remain;
+          entry.start = Date.now();
+        }
+      }
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_sizes, this)) {
+        entry.size = classPrivateFieldGet2_classPrivateFieldGet2(_sizes, this)[i];
+      }
+      return entry;
+    }
+    /**
+     * Return an array of [key, {@link LRUCache.Entry}] tuples which can be
+     * passed to {@link LRLUCache#load}.
+     *
+     * The `start` fields are calculated relative to a portable `Date.now()`
+     * timestamp, even if `performance.now()` is available.
+     *
+     * Stale entries are always included in the `dump`, even if
+     * {@link LRUCache.OptionsBase.allowStale} is false.
+     *
+     * Note: this returns an actual array, not a generator, so it can be more
+     * easily passed around.
+     */
+  }, {
+    key: "dump",
+    value: function dump() {
+      var arr = [];
+      var _iterator12 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _indexes).call(this, {
+          allowStale: true
+        })),
+        _step12;
+      try {
+        for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+          var i = _step12.value;
+          var key = classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[i];
+          var v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[i];
+          var value = _assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v) ? v.__staleWhileFetching : v;
+          if (value === undefined || key === undefined) continue;
+          var entry = {
+            value: value
+          };
+          if (classPrivateFieldGet2_classPrivateFieldGet2(_ttls, this) && classPrivateFieldGet2_classPrivateFieldGet2(_starts, this)) {
+            entry.ttl = classPrivateFieldGet2_classPrivateFieldGet2(_ttls, this)[i];
+            // always dump the start relative to a portable timestamp
+            // it's ok for this to be a bit slow, it's a rare operation.
+            var age = perf.now() - classPrivateFieldGet2_classPrivateFieldGet2(_starts, this)[i];
+            entry.start = Math.floor(Date.now() - age);
+          }
+          if (classPrivateFieldGet2_classPrivateFieldGet2(_sizes, this)) {
+            entry.size = classPrivateFieldGet2_classPrivateFieldGet2(_sizes, this)[i];
+          }
+          arr.unshift([key, entry]);
+        }
+      } catch (err) {
+        _iterator12.e(err);
+      } finally {
+        _iterator12.f();
+      }
+      return arr;
+    }
+    /**
+     * Reset the cache and load in the items in entries in the order listed.
+     *
+     * The shape of the resulting cache may be different if the same options are
+     * not used in both caches.
+     *
+     * The `start` fields are assumed to be calculated relative to a portable
+     * `Date.now()` timestamp, even if `performance.now()` is available.
+     */
+  }, {
+    key: "load",
+    value: function load(arr) {
+      this.clear();
+      var _iterator13 = (0,createForOfIteratorHelper/* default */.A)(arr),
+        _step13;
+      try {
+        for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
+          var _step13$value = (0,slicedToArray/* default */.A)(_step13.value, 2),
+            key = _step13$value[0],
+            entry = _step13$value[1];
+          if (entry.start) {
+            // entry.start is a portable timestamp, but we may be using
+            // node's performance.now(), so calculate the offset, so that
+            // we get the intended remaining TTL, no matter how long it's
+            // been on ice.
+            //
+            // it's ok for this to be a bit slow, it's a rare operation.
+            var age = Date.now() - entry.start;
+            entry.start = perf.now() - age;
+          }
+          this.set(key, entry.value, entry);
+        }
+      } catch (err) {
+        _iterator13.e(err);
+      } finally {
+        _iterator13.f();
+      }
+    }
+    /**
+     * Add a value to the cache.
+     *
+     * Note: if `undefined` is specified as a value, this is an alias for
+     * {@link LRUCache#delete}
+     *
+     * Fields on the {@link LRUCache.SetOptions} options param will override
+     * their corresponding values in the constructor options for the scope
+     * of this single `set()` operation.
+     *
+     * If `start` is provided, then that will set the effective start
+     * time for the TTL calculation. Note that this must be a previous
+     * value of `performance.now()` if supported, or a previous value of
+     * `Date.now()` if not.
+     *
+     * Options object may also include `size`, which will prevent
+     * calling the `sizeCalculation` function and just use the specified
+     * number if it is a positive integer, and `noDisposeOnSet` which
+     * will prevent calling a `dispose` function in the case of
+     * overwrites.
+     *
+     * If the `size` (or return value of `sizeCalculation`) for a given
+     * entry is greater than `maxEntrySize`, then the item will not be
+     * added to the cache.
+     *
+     * Will update the recency of the entry.
+     *
+     * If the value is `undefined`, then this is an alias for
+     * `cache.delete(key)`. `undefined` is never stored in the cache.
+     */
+  }, {
+    key: "set",
+    value: function set(k, v) {
+      var setOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      if (v === undefined) {
+        this["delete"](k);
+        return this;
+      }
+      var _setOptions$ttl = setOptions.ttl,
+        ttl = _setOptions$ttl === void 0 ? this.ttl : _setOptions$ttl,
+        start = setOptions.start,
+        _setOptions$noDispose = setOptions.noDisposeOnSet,
+        noDisposeOnSet = _setOptions$noDispose === void 0 ? this.noDisposeOnSet : _setOptions$noDispose,
+        _setOptions$sizeCalcu = setOptions.sizeCalculation,
+        sizeCalculation = _setOptions$sizeCalcu === void 0 ? this.sizeCalculation : _setOptions$sizeCalcu,
+        status = setOptions.status;
+      var _setOptions$noUpdateT = setOptions.noUpdateTTL,
+        noUpdateTTL = _setOptions$noUpdateT === void 0 ? this.noUpdateTTL : _setOptions$noUpdateT;
+      var size = classPrivateFieldGet2_classPrivateFieldGet2(_requireSize, this).call(this, k, v, setOptions.size || 0, sizeCalculation);
+      // if the item doesn't fit, don't do anything
+      // NB: maxEntrySize set to maxSize by default
+      if (this.maxEntrySize && size > this.maxEntrySize) {
+        if (status) {
+          status.set = 'miss';
+          status.maxEntrySizeExceeded = true;
+        }
+        // have to delete, in case something is there already.
+        _assertClassBrand(_LRUCache_brand, this, _delete).call(this, k, 'set');
+        return this;
+      }
+      var index = classPrivateFieldGet2_classPrivateFieldGet2(_size, this) === 0 ? undefined : classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).get(k);
+      if (index === undefined) {
+        var _this$size, _this$size2;
+        // addition
+        index = classPrivateFieldGet2_classPrivateFieldGet2(_size, this) === 0 ? classPrivateFieldGet2_classPrivateFieldGet2(_tail, this) : classPrivateFieldGet2_classPrivateFieldGet2(_free, this).length !== 0 ? classPrivateFieldGet2_classPrivateFieldGet2(_free, this).pop() : classPrivateFieldGet2_classPrivateFieldGet2(_size, this) === classPrivateFieldGet2_classPrivateFieldGet2(_max, this) ? _assertClassBrand(_LRUCache_brand, this, _evict).call(this, false) : classPrivateFieldGet2_classPrivateFieldGet2(_size, this);
+        classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[index] = k;
+        classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index] = v;
+        classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).set(k, index);
+        classPrivateFieldGet2_classPrivateFieldGet2(_next, this)[classPrivateFieldGet2_classPrivateFieldGet2(_tail, this)] = index;
+        classPrivateFieldGet2_classPrivateFieldGet2(_prev, this)[index] = classPrivateFieldGet2_classPrivateFieldGet2(_tail, this);
+        _classPrivateFieldSet2(_tail, this, index);
+        _classPrivateFieldSet2(_size, this, (_this$size = classPrivateFieldGet2_classPrivateFieldGet2(_size, this), _this$size2 = _this$size++, _this$size)), _this$size2;
+        classPrivateFieldGet2_classPrivateFieldGet2(_addItemSize, this).call(this, index, size, status);
+        if (status) status.set = 'add';
+        noUpdateTTL = false;
+      } else {
+        // update
+        _assertClassBrand(_LRUCache_brand, this, _moveToTail).call(this, index);
+        var oldVal = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index];
+        if (v !== oldVal) {
+          if (classPrivateFieldGet2_classPrivateFieldGet2(_hasFetchMethod, this) && _assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, oldVal)) {
+            oldVal.__abortController.abort(new Error('replaced'));
+            var s = oldVal.__staleWhileFetching;
+            if (s !== undefined && !noDisposeOnSet) {
+              if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDispose, this)) {
+                var _classPrivateFieldGet2;
+                (_classPrivateFieldGet2 = classPrivateFieldGet2_classPrivateFieldGet2(_dispose, this)) === null || _classPrivateFieldGet2 === void 0 || _classPrivateFieldGet2.call(this, s, k, 'set');
+              }
+              if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this)) {
+                var _classPrivateFieldGet3;
+                (_classPrivateFieldGet3 = classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this)) === null || _classPrivateFieldGet3 === void 0 || _classPrivateFieldGet3.push([s, k, 'set']);
+              }
+            }
+          } else if (!noDisposeOnSet) {
+            if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDispose, this)) {
+              var _classPrivateFieldGet4;
+              (_classPrivateFieldGet4 = classPrivateFieldGet2_classPrivateFieldGet2(_dispose, this)) === null || _classPrivateFieldGet4 === void 0 || _classPrivateFieldGet4.call(this, oldVal, k, 'set');
+            }
+            if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this)) {
+              var _classPrivateFieldGet5;
+              (_classPrivateFieldGet5 = classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this)) === null || _classPrivateFieldGet5 === void 0 || _classPrivateFieldGet5.push([oldVal, k, 'set']);
+            }
+          }
+          classPrivateFieldGet2_classPrivateFieldGet2(_removeItemSize, this).call(this, index);
+          classPrivateFieldGet2_classPrivateFieldGet2(_addItemSize, this).call(this, index, size, status);
+          classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index] = v;
+          if (status) {
+            status.set = 'replace';
+            var oldValue = oldVal && _assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, oldVal) ? oldVal.__staleWhileFetching : oldVal;
+            if (oldValue !== undefined) status.oldValue = oldValue;
+          }
+        } else if (status) {
+          status.set = 'update';
+        }
+      }
+      if (ttl !== 0 && !classPrivateFieldGet2_classPrivateFieldGet2(_ttls, this)) {
+        _assertClassBrand(_LRUCache_brand, this, _initializeTTLTracking).call(this);
+      }
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_ttls, this)) {
+        if (!noUpdateTTL) {
+          classPrivateFieldGet2_classPrivateFieldGet2(_setItemTTL, this).call(this, index, ttl, start);
+        }
+        if (status) classPrivateFieldGet2_classPrivateFieldGet2(_statusTTL, this).call(this, status, index);
+      }
+      if (!noDisposeOnSet && classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this) && classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this)) {
+        var dt = classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this);
+        var task;
+        while (task = dt === null || dt === void 0 ? void 0 : dt.shift()) {
+          var _classPrivateFieldGet6, _classPrivateFieldGet7;
+          (_classPrivateFieldGet6 = classPrivateFieldGet2_classPrivateFieldGet2(_disposeAfter, this)) === null || _classPrivateFieldGet6 === void 0 || (_classPrivateFieldGet7 = _classPrivateFieldGet6).call.apply(_classPrivateFieldGet7, [this].concat((0,toConsumableArray/* default */.A)(task)));
+        }
+      }
+      return this;
+    }
+    /**
+     * Evict the least recently used item, returning its value or
+     * `undefined` if cache is empty.
+     */
+  }, {
+    key: "pop",
+    value: function pop() {
+      try {
+        while (classPrivateFieldGet2_classPrivateFieldGet2(_size, this)) {
+          var val = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[classPrivateFieldGet2_classPrivateFieldGet2(_head, this)];
+          _assertClassBrand(_LRUCache_brand, this, _evict).call(this, true);
+          if (_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, val)) {
+            if (val.__staleWhileFetching) {
+              return val.__staleWhileFetching;
+            }
+          } else if (val !== undefined) {
+            return val;
+          }
+        }
+      } finally {
+        if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this) && classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this)) {
+          var dt = classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this);
+          var task;
+          while (task = dt === null || dt === void 0 ? void 0 : dt.shift()) {
+            var _classPrivateFieldGet8, _classPrivateFieldGet9;
+            (_classPrivateFieldGet8 = classPrivateFieldGet2_classPrivateFieldGet2(_disposeAfter, this)) === null || _classPrivateFieldGet8 === void 0 || (_classPrivateFieldGet9 = _classPrivateFieldGet8).call.apply(_classPrivateFieldGet9, [this].concat((0,toConsumableArray/* default */.A)(task)));
+          }
+        }
+      }
+    }
+  }, {
+    key: "has",
+    value:
+    /**
+     * Check if a key is in the cache, without updating the recency of use.
+     * Will return false if the item is stale, even though it is technically
+     * in the cache.
+     *
+     * Check if a key is in the cache, without updating the recency of
+     * use. Age is updated if {@link LRUCache.OptionsBase.updateAgeOnHas} is set
+     * to `true` in either the options or the constructor.
+     *
+     * Will return `false` if the item is stale, even though it is technically in
+     * the cache. The difference can be determined (if it matters) by using a
+     * `status` argument, and inspecting the `has` field.
+     *
+     * Will not update item age unless
+     * {@link LRUCache.OptionsBase.updateAgeOnHas} is set.
+     */
+    function has(k) {
+      var hasOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var _hasOptions$updateAge = hasOptions.updateAgeOnHas,
+        updateAgeOnHas = _hasOptions$updateAge === void 0 ? this.updateAgeOnHas : _hasOptions$updateAge,
+        status = hasOptions.status;
+      var index = classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).get(k);
+      if (index !== undefined) {
+        var v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index];
+        if (_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v) && v.__staleWhileFetching === undefined) {
+          return false;
+        }
+        if (!classPrivateFieldGet2_classPrivateFieldGet2(_isStale, this).call(this, index)) {
+          if (updateAgeOnHas) {
+            classPrivateFieldGet2_classPrivateFieldGet2(_updateItemAge, this).call(this, index);
+          }
+          if (status) {
+            status.has = 'hit';
+            classPrivateFieldGet2_classPrivateFieldGet2(_statusTTL, this).call(this, status, index);
+          }
+          return true;
+        } else if (status) {
+          status.has = 'stale';
+          classPrivateFieldGet2_classPrivateFieldGet2(_statusTTL, this).call(this, status, index);
+        }
+      } else if (status) {
+        status.has = 'miss';
+      }
+      return false;
+    }
+    /**
+     * Like {@link LRUCache#get} but doesn't update recency or delete stale
+     * items.
+     *
+     * Returns `undefined` if the item is stale, unless
+     * {@link LRUCache.OptionsBase.allowStale} is set.
+     */
+  }, {
+    key: "peek",
+    value: function peek(k) {
+      var peekOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var _peekOptions$allowSta = peekOptions.allowStale,
+        allowStale = _peekOptions$allowSta === void 0 ? this.allowStale : _peekOptions$allowSta;
+      var index = classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).get(k);
+      if (index === undefined || !allowStale && classPrivateFieldGet2_classPrivateFieldGet2(_isStale, this).call(this, index)) {
+        return;
+      }
+      var v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index];
+      // either stale and allowed, or forcing a refresh of non-stale value
+      return _assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v) ? v.__staleWhileFetching : v;
+    }
+  }, {
+    key: "fetch",
+    value: function () {
+      var _fetch = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee(k) {
+        var fetchOptions,
+          _fetchOptions$allowSt,
+          allowStale,
+          _fetchOptions$updateA,
+          updateAgeOnGet,
+          _fetchOptions$noDelet,
+          noDeleteOnStaleGet,
+          _fetchOptions$ttl,
+          ttl,
+          _fetchOptions$noDispo,
+          noDisposeOnSet,
+          _fetchOptions$size,
+          size,
+          _fetchOptions$sizeCal,
+          sizeCalculation,
+          _fetchOptions$noUpdat,
+          noUpdateTTL,
+          _fetchOptions$noDelet2,
+          noDeleteOnFetchRejection,
+          _fetchOptions$allowSt2,
+          allowStaleOnFetchRejection,
+          _fetchOptions$ignoreF,
+          ignoreFetchAbort,
+          _fetchOptions$allowSt3,
+          allowStaleOnFetchAbort,
+          context,
+          _fetchOptions$forceRe,
+          forceRefresh,
+          status,
+          signal,
+          options,
+          index,
+          p,
+          v,
+          stale,
+          isStale,
+          _p,
+          hasStale,
+          staleVal,
+          _args7 = arguments;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee$(_context7) {
+          while (1) switch (_context7.prev = _context7.next) {
+            case 0:
+              fetchOptions = _args7.length > 1 && _args7[1] !== undefined ? _args7[1] : {};
+              _fetchOptions$allowSt = fetchOptions.allowStale, allowStale = _fetchOptions$allowSt === void 0 ? this.allowStale : _fetchOptions$allowSt, _fetchOptions$updateA = fetchOptions.updateAgeOnGet, updateAgeOnGet = _fetchOptions$updateA === void 0 ? this.updateAgeOnGet : _fetchOptions$updateA, _fetchOptions$noDelet = fetchOptions.noDeleteOnStaleGet, noDeleteOnStaleGet = _fetchOptions$noDelet === void 0 ? this.noDeleteOnStaleGet : _fetchOptions$noDelet, _fetchOptions$ttl = fetchOptions.ttl, ttl = _fetchOptions$ttl === void 0 ? this.ttl : _fetchOptions$ttl, _fetchOptions$noDispo = fetchOptions.noDisposeOnSet, noDisposeOnSet = _fetchOptions$noDispo === void 0 ? this.noDisposeOnSet : _fetchOptions$noDispo, _fetchOptions$size = fetchOptions.size, size = _fetchOptions$size === void 0 ? 0 : _fetchOptions$size, _fetchOptions$sizeCal = fetchOptions.sizeCalculation, sizeCalculation = _fetchOptions$sizeCal === void 0 ? this.sizeCalculation : _fetchOptions$sizeCal, _fetchOptions$noUpdat = fetchOptions.noUpdateTTL, noUpdateTTL = _fetchOptions$noUpdat === void 0 ? this.noUpdateTTL : _fetchOptions$noUpdat, _fetchOptions$noDelet2 = fetchOptions.noDeleteOnFetchRejection, noDeleteOnFetchRejection = _fetchOptions$noDelet2 === void 0 ? this.noDeleteOnFetchRejection : _fetchOptions$noDelet2, _fetchOptions$allowSt2 = fetchOptions.allowStaleOnFetchRejection, allowStaleOnFetchRejection = _fetchOptions$allowSt2 === void 0 ? this.allowStaleOnFetchRejection : _fetchOptions$allowSt2, _fetchOptions$ignoreF = fetchOptions.ignoreFetchAbort, ignoreFetchAbort = _fetchOptions$ignoreF === void 0 ? this.ignoreFetchAbort : _fetchOptions$ignoreF, _fetchOptions$allowSt3 = fetchOptions.allowStaleOnFetchAbort, allowStaleOnFetchAbort = _fetchOptions$allowSt3 === void 0 ? this.allowStaleOnFetchAbort : _fetchOptions$allowSt3, context = fetchOptions.context, _fetchOptions$forceRe = fetchOptions.forceRefresh, forceRefresh = _fetchOptions$forceRe === void 0 ? false : _fetchOptions$forceRe, status = fetchOptions.status, signal = fetchOptions.signal;
+              if (classPrivateFieldGet2_classPrivateFieldGet2(_hasFetchMethod, this)) {
+                _context7.next = 5;
+                break;
+              }
+              if (status) status.fetch = 'get';
+              return _context7.abrupt("return", this.get(k, {
+                allowStale: allowStale,
+                updateAgeOnGet: updateAgeOnGet,
+                noDeleteOnStaleGet: noDeleteOnStaleGet,
+                status: status
+              }));
+            case 5:
+              options = {
+                allowStale: allowStale,
+                updateAgeOnGet: updateAgeOnGet,
+                noDeleteOnStaleGet: noDeleteOnStaleGet,
+                ttl: ttl,
+                noDisposeOnSet: noDisposeOnSet,
+                size: size,
+                sizeCalculation: sizeCalculation,
+                noUpdateTTL: noUpdateTTL,
+                noDeleteOnFetchRejection: noDeleteOnFetchRejection,
+                allowStaleOnFetchRejection: allowStaleOnFetchRejection,
+                allowStaleOnFetchAbort: allowStaleOnFetchAbort,
+                ignoreFetchAbort: ignoreFetchAbort,
+                status: status,
+                signal: signal
+              };
+              index = classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).get(k);
+              if (!(index === undefined)) {
+                _context7.next = 13;
+                break;
+              }
+              if (status) status.fetch = 'miss';
+              p = _assertClassBrand(_LRUCache_brand, this, _backgroundFetch).call(this, k, index, options, context);
+              return _context7.abrupt("return", p.__returned = p);
+            case 13:
+              // in cache, maybe already fetching
+              v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index];
+              if (!_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v)) {
+                _context7.next = 18;
+                break;
+              }
+              stale = allowStale && v.__staleWhileFetching !== undefined;
+              if (status) {
+                status.fetch = 'inflight';
+                if (stale) status.returnedStale = true;
+              }
+              return _context7.abrupt("return", stale ? v.__staleWhileFetching : v.__returned = v);
+            case 18:
+              // if we force a refresh, that means do NOT serve the cached value,
+              // unless we are already in the process of refreshing the cache.
+              isStale = classPrivateFieldGet2_classPrivateFieldGet2(_isStale, this).call(this, index);
+              if (!(!forceRefresh && !isStale)) {
+                _context7.next = 25;
+                break;
+              }
+              if (status) status.fetch = 'hit';
+              _assertClassBrand(_LRUCache_brand, this, _moveToTail).call(this, index);
+              if (updateAgeOnGet) {
+                classPrivateFieldGet2_classPrivateFieldGet2(_updateItemAge, this).call(this, index);
+              }
+              if (status) classPrivateFieldGet2_classPrivateFieldGet2(_statusTTL, this).call(this, status, index);
+              return _context7.abrupt("return", v);
+            case 25:
+              // ok, it is stale or a forced refresh, and not already fetching.
+              // refresh the cache.
+              _p = _assertClassBrand(_LRUCache_brand, this, _backgroundFetch).call(this, k, index, options, context);
+              hasStale = _p.__staleWhileFetching !== undefined;
+              staleVal = hasStale && allowStale;
+              if (status) {
+                status.fetch = isStale ? 'stale' : 'refresh';
+                if (staleVal && isStale) status.returnedStale = true;
+              }
+              return _context7.abrupt("return", staleVal ? _p.__staleWhileFetching : _p.__returned = _p);
+            case 30:
+            case "end":
+              return _context7.stop();
+          }
+        }, _callee, this);
+      }));
+      function fetch(_x2) {
+        return _fetch.apply(this, arguments);
+      }
+      return fetch;
+    }()
+  }, {
+    key: "forceFetch",
+    value: function () {
+      var _forceFetch = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee2(k) {
+        var fetchOptions,
+          v,
+          _args8 = arguments;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee2$(_context8) {
+          while (1) switch (_context8.prev = _context8.next) {
+            case 0:
+              fetchOptions = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : {};
+              _context8.next = 3;
+              return this.fetch(k, fetchOptions);
+            case 3:
+              v = _context8.sent;
+              if (!(v === undefined)) {
+                _context8.next = 6;
+                break;
+              }
+              throw new Error('fetch() returned undefined');
+            case 6:
+              return _context8.abrupt("return", v);
+            case 7:
+            case "end":
+              return _context8.stop();
+          }
+        }, _callee2, this);
+      }));
+      function forceFetch(_x3) {
+        return _forceFetch.apply(this, arguments);
+      }
+      return forceFetch;
+    }()
+  }, {
+    key: "memo",
+    value: function memo(k) {
+      var memoOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var memoMethod = classPrivateFieldGet2_classPrivateFieldGet2(_memoMethod, this);
+      if (!memoMethod) {
+        throw new Error('no memoMethod provided to constructor');
+      }
+      var context = memoOptions.context,
+        forceRefresh = memoOptions.forceRefresh,
+        options = (0,objectWithoutProperties/* default */.A)(memoOptions, _excluded);
+      var v = this.get(k, options);
+      if (!forceRefresh && v !== undefined) return v;
+      var vv = memoMethod(k, v, {
+        options: options,
+        context: context
+      });
+      this.set(k, vv, options);
+      return vv;
+    }
+    /**
+     * Return a value from the cache. Will update the recency of the cache
+     * entry found.
+     *
+     * If the key is not found, get() will return `undefined`.
+     */
+  }, {
+    key: "get",
+    value: function get(k) {
+      var getOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var _getOptions$allowStal = getOptions.allowStale,
+        allowStale = _getOptions$allowStal === void 0 ? this.allowStale : _getOptions$allowStal,
+        _getOptions$updateAge = getOptions.updateAgeOnGet,
+        updateAgeOnGet = _getOptions$updateAge === void 0 ? this.updateAgeOnGet : _getOptions$updateAge,
+        _getOptions$noDeleteO = getOptions.noDeleteOnStaleGet,
+        noDeleteOnStaleGet = _getOptions$noDeleteO === void 0 ? this.noDeleteOnStaleGet : _getOptions$noDeleteO,
+        status = getOptions.status;
+      var index = classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).get(k);
+      if (index !== undefined) {
+        var value = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index];
+        var fetching = _assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, value);
+        if (status) classPrivateFieldGet2_classPrivateFieldGet2(_statusTTL, this).call(this, status, index);
+        if (classPrivateFieldGet2_classPrivateFieldGet2(_isStale, this).call(this, index)) {
+          if (status) status.get = 'stale';
+          // delete only if not an in-flight background fetch
+          if (!fetching) {
+            if (!noDeleteOnStaleGet) {
+              _assertClassBrand(_LRUCache_brand, this, _delete).call(this, k, 'expire');
+            }
+            if (status && allowStale) status.returnedStale = true;
+            return allowStale ? value : undefined;
+          } else {
+            if (status && allowStale && value.__staleWhileFetching !== undefined) {
+              status.returnedStale = true;
+            }
+            return allowStale ? value.__staleWhileFetching : undefined;
+          }
+        } else {
+          if (status) status.get = 'hit';
+          // if we're currently fetching it, we don't actually have it yet
+          // it's not stale, which means this isn't a staleWhileRefetching.
+          // If it's not stale, and fetching, AND has a __staleWhileFetching
+          // value, then that means the user fetched with {forceRefresh:true},
+          // so it's safe to return that value.
+          if (fetching) {
+            return value.__staleWhileFetching;
+          }
+          _assertClassBrand(_LRUCache_brand, this, _moveToTail).call(this, index);
+          if (updateAgeOnGet) {
+            classPrivateFieldGet2_classPrivateFieldGet2(_updateItemAge, this).call(this, index);
+          }
+          return value;
+        }
+      } else if (status) {
+        status.get = 'miss';
+      }
+    }
+  }, {
+    key: "delete",
+    value: function (_delete2) {
+      function _delete(_x) {
+        return _delete2.apply(this, arguments);
+      }
+      _delete.toString = function () {
+        return _delete2.toString();
+      };
+      return _delete;
+    }(
+    /**
+     * Deletes a key out of the cache.
+     *
+     * Returns true if the key was deleted, false otherwise.
+     */
+    function (k) {
+      return _assertClassBrand(_LRUCache_brand, this, _delete).call(this, k, 'delete');
+    })
+  }, {
+    key: "clear",
+    value:
+    /**
+     * Clear the cache entirely, throwing away all values.
+     */
+    function clear() {
+      return _assertClassBrand(_LRUCache_brand, this, _clear).call(this, 'delete');
+    }
+  }], [{
+    key: "unsafeExposeInternals",
+    value:
+    /**
+     * Do not call this method unless you need to inspect the
+     * inner workings of the cache.  If anything returned by this
+     * object is modified in any way, strange breakage may occur.
+     *
+     * These fields are private for a reason!
+     *
+     * @internal
+     */
+    function unsafeExposeInternals(c) {
+      return {
+        // properties
+        starts: classPrivateFieldGet2_classPrivateFieldGet2(_starts, c),
+        ttls: classPrivateFieldGet2_classPrivateFieldGet2(_ttls, c),
+        sizes: classPrivateFieldGet2_classPrivateFieldGet2(_sizes, c),
+        keyMap: classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, c),
+        keyList: classPrivateFieldGet2_classPrivateFieldGet2(_keyList, c),
+        valList: classPrivateFieldGet2_classPrivateFieldGet2(_valList, c),
+        next: classPrivateFieldGet2_classPrivateFieldGet2(_next, c),
+        prev: classPrivateFieldGet2_classPrivateFieldGet2(_prev, c),
+        get head() {
+          return classPrivateFieldGet2_classPrivateFieldGet2(_head, c);
+        },
+        get tail() {
+          return classPrivateFieldGet2_classPrivateFieldGet2(_tail, c);
+        },
+        free: classPrivateFieldGet2_classPrivateFieldGet2(_free, c),
+        // methods
+        isBackgroundFetch: function isBackgroundFetch(p) {
+          return _assertClassBrand(_LRUCache_brand, c, _isBackgroundFetch).call(c, p);
+        },
+        backgroundFetch: function backgroundFetch(k, index, options, context) {
+          return _assertClassBrand(_LRUCache_brand, c, _backgroundFetch).call(c, k, index, options, context);
+        },
+        moveToTail: function moveToTail(index) {
+          return _assertClassBrand(_LRUCache_brand, c, _moveToTail).call(c, index);
+        },
+        indexes: function indexes(options) {
+          return _assertClassBrand(_LRUCache_brand, c, _indexes).call(c, options);
+        },
+        rindexes: function rindexes(options) {
+          return _assertClassBrand(_LRUCache_brand, c, _rindexes).call(c, options);
+        },
+        isStale: function isStale(index) {
+          return classPrivateFieldGet2_classPrivateFieldGet2(_isStale, c).call(c, index);
+        }
+      };
+    }
+  }]);
+}();
+//# sourceMappingURL=index.js.map
+function _initializeTTLTracking() {
+  var _this2 = this;
+  var ttls = new ZeroArray(classPrivateFieldGet2_classPrivateFieldGet2(_max, this));
+  var starts = new ZeroArray(classPrivateFieldGet2_classPrivateFieldGet2(_max, this));
+  _classPrivateFieldSet2(_ttls, this, ttls);
+  _classPrivateFieldSet2(_starts, this, starts);
+  _classPrivateFieldSet2(_setItemTTL, this, function (index, ttl) {
+    var start = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : perf.now();
+    starts[index] = ttl !== 0 ? start : 0;
+    ttls[index] = ttl;
+    if (ttl !== 0 && _this2.ttlAutopurge) {
+      var t = setTimeout(function () {
+        if (classPrivateFieldGet2_classPrivateFieldGet2(_isStale, _this2).call(_this2, index)) {
+          _assertClassBrand(_LRUCache_brand, _this2, _delete).call(_this2, classPrivateFieldGet2_classPrivateFieldGet2(_keyList, _this2)[index], 'expire');
+        }
+      }, ttl + 1);
+      // unref() not supported on all platforms
+      /* c8 ignore start */
+      if (t.unref) {
+        t.unref();
+      }
+      /* c8 ignore stop */
+    }
+  });
+  _classPrivateFieldSet2(_updateItemAge, this, function (index) {
+    starts[index] = ttls[index] !== 0 ? perf.now() : 0;
+  });
+  _classPrivateFieldSet2(_statusTTL, this, function (status, index) {
+    if (ttls[index]) {
+      var ttl = ttls[index];
+      var start = starts[index];
+      /* c8 ignore next */
+      if (!ttl || !start) return;
+      status.ttl = ttl;
+      status.start = start;
+      status.now = cachedNow || getNow();
+      var age = status.now - start;
+      status.remainingTTL = ttl - age;
+    }
+  });
+  // debounce calls to perf.now() to 1s so we're not hitting
+  // that costly call repeatedly.
+  var cachedNow = 0;
+  var getNow = function getNow() {
+    var n = perf.now();
+    if (_this2.ttlResolution > 0) {
+      cachedNow = n;
+      var t = setTimeout(function () {
+        return cachedNow = 0;
+      }, _this2.ttlResolution);
+      // not available on all platforms
+      /* c8 ignore start */
+      if (t.unref) {
+        t.unref();
+      }
+      /* c8 ignore stop */
+    }
+    return n;
+  };
+  this.getRemainingTTL = function (key) {
+    var index = classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, _this2).get(key);
+    if (index === undefined) {
+      return 0;
+    }
+    var ttl = ttls[index];
+    var start = starts[index];
+    if (!ttl || !start) {
+      return Infinity;
+    }
+    var age = (cachedNow || getNow()) - start;
+    return ttl - age;
+  };
+  _classPrivateFieldSet2(_isStale, this, function (index) {
+    var s = starts[index];
+    var t = ttls[index];
+    return !!t && !!s && (cachedNow || getNow()) - s > t;
+  });
 }
-function J(_x7, _x8, _x9, _x10, _x11) {
-  return _J.apply(this, arguments);
+function _initializeSizeTracking() {
+  var _this3 = this;
+  var sizes = new ZeroArray(classPrivateFieldGet2_classPrivateFieldGet2(_max, this));
+  _classPrivateFieldSet2(_calculatedSize, this, 0);
+  _classPrivateFieldSet2(_sizes, this, sizes);
+  _classPrivateFieldSet2(_removeItemSize, this, function (index) {
+    _classPrivateFieldSet2(_calculatedSize, _this3, classPrivateFieldGet2_classPrivateFieldGet2(_calculatedSize, _this3) - sizes[index]);
+    sizes[index] = 0;
+  });
+  _classPrivateFieldSet2(_requireSize, this, function (k, v, size, sizeCalculation) {
+    // provisionally accept background fetches.
+    // actual value size will be checked when they return.
+    if (_assertClassBrand(_LRUCache_brand, _this3, _isBackgroundFetch).call(_this3, v)) {
+      return 0;
+    }
+    if (!isPosInt(size)) {
+      if (sizeCalculation) {
+        if (typeof sizeCalculation !== 'function') {
+          throw new TypeError('sizeCalculation must be a function');
+        }
+        size = sizeCalculation(v, k);
+        if (!isPosInt(size)) {
+          throw new TypeError('sizeCalculation return invalid (expect positive integer)');
+        }
+      } else {
+        throw new TypeError('invalid size value (must be positive integer). ' + 'When maxSize or maxEntrySize is used, sizeCalculation ' + 'or size must be set.');
+      }
+    }
+    return size;
+  });
+  _classPrivateFieldSet2(_addItemSize, this, function (index, size, status) {
+    sizes[index] = size;
+    if (classPrivateFieldGet2_classPrivateFieldGet2(_maxSize, _this3)) {
+      var maxSize = classPrivateFieldGet2_classPrivateFieldGet2(_maxSize, _this3) - sizes[index];
+      while (classPrivateFieldGet2_classPrivateFieldGet2(_calculatedSize, _this3) > maxSize) {
+        _assertClassBrand(_LRUCache_brand, _this3, _evict).call(_this3, true);
+      }
+    }
+    _classPrivateFieldSet2(_calculatedSize, _this3, classPrivateFieldGet2_classPrivateFieldGet2(_calculatedSize, _this3) + sizes[index]);
+    if (status) {
+      status.entrySize = size;
+      status.totalCalculatedSize = classPrivateFieldGet2_classPrivateFieldGet2(_calculatedSize, _this3);
+    }
+  });
 }
-function _J() {
-  _J = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(r, t, n, e, a) {
-    var d;
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) switch (_context4.prev = _context4.next) {
+function _indexes() {
+  var _this4 = this;
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    _ref$allowStale = _ref.allowStale,
+    allowStale = _ref$allowStale === void 0 ? this.allowStale : _ref$allowStale;
+  return /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee3() {
+    var i;
+    return (0,regeneratorRuntime/* default */.A)().wrap(function _callee3$(_context9) {
+      while (1) switch (_context9.prev = _context9.next) {
         case 0:
-          d = "";
-          _context4.next = 3;
-          return Promise.all(t.map( /*#__PURE__*/function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(s, h) {
-              var i, E, I, m, o, c, g, u, f, y;
-              return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-                while (1) switch (_context3.prev = _context3.next) {
-                  case 0:
-                    i = "";
-                    if (!(e.depth !== void 0 && a > e.depth || e.exclude && x(e.exclude).some(function (S) {
-                      return S.test("/".concat(w(r, s)));
-                    }))) {
-                      _context3.next = 3;
-                      break;
-                    }
-                    return _context3.abrupt("return", "");
-                  case 3:
-                    E = b(s);
-                    _context3.prev = 4;
-                    _context3.next = 7;
-                    return F(s);
-                  case 7:
-                    I = _context3.sent;
-                    _context3.next = 15;
-                    break;
-                  case 10:
-                    _context3.prev = 10;
-                    _context3.t0 = _context3["catch"](4);
-                    if (!e.skipErrors) {
-                      _context3.next = 14;
-                      break;
-                    }
-                    return _context3.abrupt("return", null);
-                  case 14:
-                    throw _context3.t0;
-                  case 15:
-                    _context3.prev = 15;
-                    _context3.next = 18;
-                    return H(s);
-                  case 18:
-                    m = _context3.sent;
-                    _context3.next = 26;
-                    break;
-                  case 21:
-                    _context3.prev = 21;
-                    _context3.t1 = _context3["catch"](15);
-                    if (!e.skipErrors) {
-                      _context3.next = 25;
-                      break;
-                    }
-                    return _context3.abrupt("return", null);
-                  case 25:
-                    throw _context3.t1;
-                  case 26:
-                    o = m.isSymbolicLink(), c = I.isFile() ? "file" : "directory";
-                    if (!(!e.showHidden && E.charAt(0) === "." || !e.symbolicLinks && o)) {
-                      _context3.next = 29;
-                      break;
-                    }
-                    return _context3.abrupt("return", "");
-                  case 29:
-                    g = R(s).replace(".", "");
-                    if (!(e.extensions && c === "file" && e.extensions.indexOf(g) === -1)) {
-                      _context3.next = 32;
-                      break;
-                    }
-                    return _context3.abrupt("return", "");
-                  case 32:
-                    u = o ? ">>" : c === "directory" ? "\u2500> " : "\u2500\u2500 ", f = n + (h === t.length - 1 ? "    " : "\u2502   ");
-                    if (!(i += u + E, (e.followLinks || !o) && c === "directory")) {
-                      _context3.next = 55;
-                      break;
-                    }
-                    _context3.prev = 34;
-                    _context3.next = 37;
-                    return _(s);
-                  case 37:
-                    y = _context3.sent.map(function (S) {
-                      return T(s, S);
-                    });
-                    y = A(y, e.sorted);
-                    _context3.next = 46;
-                    break;
-                  case 41:
-                    _context3.prev = 41;
-                    _context3.t2 = _context3["catch"](34);
-                    if (!e.skipErrors) {
-                      _context3.next = 45;
-                      break;
-                    }
-                    return _context3.abrupt("return", null);
-                  case 45:
-                    throw _context3.t2;
-                  case 46:
-                    _context3.t3 = i;
-                    if (!y.length) {
-                      _context3.next = 53;
-                      break;
-                    }
-                    _context3.next = 50;
-                    return J(r, y, f, e, a + 1);
-                  case 50:
-                    _context3.t4 = _context3.sent;
-                    _context3.next = 54;
-                    break;
-                  case 53:
-                    _context3.t4 = "";
-                  case 54:
-                    i = _context3.t3 += _context3.t4;
-                  case 55:
-                    return _context3.abrupt("return", i);
-                  case 56:
-                  case "end":
-                    return _context3.stop();
-                }
-              }, _callee3, null, [[4, 10], [15, 21], [34, 41]]);
-            }));
-            return function (_x25, _x26) {
-              return _ref2.apply(this, arguments);
-            };
-          }()));
-        case 3:
-          _context4.sent.filter(function (s) {
-            return !!s;
-          }).forEach(function (s, h, i) {
-            d += n + (h === i.length - 1 ? "\u2514" + s : "\u251C" + s);
-          });
-          return _context4.abrupt("return", d);
+          if (!classPrivateFieldGet2_classPrivateFieldGet2(_size, _this4)) {
+            _context9.next = 15;
+            break;
+          }
+          i = classPrivateFieldGet2_classPrivateFieldGet2(_tail, _this4);
+        case 2:
+          if (false) {}
+          if (_assertClassBrand(_LRUCache_brand, _this4, _isValidIndex).call(_this4, i)) {
+            _context9.next = 5;
+            break;
+          }
+          return _context9.abrupt("break", 15);
         case 5:
+          if (!(allowStale || !classPrivateFieldGet2_classPrivateFieldGet2(_isStale, _this4).call(_this4, i))) {
+            _context9.next = 8;
+            break;
+          }
+          _context9.next = 8;
+          return i;
+        case 8:
+          if (!(i === classPrivateFieldGet2_classPrivateFieldGet2(_head, _this4))) {
+            _context9.next = 12;
+            break;
+          }
+          return _context9.abrupt("break", 15);
+        case 12:
+          i = classPrivateFieldGet2_classPrivateFieldGet2(_prev, _this4)[i];
+        case 13:
+          _context9.next = 2;
+          break;
+        case 15:
         case "end":
-          return _context4.stop();
+          return _context9.stop();
+      }
+    }, _callee3);
+  })();
+}
+function _rindexes() {
+  var _this5 = this;
+  var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+    _ref2$allowStale = _ref2.allowStale,
+    allowStale = _ref2$allowStale === void 0 ? this.allowStale : _ref2$allowStale;
+  return /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee4() {
+    var i;
+    return (0,regeneratorRuntime/* default */.A)().wrap(function _callee4$(_context10) {
+      while (1) switch (_context10.prev = _context10.next) {
+        case 0:
+          if (!classPrivateFieldGet2_classPrivateFieldGet2(_size, _this5)) {
+            _context10.next = 15;
+            break;
+          }
+          i = classPrivateFieldGet2_classPrivateFieldGet2(_head, _this5);
+        case 2:
+          if (false) {}
+          if (_assertClassBrand(_LRUCache_brand, _this5, _isValidIndex).call(_this5, i)) {
+            _context10.next = 5;
+            break;
+          }
+          return _context10.abrupt("break", 15);
+        case 5:
+          if (!(allowStale || !classPrivateFieldGet2_classPrivateFieldGet2(_isStale, _this5).call(_this5, i))) {
+            _context10.next = 8;
+            break;
+          }
+          _context10.next = 8;
+          return i;
+        case 8:
+          if (!(i === classPrivateFieldGet2_classPrivateFieldGet2(_tail, _this5))) {
+            _context10.next = 12;
+            break;
+          }
+          return _context10.abrupt("break", 15);
+        case 12:
+          i = classPrivateFieldGet2_classPrivateFieldGet2(_next, _this5)[i];
+        case 13:
+          _context10.next = 2;
+          break;
+        case 15:
+        case "end":
+          return _context10.stop();
       }
     }, _callee4);
-  }));
-  return _J.apply(this, arguments);
+  })();
 }
-function Q(r, t, n, e) {
-  var a = "";
-  return r = q(r, n.sorted), r.filter(function (d) {
-    return !K(d, n, e);
-  }).forEach(function (d, l, s) {
-    var h = d.isSymbolicLink ? ">>" : d.type === "directory" ? "\u2500> " : "\u2500\u2500 ",
-      i = l === s.length - 1 ? "\u2514" + h : "\u251C" + h,
-      E = t + (l === s.length - 1 ? "    " : "\u2502   ");
-    a += t + i + d.name, a += d.children && (n.followLinks || !d.isSymbolicLink) ? Q(d.children, E, n, e + 1) : "";
-  }), a;
+function _isValidIndex(index) {
+  return index !== undefined && classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).get(classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[index]) === index;
 }
-function W(_x12, _x13, _x14, _x15) {
-  return _W.apply(this, arguments);
-}
-function _W() {
-  _W = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5(r, t, n, e) {
-    var a, d, l, s, h, i, E;
-    return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-      while (1) switch (_context5.prev = _context5.next) {
-        case 0:
-          a = "";
-          r = q(r, n.sorted);
-          d = r.filter(function (l) {
-            return !K(l, n, e);
-          });
-          l = 0;
-        case 4:
-          if (!(l < d.length)) {
-            _context5.next = 19;
-            break;
-          }
-          s = d[l], h = s.isSymbolicLink ? ">>" : s.type === "directory" ? "\u2500> " : "\u2500\u2500 ", i = l === d.length - 1 ? "\u2514" + h : "\u251C" + h, E = t + (l === d.length - 1 ? "    " : "\u2502   ");
-          a += t + i + s.name;
-          _context5.t0 = a;
-          if (!(s.children && (n.followLinks || !s.isSymbolicLink))) {
-            _context5.next = 14;
-            break;
-          }
-          _context5.next = 11;
-          return W(s.children, E, n, e + 1);
-        case 11:
-          _context5.t1 = _context5.sent;
-          _context5.next = 15;
-          break;
-        case 14:
-          _context5.t1 = "";
-        case 15:
-          a = _context5.t0 += _context5.t1;
-        case 16:
-          l++;
-          _context5.next = 4;
-          break;
-        case 19:
-          return _context5.abrupt("return", a);
-        case 20:
-        case "end":
-          return _context5.stop();
-      }
-    }, _callee5);
-  }));
-  return _W.apply(this, arguments);
-}
-function me(r, t, n, e) {
-  var a = M(t),
-    d = D(r, a),
-    l = U(d, d, 0, a, n, e);
-  return l && (l.sizeInBytes = a.sizeInBytes ? l.sizeInBytes : void 0), l;
-}
-function ge(_x16, _x17, _x18, _x19) {
-  return _ge.apply(this, arguments);
-}
-function _ge() {
-  _ge = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6(r, t, n, e) {
-    var a, d, l;
-    return _regeneratorRuntime().wrap(function _callee6$(_context6) {
-      while (1) switch (_context6.prev = _context6.next) {
-        case 0:
-          a = M(t);
-          d = D(r, a);
-          _context6.next = 4;
-          return G(d, d, 0, a, n, e);
-        case 4:
-          l = _context6.sent;
-          return _context6.abrupt("return", (l && (l.sizeInBytes = a.sizeInBytes ? l.sizeInBytes : void 0), l));
-        case 6:
-        case "end":
-          return _context6.stop();
-      }
-    }, _callee6);
-  }));
-  return _ge.apply(this, arguments);
-}
-function Ie(r, t) {
-  var n = "",
-    e = p(t),
-    a = D(r, e),
-    d = (0,external_node_path_namespaceObject.basename)(a);
-  n += d;
-  var l;
-  try {
-    l = (0,external_node_fs_namespaceObject.statSync)(a);
-  } catch (i) {
-    if (e.skipErrors) return null;
-    throw i;
-  }
-  var s;
-  try {
-    s = (0,external_node_fs_namespaceObject.lstatSync)(a);
-  } catch (i) {
-    if (e.skipErrors) return null;
-    throw i;
-  }
-  var h = s.isSymbolicLink();
-  if ((e.followLinks || !h) && l.isDirectory()) {
-    var i;
-    try {
-      i = (0,external_node_fs_namespaceObject.readdirSync)(a).map(function (E) {
-        return (0,external_node_path_namespaceObject.resolve)(a, E);
-      }), i = A(i, e.sorted);
-    } catch (E) {
-      if (e.skipErrors) return null;
-      throw E;
+function _evict(free) {
+  var _this$size3, _this$size4;
+  var head = classPrivateFieldGet2_classPrivateFieldGet2(_head, this);
+  var k = classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[head];
+  var v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[head];
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_hasFetchMethod, this) && _assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v)) {
+    v.__abortController.abort(new Error('evicted'));
+  } else if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDispose, this) || classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this)) {
+    if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDispose, this)) {
+      var _classPrivateFieldGet10;
+      (_classPrivateFieldGet10 = classPrivateFieldGet2_classPrivateFieldGet2(_dispose, this)) === null || _classPrivateFieldGet10 === void 0 || _classPrivateFieldGet10.call(this, v, k, 'evict');
     }
-    n += i.length ? j(a, i, "\n ", e, 1) : "";
+    if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this)) {
+      var _classPrivateFieldGet11;
+      (_classPrivateFieldGet11 = classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this)) === null || _classPrivateFieldGet11 === void 0 || _classPrivateFieldGet11.push([v, k, 'evict']);
+    }
   }
-  return n;
+  classPrivateFieldGet2_classPrivateFieldGet2(_removeItemSize, this).call(this, head);
+  // if we aren't about to use the index, then null these out
+  if (free) {
+    classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[head] = undefined;
+    classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[head] = undefined;
+    classPrivateFieldGet2_classPrivateFieldGet2(_free, this).push(head);
+  }
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_size, this) === 1) {
+    _classPrivateFieldSet2(_head, this, _classPrivateFieldSet2(_tail, this, 0));
+    classPrivateFieldGet2_classPrivateFieldGet2(_free, this).length = 0;
+  } else {
+    _classPrivateFieldSet2(_head, this, classPrivateFieldGet2_classPrivateFieldGet2(_next, this)[head]);
+  }
+  classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this)["delete"](k);
+  _classPrivateFieldSet2(_size, this, (_this$size3 = classPrivateFieldGet2_classPrivateFieldGet2(_size, this), _this$size4 = _this$size3--, _this$size3)), _this$size4;
+  return head;
 }
-function Se(_x20, _x21) {
-  return _Se.apply(this, arguments);
-}
-function _Se() {
-  _Se = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7(r, t) {
-    var n, e, a, d, l, s, h, i;
-    return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-      while (1) switch (_context7.prev = _context7.next) {
-        case 0:
-          n = "", e = p(t), a = D(r, e), d = b(a);
-          n += d;
-          _context7.prev = 2;
-          _context7.next = 5;
-          return F(a);
-        case 5:
-          l = _context7.sent;
-          _context7.next = 13;
-          break;
-        case 8:
-          _context7.prev = 8;
-          _context7.t0 = _context7["catch"](2);
-          if (!e.skipErrors) {
-            _context7.next = 12;
-            break;
-          }
-          return _context7.abrupt("return", null);
-        case 12:
-          throw _context7.t0;
-        case 13:
-          _context7.prev = 13;
-          _context7.next = 16;
-          return H(a);
-        case 16:
-          s = _context7.sent;
-          _context7.next = 24;
-          break;
-        case 19:
-          _context7.prev = 19;
-          _context7.t1 = _context7["catch"](13);
-          if (!e.skipErrors) {
-            _context7.next = 23;
-            break;
-          }
-          return _context7.abrupt("return", null);
-        case 23:
-          throw _context7.t1;
-        case 24:
-          h = s.isSymbolicLink();
-          if (!((e.followLinks || !h) && l.isDirectory())) {
-            _context7.next = 47;
-            break;
-          }
-          _context7.prev = 26;
-          _context7.next = 29;
-          return _(a);
-        case 29:
-          i = _context7.sent.map(function (E) {
-            return T(a, E);
-          });
-          i = A(i, e.sorted);
-          _context7.next = 38;
-          break;
-        case 33:
-          _context7.prev = 33;
-          _context7.t2 = _context7["catch"](26);
-          if (!e.skipErrors) {
-            _context7.next = 37;
-            break;
-          }
-          return _context7.abrupt("return", null);
-        case 37:
-          throw _context7.t2;
-        case 38:
-          _context7.t3 = n;
-          if (!i.length) {
-            _context7.next = 45;
-            break;
-          }
-          _context7.next = 42;
-          return J(a, i, "\n ", e, 1);
-        case 42:
-          _context7.t4 = _context7.sent;
-          _context7.next = 46;
-          break;
-        case 45:
-          _context7.t4 = "";
-        case 46:
-          n = _context7.t3 += _context7.t4;
-        case 47:
-          return _context7.abrupt("return", n);
-        case 48:
-        case "end":
-          return _context7.stop();
+function _backgroundFetch(k, index, options, context) {
+  var _this6 = this;
+  var v = index === undefined ? undefined : classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index];
+  if (_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v)) {
+    return v;
+  }
+  var ac = new AC();
+  var signal = options.signal;
+  // when/if our AC signals, then stop listening to theirs.
+  signal === null || signal === void 0 || signal.addEventListener('abort', function () {
+    return ac.abort(signal.reason);
+  }, {
+    signal: ac.signal
+  });
+  var fetchOpts = {
+    signal: ac.signal,
+    options: options,
+    context: context
+  };
+  var cb = function cb(v) {
+    var updateCache = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var aborted = ac.signal.aborted;
+    var ignoreAbort = options.ignoreFetchAbort && v !== undefined;
+    if (options.status) {
+      if (aborted && !updateCache) {
+        options.status.fetchAborted = true;
+        options.status.fetchError = ac.signal.reason;
+        if (ignoreAbort) options.status.fetchAbortIgnored = true;
+      } else {
+        options.status.fetchResolved = true;
       }
-    }, _callee7, null, [[2, 8], [13, 19], [26, 33]]);
-  }));
-  return _Se.apply(this, arguments);
-}
-function xe(r, t) {
-  var n = "",
-    e = p(t);
-  return n += r ? r.name : "", n += r.children ? Q(r.children, "\n ", e, 1) : "", n;
-}
-function Le(_x22, _x23) {
-  return _Le.apply(this, arguments);
-}
-function _Le() {
-  _Le = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8(r, t) {
-    var n, e;
-    return _regeneratorRuntime().wrap(function _callee8$(_context8) {
-      while (1) switch (_context8.prev = _context8.next) {
-        case 0:
-          n = "", e = p(t);
-          n += r ? r.name : "";
-          _context8.t0 = n;
-          if (!r.children) {
-            _context8.next = 9;
-            break;
-          }
-          _context8.next = 6;
-          return W(r.children, "\n ", e, 1);
-        case 6:
-          _context8.t1 = _context8.sent;
-          _context8.next = 10;
-          break;
-        case 9:
-          _context8.t1 = "";
-        case 10:
-          n = _context8.t0 += _context8.t1;
-          return _context8.abrupt("return", n);
-        case 12:
-        case "end":
-          return _context8.stop();
+    }
+    if (aborted && !ignoreAbort && !updateCache) {
+      return fetchFail(ac.signal.reason);
+    }
+    // either we didn't abort, and are still here, or we did, and ignored
+    var bf = p;
+    if (classPrivateFieldGet2_classPrivateFieldGet2(_valList, _this6)[index] === p) {
+      if (v === undefined) {
+        if (bf.__staleWhileFetching) {
+          classPrivateFieldGet2_classPrivateFieldGet2(_valList, _this6)[index] = bf.__staleWhileFetching;
+        } else {
+          _assertClassBrand(_LRUCache_brand, _this6, _delete).call(_this6, k, 'fetch');
+        }
+      } else {
+        if (options.status) options.status.fetchUpdated = true;
+        _this6.set(k, v, fetchOpts.options);
       }
-    }, _callee8);
-  }));
-  return _Le.apply(this, arguments);
+    }
+    return v;
+  };
+  var eb = function eb(er) {
+    if (options.status) {
+      options.status.fetchRejected = true;
+      options.status.fetchError = er;
+    }
+    return fetchFail(er);
+  };
+  var fetchFail = function fetchFail(er) {
+    var aborted = ac.signal.aborted;
+    var allowStaleAborted = aborted && options.allowStaleOnFetchAbort;
+    var allowStale = allowStaleAborted || options.allowStaleOnFetchRejection;
+    var noDelete = allowStale || options.noDeleteOnFetchRejection;
+    var bf = p;
+    if (classPrivateFieldGet2_classPrivateFieldGet2(_valList, _this6)[index] === p) {
+      // if we allow stale on fetch rejections, then we need to ensure that
+      // the stale value is not removed from the cache when the fetch fails.
+      var del = !noDelete || bf.__staleWhileFetching === undefined;
+      if (del) {
+        _assertClassBrand(_LRUCache_brand, _this6, _delete).call(_this6, k, 'fetch');
+      } else if (!allowStaleAborted) {
+        // still replace the *promise* with the stale value,
+        // since we are done with the promise at this point.
+        // leave it untouched if we're still waiting for an
+        // aborted background fetch that hasn't yet returned.
+        classPrivateFieldGet2_classPrivateFieldGet2(_valList, _this6)[index] = bf.__staleWhileFetching;
+      }
+    }
+    if (allowStale) {
+      if (options.status && bf.__staleWhileFetching !== undefined) {
+        options.status.returnedStale = true;
+      }
+      return bf.__staleWhileFetching;
+    } else if (bf.__returned === bf) {
+      throw er;
+    }
+  };
+  var pcall = function pcall(res, rej) {
+    var _classPrivateFieldGet12;
+    var fmp = (_classPrivateFieldGet12 = classPrivateFieldGet2_classPrivateFieldGet2(_fetchMethod, _this6)) === null || _classPrivateFieldGet12 === void 0 ? void 0 : _classPrivateFieldGet12.call(_this6, k, v, fetchOpts);
+    if (fmp && fmp instanceof Promise) {
+      fmp.then(function (v) {
+        return res(v === undefined ? undefined : v);
+      }, rej);
+    }
+    // ignored, we go until we finish, regardless.
+    // defer check until we are actually aborting,
+    // so fetchMethod can override.
+    ac.signal.addEventListener('abort', function () {
+      if (!options.ignoreFetchAbort || options.allowStaleOnFetchAbort) {
+        res(undefined);
+        // when it eventually resolves, update the cache.
+        if (options.allowStaleOnFetchAbort) {
+          res = function res(v) {
+            return cb(v, true);
+          };
+        }
+      }
+    });
+  };
+  if (options.status) options.status.fetchDispatched = true;
+  var p = new Promise(pcall).then(cb, eb);
+  var bf = Object.assign(p, {
+    __abortController: ac,
+    __staleWhileFetching: v,
+    __returned: undefined
+  });
+  if (index === undefined) {
+    // internal, don't expose status.
+    this.set(k, bf, (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, fetchOpts.options), {}, {
+      status: undefined
+    }));
+    index = classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).get(k);
+  } else {
+    classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index] = bf;
+  }
+  return bf;
+}
+function _isBackgroundFetch(p) {
+  if (!classPrivateFieldGet2_classPrivateFieldGet2(_hasFetchMethod, this)) return false;
+  var b = p;
+  return !!b && b instanceof Promise && b.hasOwnProperty('__staleWhileFetching') && b.__abortController instanceof AC;
+}
+function _connect(p, n) {
+  classPrivateFieldGet2_classPrivateFieldGet2(_prev, this)[n] = p;
+  classPrivateFieldGet2_classPrivateFieldGet2(_next, this)[p] = n;
+}
+function _moveToTail(index) {
+  // if tail already, nothing to do
+  // if head, move head to next[index]
+  // else
+  //   move next[prev[index]] to next[index] (head has no prev)
+  //   move prev[next[index]] to prev[index]
+  // prev[index] = tail
+  // next[tail] = index
+  // tail = index
+  if (index !== classPrivateFieldGet2_classPrivateFieldGet2(_tail, this)) {
+    if (index === classPrivateFieldGet2_classPrivateFieldGet2(_head, this)) {
+      _classPrivateFieldSet2(_head, this, classPrivateFieldGet2_classPrivateFieldGet2(_next, this)[index]);
+    } else {
+      _assertClassBrand(_LRUCache_brand, this, _connect).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_prev, this)[index], classPrivateFieldGet2_classPrivateFieldGet2(_next, this)[index]);
+    }
+    _assertClassBrand(_LRUCache_brand, this, _connect).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_tail, this), index);
+    _classPrivateFieldSet2(_tail, this, index);
+  }
+}
+function _delete(k, reason) {
+  var _classPrivateFieldGet15;
+  var deleted = false;
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_size, this) !== 0) {
+    var index = classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).get(k);
+    if (index !== undefined) {
+      deleted = true;
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_size, this) === 1) {
+        _assertClassBrand(_LRUCache_brand, this, _clear).call(this, reason);
+      } else {
+        var _this$size5, _this$size6;
+        classPrivateFieldGet2_classPrivateFieldGet2(_removeItemSize, this).call(this, index);
+        var v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index];
+        if (_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v)) {
+          v.__abortController.abort(new Error('deleted'));
+        } else if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDispose, this) || classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this)) {
+          if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDispose, this)) {
+            var _classPrivateFieldGet13;
+            (_classPrivateFieldGet13 = classPrivateFieldGet2_classPrivateFieldGet2(_dispose, this)) === null || _classPrivateFieldGet13 === void 0 || _classPrivateFieldGet13.call(this, v, k, reason);
+          }
+          if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this)) {
+            var _classPrivateFieldGet14;
+            (_classPrivateFieldGet14 = classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this)) === null || _classPrivateFieldGet14 === void 0 || _classPrivateFieldGet14.push([v, k, reason]);
+          }
+        }
+        classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this)["delete"](k);
+        classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[index] = undefined;
+        classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index] = undefined;
+        if (index === classPrivateFieldGet2_classPrivateFieldGet2(_tail, this)) {
+          _classPrivateFieldSet2(_tail, this, classPrivateFieldGet2_classPrivateFieldGet2(_prev, this)[index]);
+        } else if (index === classPrivateFieldGet2_classPrivateFieldGet2(_head, this)) {
+          _classPrivateFieldSet2(_head, this, classPrivateFieldGet2_classPrivateFieldGet2(_next, this)[index]);
+        } else {
+          var pi = classPrivateFieldGet2_classPrivateFieldGet2(_prev, this)[index];
+          classPrivateFieldGet2_classPrivateFieldGet2(_next, this)[pi] = classPrivateFieldGet2_classPrivateFieldGet2(_next, this)[index];
+          var ni = classPrivateFieldGet2_classPrivateFieldGet2(_next, this)[index];
+          classPrivateFieldGet2_classPrivateFieldGet2(_prev, this)[ni] = classPrivateFieldGet2_classPrivateFieldGet2(_prev, this)[index];
+        }
+        _classPrivateFieldSet2(_size, this, (_this$size5 = classPrivateFieldGet2_classPrivateFieldGet2(_size, this), _this$size6 = _this$size5--, _this$size5)), _this$size6;
+        classPrivateFieldGet2_classPrivateFieldGet2(_free, this).push(index);
+      }
+    }
+  }
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this) && (_classPrivateFieldGet15 = classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this)) !== null && _classPrivateFieldGet15 !== void 0 && _classPrivateFieldGet15.length) {
+    var dt = classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this);
+    var task;
+    while (task = dt === null || dt === void 0 ? void 0 : dt.shift()) {
+      var _classPrivateFieldGet16, _classPrivateFieldGet17;
+      (_classPrivateFieldGet16 = classPrivateFieldGet2_classPrivateFieldGet2(_disposeAfter, this)) === null || _classPrivateFieldGet16 === void 0 || (_classPrivateFieldGet17 = _classPrivateFieldGet16).call.apply(_classPrivateFieldGet17, [this].concat((0,toConsumableArray/* default */.A)(task)));
+    }
+  }
+  return deleted;
+}
+function _clear(reason) {
+  var _iterator14 = (0,createForOfIteratorHelper/* default */.A)(_assertClassBrand(_LRUCache_brand, this, _rindexes).call(this, {
+      allowStale: true
+    })),
+    _step14;
+  try {
+    for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
+      var index = _step14.value;
+      var v = classPrivateFieldGet2_classPrivateFieldGet2(_valList, this)[index];
+      if (_assertClassBrand(_LRUCache_brand, this, _isBackgroundFetch).call(this, v)) {
+        v.__abortController.abort(new Error('deleted'));
+      } else {
+        var k = classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this)[index];
+        if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDispose, this)) {
+          var _classPrivateFieldGet20;
+          (_classPrivateFieldGet20 = classPrivateFieldGet2_classPrivateFieldGet2(_dispose, this)) === null || _classPrivateFieldGet20 === void 0 || _classPrivateFieldGet20.call(this, v, k, reason);
+        }
+        if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this)) {
+          var _classPrivateFieldGet21;
+          (_classPrivateFieldGet21 = classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this)) === null || _classPrivateFieldGet21 === void 0 || _classPrivateFieldGet21.push([v, k, reason]);
+        }
+      }
+    }
+  } catch (err) {
+    _iterator14.e(err);
+  } finally {
+    _iterator14.f();
+  }
+  classPrivateFieldGet2_classPrivateFieldGet2(_keyMap, this).clear();
+  classPrivateFieldGet2_classPrivateFieldGet2(_valList, this).fill(undefined);
+  classPrivateFieldGet2_classPrivateFieldGet2(_keyList, this).fill(undefined);
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_ttls, this) && classPrivateFieldGet2_classPrivateFieldGet2(_starts, this)) {
+    classPrivateFieldGet2_classPrivateFieldGet2(_ttls, this).fill(0);
+    classPrivateFieldGet2_classPrivateFieldGet2(_starts, this).fill(0);
+  }
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_sizes, this)) {
+    classPrivateFieldGet2_classPrivateFieldGet2(_sizes, this).fill(0);
+  }
+  _classPrivateFieldSet2(_head, this, 0);
+  _classPrivateFieldSet2(_tail, this, 0);
+  classPrivateFieldGet2_classPrivateFieldGet2(_free, this).length = 0;
+  _classPrivateFieldSet2(_calculatedSize, this, 0);
+  _classPrivateFieldSet2(_size, this, 0);
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_hasDisposeAfter, this) && classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this)) {
+    var dt = classPrivateFieldGet2_classPrivateFieldGet2(_disposed, this);
+    var task;
+    while (task = dt === null || dt === void 0 ? void 0 : dt.shift()) {
+      var _classPrivateFieldGet18, _classPrivateFieldGet19;
+      (_classPrivateFieldGet18 = classPrivateFieldGet2_classPrivateFieldGet2(_disposeAfter, this)) === null || _classPrivateFieldGet18 === void 0 || (_classPrivateFieldGet19 = _classPrivateFieldGet18).call.apply(_classPrivateFieldGet19, [this].concat((0,toConsumableArray/* default */.A)(task)));
+    }
+  }
+}
+;// CONCATENATED MODULE: external "node:path"
+const external_node_path_namespaceObject = require("node:path");
+// EXTERNAL MODULE: external "fs"
+var external_fs_ = __webpack_require__(9896);
+var external_fs_default = /*#__PURE__*/__webpack_require__.n(external_fs_);
+;// CONCATENATED MODULE: external "node:fs"
+const external_node_fs_namespaceObject = require("node:fs");
+var external_node_fs_namespaceObject_0 = /*#__PURE__*/__webpack_require__.t(external_node_fs_namespaceObject, 2);
+;// CONCATENATED MODULE: external "node:fs/promises"
+const promises_namespaceObject = require("node:fs/promises");
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
+var getPrototypeOf = __webpack_require__(3954);
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/superPropBase.js
+
+function _superPropBase(t, o) {
+  for (; !{}.hasOwnProperty.call(t, o) && null !== (t = (0,getPrototypeOf/* default */.A)(t)););
+  return t;
 }
 
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/get.js
+
+function _get() {
+  return _get = "undefined" != typeof Reflect && Reflect.get ? Reflect.get.bind() : function (e, t, r) {
+    var p = _superPropBase(e, t);
+    if (p) {
+      var n = Object.getOwnPropertyDescriptor(p, t);
+      return n.get ? n.get.call(arguments.length < 3 ? e : r) : n.value;
+    }
+  }, _get.apply(null, arguments);
+}
+
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/superPropGet.js
+
+
+function _superPropertyGet(t, e, r, o) {
+  var p = _get((0,getPrototypeOf/* default */.A)(1 & o ? t.prototype : t), e, r);
+  return 2 & o ? function (t) {
+    return p.apply(r, t);
+  } : p;
+}
+
+// EXTERNAL MODULE: external "node:events"
+var external_node_events_ = __webpack_require__(8474);
+// EXTERNAL MODULE: external "node:stream"
+var external_node_stream_ = __webpack_require__(7075);
+;// CONCATENATED MODULE: external "node:string_decoder"
+const external_node_string_decoder_namespaceObject = require("node:string_decoder");
+;// CONCATENATED MODULE: ./node_modules/minipass/dist/esm/index.js
+
+
+
+
+
+
+
+
+
+var proc = typeof process === 'object' && process ? process : {
+  stdout: null,
+  stderr: null
+};
+
+
+
+/**
+ * Return true if the argument is a Minipass stream, Node stream, or something
+ * else that Minipass can interact with.
+ */
+var isStream = function isStream(s) {
+  return !!s && typeof s === 'object' && (s instanceof Minipass || s instanceof external_node_stream_ || isReadable(s) || isWritable(s));
+};
+/**
+ * Return true if the argument is a valid {@link Minipass.Readable}
+ */
+var isReadable = function isReadable(s) {
+  return !!s && typeof s === 'object' && s instanceof external_node_events_.EventEmitter && typeof s.pipe === 'function' &&
+  // node core Writable streams have a pipe() method, but it throws
+  s.pipe !== external_node_stream_.Writable.prototype.pipe;
+};
+/**
+ * Return true if the argument is a valid {@link Minipass.Writable}
+ */
+var isWritable = function isWritable(s) {
+  return !!s && typeof s === 'object' && s instanceof external_node_events_.EventEmitter && typeof s.write === 'function' && typeof s.end === 'function';
+};
+var EOF = Symbol('EOF');
+var MAYBE_EMIT_END = Symbol('maybeEmitEnd');
+var EMITTED_END = Symbol('emittedEnd');
+var EMITTING_END = Symbol('emittingEnd');
+var EMITTED_ERROR = Symbol('emittedError');
+var CLOSED = Symbol('closed');
+var READ = Symbol('read');
+var FLUSH = Symbol('flush');
+var FLUSHCHUNK = Symbol('flushChunk');
+var ENCODING = Symbol('encoding');
+var DECODER = Symbol('decoder');
+var FLOWING = Symbol('flowing');
+var PAUSED = Symbol('paused');
+var RESUME = Symbol('resume');
+var BUFFER = Symbol('buffer');
+var PIPES = Symbol('pipes');
+var BUFFERLENGTH = Symbol('bufferLength');
+var BUFFERPUSH = Symbol('bufferPush');
+var BUFFERSHIFT = Symbol('bufferShift');
+var OBJECTMODE = Symbol('objectMode');
+// internal event when stream is destroyed
+var DESTROYED = Symbol('destroyed');
+// internal event when stream has an error
+var ERROR = Symbol('error');
+var EMITDATA = Symbol('emitData');
+var EMITEND = Symbol('emitEnd');
+var EMITEND2 = Symbol('emitEnd2');
+var ASYNC = Symbol('async');
+var ABORT = Symbol('abort');
+var ABORTED = Symbol('aborted');
+var SIGNAL = Symbol('signal');
+var DATALISTENERS = Symbol('dataListeners');
+var DISCARDED = Symbol('discarded');
+var defer = function defer(fn) {
+  return Promise.resolve().then(fn);
+};
+var nodefer = function nodefer(fn) {
+  return fn();
+};
+var isEndish = function isEndish(ev) {
+  return ev === 'end' || ev === 'finish' || ev === 'prefinish';
+};
+var isArrayBufferLike = function isArrayBufferLike(b) {
+  return b instanceof ArrayBuffer || !!b && typeof b === 'object' && b.constructor && b.constructor.name === 'ArrayBuffer' && b.byteLength >= 0;
+};
+var isArrayBufferView = function isArrayBufferView(b) {
+  return !Buffer.isBuffer(b) && ArrayBuffer.isView(b);
+};
+/**
+ * Internal class representing a pipe to a destination stream.
+ *
+ * @internal
+ */
+var Pipe = /*#__PURE__*/function () {
+  function Pipe(src, dest, opts) {
+    (0,classCallCheck/* default */.A)(this, Pipe);
+    (0,defineProperty/* default */.A)(this, "src", void 0);
+    (0,defineProperty/* default */.A)(this, "dest", void 0);
+    (0,defineProperty/* default */.A)(this, "opts", void 0);
+    (0,defineProperty/* default */.A)(this, "ondrain", void 0);
+    this.src = src;
+    this.dest = dest;
+    this.opts = opts;
+    this.ondrain = function () {
+      return src[RESUME]();
+    };
+    this.dest.on('drain', this.ondrain);
+  }
+  return (0,createClass/* default */.A)(Pipe, [{
+    key: "unpipe",
+    value: function unpipe() {
+      this.dest.removeListener('drain', this.ondrain);
+    }
+    // only here for the prototype
+    /* c8 ignore start */
+  }, {
+    key: "proxyErrors",
+    value: function proxyErrors(_er) {}
+    /* c8 ignore stop */
+  }, {
+    key: "end",
+    value: function end() {
+      this.unpipe();
+      if (this.opts.end) this.dest.end();
+    }
+  }]);
+}();
+/**
+ * Internal class representing a pipe to a destination stream where
+ * errors are proxied.
+ *
+ * @internal
+ */
+var PipeProxyErrors = /*#__PURE__*/function (_Pipe2) {
+  function PipeProxyErrors(src, dest, opts) {
+    var _this;
+    (0,classCallCheck/* default */.A)(this, PipeProxyErrors);
+    _this = (0,callSuper/* default */.A)(this, PipeProxyErrors, [src, dest, opts]);
+    _this.proxyErrors = function (er) {
+      return dest.emit('error', er);
+    };
+    src.on('error', _this.proxyErrors);
+    return _this;
+  }
+  (0,inherits/* default */.A)(PipeProxyErrors, _Pipe2);
+  return (0,createClass/* default */.A)(PipeProxyErrors, [{
+    key: "unpipe",
+    value: function unpipe() {
+      this.src.removeListener('error', this.proxyErrors);
+      _superPropertyGet(PipeProxyErrors, "unpipe", this, 3)([]);
+    }
+  }]);
+}(Pipe);
+var isObjectModeOptions = function isObjectModeOptions(o) {
+  return !!o.objectMode;
+};
+var isEncodingOptions = function isEncodingOptions(o) {
+  return !o.objectMode && !!o.encoding && o.encoding !== 'buffer';
+};
+/**
+ * Main export, the Minipass class
+ *
+ * `RType` is the type of data emitted, defaults to Buffer
+ *
+ * `WType` is the type of data to be written, if RType is buffer or string,
+ * then any {@link Minipass.ContiguousData} is allowed.
+ *
+ * `Events` is the set of event handler signatures that this object
+ * will emit, see {@link Minipass.Events}
+ */
+var Minipass = /*#__PURE__*/function (_EventEmitter) {
+  /**
+   * If `RType` is Buffer, then options do not need to be provided.
+   * Otherwise, an options object must be provided to specify either
+   * {@link Minipass.SharedOptions.objectMode} or
+   * {@link Minipass.SharedOptions.encoding}, as appropriate.
+   */
+  function Minipass() {
+    var _this2;
+    (0,classCallCheck/* default */.A)(this, Minipass);
+    var options = (arguments.length <= 0 ? undefined : arguments[0]) || {};
+    _this2 = (0,callSuper/* default */.A)(this, Minipass);
+    (0,defineProperty/* default */.A)(_this2, FLOWING, false);
+    (0,defineProperty/* default */.A)(_this2, PAUSED, false);
+    (0,defineProperty/* default */.A)(_this2, PIPES, []);
+    (0,defineProperty/* default */.A)(_this2, BUFFER, []);
+    (0,defineProperty/* default */.A)(_this2, OBJECTMODE, void 0);
+    (0,defineProperty/* default */.A)(_this2, ENCODING, void 0);
+    (0,defineProperty/* default */.A)(_this2, ASYNC, void 0);
+    (0,defineProperty/* default */.A)(_this2, DECODER, void 0);
+    (0,defineProperty/* default */.A)(_this2, EOF, false);
+    (0,defineProperty/* default */.A)(_this2, EMITTED_END, false);
+    (0,defineProperty/* default */.A)(_this2, EMITTING_END, false);
+    (0,defineProperty/* default */.A)(_this2, CLOSED, false);
+    (0,defineProperty/* default */.A)(_this2, EMITTED_ERROR, null);
+    (0,defineProperty/* default */.A)(_this2, BUFFERLENGTH, 0);
+    (0,defineProperty/* default */.A)(_this2, DESTROYED, false);
+    (0,defineProperty/* default */.A)(_this2, SIGNAL, void 0);
+    (0,defineProperty/* default */.A)(_this2, ABORTED, false);
+    (0,defineProperty/* default */.A)(_this2, DATALISTENERS, 0);
+    (0,defineProperty/* default */.A)(_this2, DISCARDED, false);
+    /**
+     * true if the stream can be written
+     */
+    (0,defineProperty/* default */.A)(_this2, "writable", true);
+    /**
+     * true if the stream can be read
+     */
+    (0,defineProperty/* default */.A)(_this2, "readable", true);
+    if (options.objectMode && typeof options.encoding === 'string') {
+      throw new TypeError('Encoding and objectMode may not be used together');
+    }
+    if (isObjectModeOptions(options)) {
+      _this2[OBJECTMODE] = true;
+      _this2[ENCODING] = null;
+    } else if (isEncodingOptions(options)) {
+      _this2[ENCODING] = options.encoding;
+      _this2[OBJECTMODE] = false;
+    } else {
+      _this2[OBJECTMODE] = false;
+      _this2[ENCODING] = null;
+    }
+    _this2[ASYNC] = !!options.async;
+    _this2[DECODER] = _this2[ENCODING] ? new external_node_string_decoder_namespaceObject.StringDecoder(_this2[ENCODING]) : null;
+    //@ts-ignore - private option for debugging and testing
+    if (options && options.debugExposeBuffer === true) {
+      Object.defineProperty(_this2, 'buffer', {
+        get: function get() {
+          return _this2[BUFFER];
+        }
+      });
+    }
+    //@ts-ignore - private option for debugging and testing
+    if (options && options.debugExposePipes === true) {
+      Object.defineProperty(_this2, 'pipes', {
+        get: function get() {
+          return _this2[PIPES];
+        }
+      });
+    }
+    var signal = options.signal;
+    if (signal) {
+      _this2[SIGNAL] = signal;
+      if (signal.aborted) {
+        _this2[ABORT]();
+      } else {
+        signal.addEventListener('abort', function () {
+          return _this2[ABORT]();
+        });
+      }
+    }
+    return _this2;
+  }
+  /**
+   * The amount of data stored in the buffer waiting to be read.
+   *
+   * For Buffer strings, this will be the total byte length.
+   * For string encoding streams, this will be the string character length,
+   * according to JavaScript's `string.length` logic.
+   * For objectMode streams, this is a count of the items waiting to be
+   * emitted.
+   */
+  (0,inherits/* default */.A)(Minipass, _EventEmitter);
+  return (0,createClass/* default */.A)(Minipass, [{
+    key: "bufferLength",
+    get: function get() {
+      return this[BUFFERLENGTH];
+    }
+    /**
+     * The `BufferEncoding` currently in use, or `null`
+     */
+  }, {
+    key: "encoding",
+    get: function get() {
+      return this[ENCODING];
+    }
+    /**
+     * @deprecated - This is a read only property
+     */,
+    set: function set(_enc) {
+      throw new Error('Encoding must be set at instantiation time');
+    }
+    /**
+     * @deprecated - Encoding may only be set at instantiation time
+     */
+  }, {
+    key: "setEncoding",
+    value: function setEncoding(_enc) {
+      throw new Error('Encoding must be set at instantiation time');
+    }
+    /**
+     * True if this is an objectMode stream
+     */
+  }, {
+    key: "objectMode",
+    get: function get() {
+      return this[OBJECTMODE];
+    }
+    /**
+     * @deprecated - This is a read-only property
+     */,
+    set: function set(_om) {
+      throw new Error('objectMode must be set at instantiation time');
+    }
+    /**
+     * true if this is an async stream
+     */
+  }, {
+    key: 'async',
+    get: function get() {
+      return this[ASYNC];
+    }
+    /**
+     * Set to true to make this stream async.
+     *
+     * Once set, it cannot be unset, as this would potentially cause incorrect
+     * behavior.  Ie, a sync stream can be made async, but an async stream
+     * cannot be safely made sync.
+     */,
+    set: function set(a) {
+      this[ASYNC] = this[ASYNC] || !!a;
+    }
+    // drop everything and get out of the flow completely
+  }, {
+    key: ABORT,
+    value: function value() {
+      var _this$SIGNAL, _this$SIGNAL2;
+      this[ABORTED] = true;
+      this.emit('abort', (_this$SIGNAL = this[SIGNAL]) === null || _this$SIGNAL === void 0 ? void 0 : _this$SIGNAL.reason);
+      this.destroy((_this$SIGNAL2 = this[SIGNAL]) === null || _this$SIGNAL2 === void 0 ? void 0 : _this$SIGNAL2.reason);
+    }
+    /**
+     * True if the stream has been aborted.
+     */
+  }, {
+    key: "aborted",
+    get: function get() {
+      return this[ABORTED];
+    }
+    /**
+     * No-op setter. Stream aborted status is set via the AbortSignal provided
+     * in the constructor options.
+     */,
+    set: function set(_) {}
+  }, {
+    key: "write",
+    value: function write(chunk, encoding, cb) {
+      var _this$DECODER;
+      if (this[ABORTED]) return false;
+      if (this[EOF]) throw new Error('write after end');
+      if (this[DESTROYED]) {
+        this.emit('error', Object.assign(new Error('Cannot call write after a stream was destroyed'), {
+          code: 'ERR_STREAM_DESTROYED'
+        }));
+        return true;
+      }
+      if (typeof encoding === 'function') {
+        cb = encoding;
+        encoding = 'utf8';
+      }
+      if (!encoding) encoding = 'utf8';
+      var fn = this[ASYNC] ? defer : nodefer;
+      // convert array buffers and typed array views into buffers
+      // at some point in the future, we may want to do the opposite!
+      // leave strings and buffers as-is
+      // anything is only allowed if in object mode, so throw
+      if (!this[OBJECTMODE] && !Buffer.isBuffer(chunk)) {
+        if (isArrayBufferView(chunk)) {
+          //@ts-ignore - sinful unsafe type changing
+          chunk = Buffer.from(chunk.buffer, chunk.byteOffset, chunk.byteLength);
+        } else if (isArrayBufferLike(chunk)) {
+          //@ts-ignore - sinful unsafe type changing
+          chunk = Buffer.from(chunk);
+        } else if (typeof chunk !== 'string') {
+          throw new Error('Non-contiguous data written to non-objectMode stream');
+        }
+      }
+      // handle object mode up front, since it's simpler
+      // this yields better performance, fewer checks later.
+      if (this[OBJECTMODE]) {
+        // maybe impossible?
+        /* c8 ignore start */
+        if (this[FLOWING] && this[BUFFERLENGTH] !== 0) this[FLUSH](true);
+        /* c8 ignore stop */
+        if (this[FLOWING]) this.emit('data', chunk);else this[BUFFERPUSH](chunk);
+        if (this[BUFFERLENGTH] !== 0) this.emit('readable');
+        if (cb) fn(cb);
+        return this[FLOWING];
+      }
+      // at this point the chunk is a buffer or string
+      // don't buffer it up or send it to the decoder
+      if (!chunk.length) {
+        if (this[BUFFERLENGTH] !== 0) this.emit('readable');
+        if (cb) fn(cb);
+        return this[FLOWING];
+      }
+      // fast-path writing strings of same encoding to a stream with
+      // an empty buffer, skipping the buffer/decoder dance
+      if (typeof chunk === 'string' &&
+      // unless it is a string already ready for us to use
+      !(encoding === this[ENCODING] && !((_this$DECODER = this[DECODER]) !== null && _this$DECODER !== void 0 && _this$DECODER.lastNeed))) {
+        //@ts-ignore - sinful unsafe type change
+        chunk = Buffer.from(chunk, encoding);
+      }
+      if (Buffer.isBuffer(chunk) && this[ENCODING]) {
+        //@ts-ignore - sinful unsafe type change
+        chunk = this[DECODER].write(chunk);
+      }
+      // Note: flushing CAN potentially switch us into not-flowing mode
+      if (this[FLOWING] && this[BUFFERLENGTH] !== 0) this[FLUSH](true);
+      if (this[FLOWING]) this.emit('data', chunk);else this[BUFFERPUSH](chunk);
+      if (this[BUFFERLENGTH] !== 0) this.emit('readable');
+      if (cb) fn(cb);
+      return this[FLOWING];
+    }
+    /**
+     * Low-level explicit read method.
+     *
+     * In objectMode, the argument is ignored, and one item is returned if
+     * available.
+     *
+     * `n` is the number of bytes (or in the case of encoding streams,
+     * characters) to consume. If `n` is not provided, then the entire buffer
+     * is returned, or `null` is returned if no data is available.
+     *
+     * If `n` is greater that the amount of data in the internal buffer,
+     * then `null` is returned.
+     */
+  }, {
+    key: "read",
+    value: function read(n) {
+      if (this[DESTROYED]) return null;
+      this[DISCARDED] = false;
+      if (this[BUFFERLENGTH] === 0 || n === 0 || n && n > this[BUFFERLENGTH]) {
+        this[MAYBE_EMIT_END]();
+        return null;
+      }
+      if (this[OBJECTMODE]) n = null;
+      if (this[BUFFER].length > 1 && !this[OBJECTMODE]) {
+        // not object mode, so if we have an encoding, then RType is string
+        // otherwise, must be Buffer
+        this[BUFFER] = [this[ENCODING] ? this[BUFFER].join('') : Buffer.concat(this[BUFFER], this[BUFFERLENGTH])];
+      }
+      var ret = this[READ](n || null, this[BUFFER][0]);
+      this[MAYBE_EMIT_END]();
+      return ret;
+    }
+  }, {
+    key: READ,
+    value: function value(n, chunk) {
+      if (this[OBJECTMODE]) this[BUFFERSHIFT]();else {
+        var c = chunk;
+        if (n === c.length || n === null) this[BUFFERSHIFT]();else if (typeof c === 'string') {
+          this[BUFFER][0] = c.slice(n);
+          chunk = c.slice(0, n);
+          this[BUFFERLENGTH] -= n;
+        } else {
+          this[BUFFER][0] = c.subarray(n);
+          chunk = c.subarray(0, n);
+          this[BUFFERLENGTH] -= n;
+        }
+      }
+      this.emit('data', chunk);
+      if (!this[BUFFER].length && !this[EOF]) this.emit('drain');
+      return chunk;
+    }
+  }, {
+    key: "end",
+    value: function end(chunk, encoding, cb) {
+      if (typeof chunk === 'function') {
+        cb = chunk;
+        chunk = undefined;
+      }
+      if (typeof encoding === 'function') {
+        cb = encoding;
+        encoding = 'utf8';
+      }
+      if (chunk !== undefined) this.write(chunk, encoding);
+      if (cb) this.once('end', cb);
+      this[EOF] = true;
+      this.writable = false;
+      // if we haven't written anything, then go ahead and emit,
+      // even if we're not reading.
+      // we'll re-emit if a new 'end' listener is added anyway.
+      // This makes MP more suitable to write-only use cases.
+      if (this[FLOWING] || !this[PAUSED]) this[MAYBE_EMIT_END]();
+      return this;
+    }
+    // don't let the internal resume be overwritten
+  }, {
+    key: RESUME,
+    value: function value() {
+      if (this[DESTROYED]) return;
+      if (!this[DATALISTENERS] && !this[PIPES].length) {
+        this[DISCARDED] = true;
+      }
+      this[PAUSED] = false;
+      this[FLOWING] = true;
+      this.emit('resume');
+      if (this[BUFFER].length) this[FLUSH]();else if (this[EOF]) this[MAYBE_EMIT_END]();else this.emit('drain');
+    }
+    /**
+     * Resume the stream if it is currently in a paused state
+     *
+     * If called when there are no pipe destinations or `data` event listeners,
+     * this will place the stream in a "discarded" state, where all data will
+     * be thrown away. The discarded state is removed if a pipe destination or
+     * data handler is added, if pause() is called, or if any synchronous or
+     * asynchronous iteration is started.
+     */
+  }, {
+    key: "resume",
+    value: function resume() {
+      return this[RESUME]();
+    }
+    /**
+     * Pause the stream
+     */
+  }, {
+    key: "pause",
+    value: function pause() {
+      this[FLOWING] = false;
+      this[PAUSED] = true;
+      this[DISCARDED] = false;
+    }
+    /**
+     * true if the stream has been forcibly destroyed
+     */
+  }, {
+    key: "destroyed",
+    get: function get() {
+      return this[DESTROYED];
+    }
+    /**
+     * true if the stream is currently in a flowing state, meaning that
+     * any writes will be immediately emitted.
+     */
+  }, {
+    key: "flowing",
+    get: function get() {
+      return this[FLOWING];
+    }
+    /**
+     * true if the stream is currently in a paused state
+     */
+  }, {
+    key: "paused",
+    get: function get() {
+      return this[PAUSED];
+    }
+  }, {
+    key: BUFFERPUSH,
+    value: function value(chunk) {
+      if (this[OBJECTMODE]) this[BUFFERLENGTH] += 1;else this[BUFFERLENGTH] += chunk.length;
+      this[BUFFER].push(chunk);
+    }
+  }, {
+    key: BUFFERSHIFT,
+    value: function value() {
+      if (this[OBJECTMODE]) this[BUFFERLENGTH] -= 1;else this[BUFFERLENGTH] -= this[BUFFER][0].length;
+      return this[BUFFER].shift();
+    }
+  }, {
+    key: FLUSH,
+    value: function value() {
+      var noDrain = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      do {} while (this[FLUSHCHUNK](this[BUFFERSHIFT]()) && this[BUFFER].length);
+      if (!noDrain && !this[BUFFER].length && !this[EOF]) this.emit('drain');
+    }
+  }, {
+    key: FLUSHCHUNK,
+    value: function value(chunk) {
+      this.emit('data', chunk);
+      return this[FLOWING];
+    }
+    /**
+     * Pipe all data emitted by this stream into the destination provided.
+     *
+     * Triggers the flow of data.
+     */
+  }, {
+    key: "pipe",
+    value: function pipe(dest, opts) {
+      var _this3 = this;
+      if (this[DESTROYED]) return dest;
+      this[DISCARDED] = false;
+      var ended = this[EMITTED_END];
+      opts = opts || {};
+      if (dest === proc.stdout || dest === proc.stderr) opts.end = false;else opts.end = opts.end !== false;
+      opts.proxyErrors = !!opts.proxyErrors;
+      // piping an ended stream ends immediately
+      if (ended) {
+        if (opts.end) dest.end();
+      } else {
+        // "as" here just ignores the WType, which pipes don't care about,
+        // since they're only consuming from us, and writing to the dest
+        this[PIPES].push(!opts.proxyErrors ? new Pipe(this, dest, opts) : new PipeProxyErrors(this, dest, opts));
+        if (this[ASYNC]) defer(function () {
+          return _this3[RESUME]();
+        });else this[RESUME]();
+      }
+      return dest;
+    }
+    /**
+     * Fully unhook a piped destination stream.
+     *
+     * If the destination stream was the only consumer of this stream (ie,
+     * there are no other piped destinations or `'data'` event listeners)
+     * then the flow of data will stop until there is another consumer or
+     * {@link Minipass#resume} is explicitly called.
+     */
+  }, {
+    key: "unpipe",
+    value: function unpipe(dest) {
+      var p = this[PIPES].find(function (p) {
+        return p.dest === dest;
+      });
+      if (p) {
+        if (this[PIPES].length === 1) {
+          if (this[FLOWING] && this[DATALISTENERS] === 0) {
+            this[FLOWING] = false;
+          }
+          this[PIPES] = [];
+        } else this[PIPES].splice(this[PIPES].indexOf(p), 1);
+        p.unpipe();
+      }
+    }
+    /**
+     * Alias for {@link Minipass#on}
+     */
+  }, {
+    key: "addListener",
+    value: function addListener(ev, handler) {
+      return this.on(ev, handler);
+    }
+    /**
+     * Mostly identical to `EventEmitter.on`, with the following
+     * behavior differences to prevent data loss and unnecessary hangs:
+     *
+     * - Adding a 'data' event handler will trigger the flow of data
+     *
+     * - Adding a 'readable' event handler when there is data waiting to be read
+     *   will cause 'readable' to be emitted immediately.
+     *
+     * - Adding an 'endish' event handler ('end', 'finish', etc.) which has
+     *   already passed will cause the event to be emitted immediately and all
+     *   handlers removed.
+     *
+     * - Adding an 'error' event handler after an error has been emitted will
+     *   cause the event to be re-emitted immediately with the error previously
+     *   raised.
+     */
+  }, {
+    key: "on",
+    value: function on(ev, handler) {
+      var _this4 = this;
+      var ret = _superPropertyGet(Minipass, "on", this, 3)([ev, handler]);
+      if (ev === 'data') {
+        this[DISCARDED] = false;
+        this[DATALISTENERS]++;
+        if (!this[PIPES].length && !this[FLOWING]) {
+          this[RESUME]();
+        }
+      } else if (ev === 'readable' && this[BUFFERLENGTH] !== 0) {
+        _superPropertyGet(Minipass, "emit", this, 3)(['readable']);
+      } else if (isEndish(ev) && this[EMITTED_END]) {
+        _superPropertyGet(Minipass, "emit", this, 3)([ev]);
+        this.removeAllListeners(ev);
+      } else if (ev === 'error' && this[EMITTED_ERROR]) {
+        var h = handler;
+        if (this[ASYNC]) defer(function () {
+          return h.call(_this4, _this4[EMITTED_ERROR]);
+        });else h.call(this, this[EMITTED_ERROR]);
+      }
+      return ret;
+    }
+    /**
+     * Alias for {@link Minipass#off}
+     */
+  }, {
+    key: "removeListener",
+    value: function removeListener(ev, handler) {
+      return this.off(ev, handler);
+    }
+    /**
+     * Mostly identical to `EventEmitter.off`
+     *
+     * If a 'data' event handler is removed, and it was the last consumer
+     * (ie, there are no pipe destinations or other 'data' event listeners),
+     * then the flow of data will stop until there is another consumer or
+     * {@link Minipass#resume} is explicitly called.
+     */
+  }, {
+    key: "off",
+    value: function off(ev, handler) {
+      var ret = _superPropertyGet(Minipass, "off", this, 3)([ev, handler]);
+      // if we previously had listeners, and now we don't, and we don't
+      // have any pipes, then stop the flow, unless it's been explicitly
+      // put in a discarded flowing state via stream.resume().
+      if (ev === 'data') {
+        this[DATALISTENERS] = this.listeners('data').length;
+        if (this[DATALISTENERS] === 0 && !this[DISCARDED] && !this[PIPES].length) {
+          this[FLOWING] = false;
+        }
+      }
+      return ret;
+    }
+    /**
+     * Mostly identical to `EventEmitter.removeAllListeners`
+     *
+     * If all 'data' event handlers are removed, and they were the last consumer
+     * (ie, there are no pipe destinations), then the flow of data will stop
+     * until there is another consumer or {@link Minipass#resume} is explicitly
+     * called.
+     */
+  }, {
+    key: "removeAllListeners",
+    value: function removeAllListeners(ev) {
+      var ret = _superPropertyGet(Minipass, "removeAllListeners", this, 3)([ev]);
+      if (ev === 'data' || ev === undefined) {
+        this[DATALISTENERS] = 0;
+        if (!this[DISCARDED] && !this[PIPES].length) {
+          this[FLOWING] = false;
+        }
+      }
+      return ret;
+    }
+    /**
+     * true if the 'end' event has been emitted
+     */
+  }, {
+    key: "emittedEnd",
+    get: function get() {
+      return this[EMITTED_END];
+    }
+  }, {
+    key: MAYBE_EMIT_END,
+    value: function value() {
+      if (!this[EMITTING_END] && !this[EMITTED_END] && !this[DESTROYED] && this[BUFFER].length === 0 && this[EOF]) {
+        this[EMITTING_END] = true;
+        this.emit('end');
+        this.emit('prefinish');
+        this.emit('finish');
+        if (this[CLOSED]) this.emit('close');
+        this[EMITTING_END] = false;
+      }
+    }
+    /**
+     * Mostly identical to `EventEmitter.emit`, with the following
+     * behavior differences to prevent data loss and unnecessary hangs:
+     *
+     * If the stream has been destroyed, and the event is something other
+     * than 'close' or 'error', then `false` is returned and no handlers
+     * are called.
+     *
+     * If the event is 'end', and has already been emitted, then the event
+     * is ignored. If the stream is in a paused or non-flowing state, then
+     * the event will be deferred until data flow resumes. If the stream is
+     * async, then handlers will be called on the next tick rather than
+     * immediately.
+     *
+     * If the event is 'close', and 'end' has not yet been emitted, then
+     * the event will be deferred until after 'end' is emitted.
+     *
+     * If the event is 'error', and an AbortSignal was provided for the stream,
+     * and there are no listeners, then the event is ignored, matching the
+     * behavior of node core streams in the presense of an AbortSignal.
+     *
+     * If the event is 'finish' or 'prefinish', then all listeners will be
+     * removed after emitting the event, to prevent double-firing.
+     */
+  }, {
+    key: "emit",
+    value: function emit(ev) {
+      var _this5 = this;
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+      var data = args[0];
+      // error and close are only events allowed after calling destroy()
+      if (ev !== 'error' && ev !== 'close' && ev !== DESTROYED && this[DESTROYED]) {
+        return false;
+      } else if (ev === 'data') {
+        return !this[OBJECTMODE] && !data ? false : this[ASYNC] ? (defer(function () {
+          return _this5[EMITDATA](data);
+        }), true) : this[EMITDATA](data);
+      } else if (ev === 'end') {
+        return this[EMITEND]();
+      } else if (ev === 'close') {
+        this[CLOSED] = true;
+        // don't emit close before 'end' and 'finish'
+        if (!this[EMITTED_END] && !this[DESTROYED]) return false;
+        var _ret = _superPropertyGet(Minipass, "emit", this, 3)(['close']);
+        this.removeAllListeners('close');
+        return _ret;
+      } else if (ev === 'error') {
+        this[EMITTED_ERROR] = data;
+        _superPropertyGet(Minipass, "emit", this, 3)([ERROR, data]);
+        var _ret2 = !this[SIGNAL] || this.listeners('error').length ? _superPropertyGet(Minipass, "emit", this, 3)(['error', data]) : false;
+        this[MAYBE_EMIT_END]();
+        return _ret2;
+      } else if (ev === 'resume') {
+        var _ret3 = _superPropertyGet(Minipass, "emit", this, 3)(['resume']);
+        this[MAYBE_EMIT_END]();
+        return _ret3;
+      } else if (ev === 'finish' || ev === 'prefinish') {
+        var _ret4 = _superPropertyGet(Minipass, "emit", this, 3)([ev]);
+        this.removeAllListeners(ev);
+        return _ret4;
+      }
+      // Some other unknown event
+      var ret = _superPropertyGet(Minipass, "emit", this, 3)([ev].concat(args));
+      this[MAYBE_EMIT_END]();
+      return ret;
+    }
+  }, {
+    key: EMITDATA,
+    value: function value(data) {
+      var _iterator = (0,createForOfIteratorHelper/* default */.A)(this[PIPES]),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var p = _step.value;
+          if (p.dest.write(data) === false) this.pause();
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      var ret = this[DISCARDED] ? false : _superPropertyGet(Minipass, "emit", this, 3)(['data', data]);
+      this[MAYBE_EMIT_END]();
+      return ret;
+    }
+  }, {
+    key: EMITEND,
+    value: function value() {
+      var _this6 = this;
+      if (this[EMITTED_END]) return false;
+      this[EMITTED_END] = true;
+      this.readable = false;
+      return this[ASYNC] ? (defer(function () {
+        return _this6[EMITEND2]();
+      }), true) : this[EMITEND2]();
+    }
+  }, {
+    key: EMITEND2,
+    value: function value() {
+      if (this[DECODER]) {
+        var data = this[DECODER].end();
+        if (data) {
+          var _iterator2 = (0,createForOfIteratorHelper/* default */.A)(this[PIPES]),
+            _step2;
+          try {
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var p = _step2.value;
+              p.dest.write(data);
+            }
+          } catch (err) {
+            _iterator2.e(err);
+          } finally {
+            _iterator2.f();
+          }
+          if (!this[DISCARDED]) _superPropertyGet(Minipass, "emit", this, 3)(['data', data]);
+        }
+      }
+      var _iterator3 = (0,createForOfIteratorHelper/* default */.A)(this[PIPES]),
+        _step3;
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var _p = _step3.value;
+          _p.end();
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+      var ret = _superPropertyGet(Minipass, "emit", this, 3)(['end']);
+      this.removeAllListeners('end');
+      return ret;
+    }
+    /**
+     * Return a Promise that resolves to an array of all emitted data once
+     * the stream ends.
+     */
+  }, {
+    key: "collect",
+    value: (function () {
+      var _collect = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee() {
+        var _this7 = this;
+        var buf, p;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              buf = Object.assign([], {
+                dataLength: 0
+              });
+              if (!this[OBJECTMODE]) buf.dataLength = 0;
+              // set the promise first, in case an error is raised
+              // by triggering the flow here.
+              p = this.promise();
+              this.on('data', function (c) {
+                buf.push(c);
+                if (!_this7[OBJECTMODE]) buf.dataLength += c.length;
+              });
+              _context.next = 6;
+              return p;
+            case 6:
+              return _context.abrupt("return", buf);
+            case 7:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this);
+      }));
+      function collect() {
+        return _collect.apply(this, arguments);
+      }
+      return collect;
+    }()
+    /**
+     * Return a Promise that resolves to the concatenation of all emitted data
+     * once the stream ends.
+     *
+     * Not allowed on objectMode streams.
+     */
+    )
+  }, {
+    key: "concat",
+    value: (function () {
+      var _concat = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee2() {
+        var buf;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!this[OBJECTMODE]) {
+                _context2.next = 2;
+                break;
+              }
+              throw new Error('cannot concat in objectMode');
+            case 2:
+              _context2.next = 4;
+              return this.collect();
+            case 4:
+              buf = _context2.sent;
+              return _context2.abrupt("return", this[ENCODING] ? buf.join('') : Buffer.concat(buf, buf.dataLength));
+            case 6:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, this);
+      }));
+      function concat() {
+        return _concat.apply(this, arguments);
+      }
+      return concat;
+    }()
+    /**
+     * Return a void Promise that resolves once the stream ends.
+     */
+    )
+  }, {
+    key: "promise",
+    value: (function () {
+      var _promise = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee3() {
+        var _this8 = this;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              return _context3.abrupt("return", new Promise(function (resolve, reject) {
+                _this8.on(DESTROYED, function () {
+                  return reject(new Error('stream destroyed'));
+                });
+                _this8.on('error', function (er) {
+                  return reject(er);
+                });
+                _this8.on('end', function () {
+                  return resolve();
+                });
+              }));
+            case 1:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3);
+      }));
+      function promise() {
+        return _promise.apply(this, arguments);
+      }
+      return promise;
+    }()
+    /**
+     * Asynchronous `for await of` iteration.
+     *
+     * This will continue emitting all chunks until the stream terminates.
+     */
+    )
+  }, {
+    key: Symbol.asyncIterator,
+    value: function value() {
+      var _this9 = this;
+      // set this up front, in case the consumer doesn't call next()
+      // right away.
+      this[DISCARDED] = false;
+      var stopped = false;
+      var stop = /*#__PURE__*/function () {
+        var _ref = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee4() {
+          return (0,regeneratorRuntime/* default */.A)().wrap(function _callee4$(_context4) {
+            while (1) switch (_context4.prev = _context4.next) {
+              case 0:
+                _this9.pause();
+                stopped = true;
+                return _context4.abrupt("return", {
+                  value: undefined,
+                  done: true
+                });
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }, _callee4);
+        }));
+        return function stop() {
+          return _ref.apply(this, arguments);
+        };
+      }();
+      var next = function next() {
+        if (stopped) return stop();
+        var res = _this9.read();
+        if (res !== null) return Promise.resolve({
+          done: false,
+          value: res
+        });
+        if (_this9[EOF]) return stop();
+        var resolve;
+        var reject;
+        var onerr = function onerr(er) {
+          _this9.off('data', ondata);
+          _this9.off('end', onend);
+          _this9.off(DESTROYED, ondestroy);
+          stop();
+          reject(er);
+        };
+        var ondata = function ondata(value) {
+          _this9.off('error', onerr);
+          _this9.off('end', onend);
+          _this9.off(DESTROYED, ondestroy);
+          _this9.pause();
+          resolve({
+            value: value,
+            done: !!_this9[EOF]
+          });
+        };
+        var onend = function onend() {
+          _this9.off('error', onerr);
+          _this9.off('data', ondata);
+          _this9.off(DESTROYED, ondestroy);
+          stop();
+          resolve({
+            done: true,
+            value: undefined
+          });
+        };
+        var ondestroy = function ondestroy() {
+          return onerr(new Error('stream destroyed'));
+        };
+        return new Promise(function (res, rej) {
+          reject = rej;
+          resolve = res;
+          _this9.once(DESTROYED, ondestroy);
+          _this9.once('error', onerr);
+          _this9.once('end', onend);
+          _this9.once('data', ondata);
+        });
+      };
+      return (0,defineProperty/* default */.A)({
+        next: next,
+        "throw": stop,
+        "return": stop
+      }, Symbol.asyncIterator, function () {
+        return this;
+      });
+    }
+    /**
+     * Synchronous `for of` iteration.
+     *
+     * The iteration will terminate when the internal buffer runs out, even
+     * if the stream has not yet terminated.
+     */
+  }, {
+    key: Symbol.iterator,
+    value: function value() {
+      var _this10 = this;
+      // set this up front, in case the consumer doesn't call next()
+      // right away.
+      this[DISCARDED] = false;
+      var stopped = false;
+      var _stop = function stop() {
+        _this10.pause();
+        _this10.off(ERROR, _stop);
+        _this10.off(DESTROYED, _stop);
+        _this10.off('end', _stop);
+        stopped = true;
+        return {
+          done: true,
+          value: undefined
+        };
+      };
+      var next = function next() {
+        if (stopped) return _stop();
+        var value = _this10.read();
+        return value === null ? _stop() : {
+          done: false,
+          value: value
+        };
+      };
+      this.once('end', _stop);
+      this.once(ERROR, _stop);
+      this.once(DESTROYED, _stop);
+      return (0,defineProperty/* default */.A)({
+        next: next,
+        "throw": _stop,
+        "return": _stop
+      }, Symbol.iterator, function () {
+        return this;
+      });
+    }
+    /**
+     * Destroy a stream, preventing it from being used for any further purpose.
+     *
+     * If the stream has a `close()` method, then it will be called on
+     * destruction.
+     *
+     * After destruction, any attempt to write data, read data, or emit most
+     * events will be ignored.
+     *
+     * If an error argument is provided, then it will be emitted in an
+     * 'error' event.
+     */
+  }, {
+    key: "destroy",
+    value: function destroy(er) {
+      if (this[DESTROYED]) {
+        if (er) this.emit('error', er);else this.emit(DESTROYED);
+        return this;
+      }
+      this[DESTROYED] = true;
+      this[DISCARDED] = true;
+      // throw away all buffered data, it's never coming out
+      this[BUFFER].length = 0;
+      this[BUFFERLENGTH] = 0;
+      var wc = this;
+      if (typeof wc.close === 'function' && !this[CLOSED]) wc.close();
+      if (er) this.emit('error', er);
+      // if no error to emit, still reject pending promises
+      else this.emit(DESTROYED);
+      return this;
+    }
+    /**
+     * Alias for {@link isStream}
+     *
+     * Former export location, maintained for backwards compatibility.
+     *
+     * @deprecated
+     */
+  }], [{
+    key: "isStream",
+    get: function get() {
+      return isStream;
+    }
+  }]);
+}(external_node_events_.EventEmitter);
+//# sourceMappingURL=index.js.map
+;// CONCATENATED MODULE: ./node_modules/path-scurry/dist/esm/index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var realpathSync = external_fs_.realpathSync["native"];
+// TODO: test perf of fs/promises realpath vs realpathCB,
+// since the promises one uses realpath.native
+
+
+var defaultFS = {
+  lstatSync: external_fs_.lstatSync,
+  readdir: external_fs_.readdir,
+  readdirSync: external_fs_.readdirSync,
+  readlinkSync: external_fs_.readlinkSync,
+  realpathSync: realpathSync,
+  promises: {
+    lstat: promises_namespaceObject.lstat,
+    readdir: promises_namespaceObject.readdir,
+    readlink: promises_namespaceObject.readlink,
+    realpath: promises_namespaceObject.realpath
+  }
+};
+// if they just gave us require('fs') then use our default
+var fsFromOption = function fsFromOption(fsOption) {
+  return !fsOption || fsOption === defaultFS || fsOption === external_node_fs_namespaceObject_0 ? defaultFS : (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, defaultFS), fsOption), {}, {
+    promises: (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, defaultFS.promises), fsOption.promises || {})
+  });
+};
+// turn something like //?/c:/ into c:\
+var uncDriveRegexp = /^\\\\\?\\([a-z]:)\\?$/i;
+var uncToDrive = function uncToDrive(rootPath) {
+  return rootPath.replace(/\//g, '\\').replace(uncDriveRegexp, '$1\\');
+};
+// windows paths are separated by either / or \
+var eitherSep = /[\\\/]/;
+var UNKNOWN = 0; // may not even exist, for all we know
+var IFIFO = 1;
+var IFCHR = 2;
+var IFDIR = 4;
+var IFBLK = 6;
+var IFREG = 8;
+var IFLNK = 10;
+var IFSOCK = 12;
+var IFMT = 15;
+// mask to unset low 4 bits
+var IFMT_UNKNOWN = ~IFMT;
+// set after successfully calling readdir() and getting entries.
+var READDIR_CALLED = 16;
+// set after a successful lstat()
+var LSTAT_CALLED = 32;
+// set if an entry (or one of its parents) is definitely not a dir
+var ENOTDIR = 64;
+// set if an entry (or one of its parents) does not exist
+// (can also be set on lstat errors like EACCES or ENAMETOOLONG)
+var ENOENT = 128;
+// cannot have child entries -- also verify &IFMT is either IFDIR or IFLNK
+// set if we fail to readlink
+var ENOREADLINK = 256;
+// set if we know realpath() will fail
+var ENOREALPATH = 512;
+var ENOCHILD = ENOTDIR | ENOENT | ENOREALPATH;
+var TYPEMASK = 1023;
+var entToType = function entToType(s) {
+  return s.isFile() ? IFREG : s.isDirectory() ? IFDIR : s.isSymbolicLink() ? IFLNK : s.isCharacterDevice() ? IFCHR : s.isBlockDevice() ? IFBLK : s.isSocket() ? IFSOCK : s.isFIFO() ? IFIFO : UNKNOWN;
+};
+// normalize unicode path names
+var normalizeCache = new Map();
+var normalize = function normalize(s) {
+  var c = normalizeCache.get(s);
+  if (c) return c;
+  var n = s.normalize('NFKD');
+  normalizeCache.set(s, n);
+  return n;
+};
+var normalizeNocaseCache = new Map();
+var normalizeNocase = function normalizeNocase(s) {
+  var c = normalizeNocaseCache.get(s);
+  if (c) return c;
+  var n = normalize(s.toLowerCase());
+  normalizeNocaseCache.set(s, n);
+  return n;
+};
+/**
+ * An LRUCache for storing resolved path strings or Path objects.
+ * @internal
+ */
+var ResolveCache = /*#__PURE__*/function (_LRUCache) {
+  function ResolveCache() {
+    (0,classCallCheck/* default */.A)(this, ResolveCache);
+    return (0,callSuper/* default */.A)(this, ResolveCache, [{
+      max: 256
+    }]);
+  }
+  (0,inherits/* default */.A)(ResolveCache, _LRUCache);
+  return (0,createClass/* default */.A)(ResolveCache);
+}(LRUCache);
+// In order to prevent blowing out the js heap by allocating hundreds of
+// thousands of Path entries when walking extremely large trees, the "children"
+// in this tree are represented by storing an array of Path entries in an
+// LRUCache, indexed by the parent.  At any time, Path.children() may return an
+// empty array, indicating that it doesn't know about any of its children, and
+// thus has to rebuild that cache.  This is fine, it just means that we don't
+// benefit as much from having the cached entries, but huge directory walks
+// don't blow out the stack, and smaller ones are still as fast as possible.
+//
+//It does impose some complexity when building up the readdir data, because we
+//need to pass a reference to the children array that we started with.
+/**
+ * an LRUCache for storing child entries.
+ * @internal
+ */
+var ChildrenCache = /*#__PURE__*/function (_LRUCache2) {
+  function ChildrenCache() {
+    var maxSize = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 16 * 1024;
+    (0,classCallCheck/* default */.A)(this, ChildrenCache);
+    return (0,callSuper/* default */.A)(this, ChildrenCache, [{
+      maxSize: maxSize,
+      // parent + children
+      sizeCalculation: function sizeCalculation(a) {
+        return a.length + 1;
+      }
+    }]);
+  }
+  (0,inherits/* default */.A)(ChildrenCache, _LRUCache2);
+  return (0,createClass/* default */.A)(ChildrenCache);
+}(LRUCache);
+var setAsCwd = Symbol('PathScurry setAsCwd');
+/**
+ * Path objects are sort of like a super-powered
+ * {@link https://nodejs.org/docs/latest/api/fs.html#class-fsdirent fs.Dirent}
+ *
+ * Each one represents a single filesystem entry on disk, which may or may not
+ * exist. It includes methods for reading various types of information via
+ * lstat, readlink, and readdir, and caches all information to the greatest
+ * degree possible.
+ *
+ * Note that fs operations that would normally throw will instead return an
+ * "empty" value. This is in order to prevent excessive overhead from error
+ * stack traces.
+ */
+var _fs = /*#__PURE__*/new WeakMap();
+var _dev = /*#__PURE__*/new WeakMap();
+var _mode = /*#__PURE__*/new WeakMap();
+var _nlink = /*#__PURE__*/new WeakMap();
+var _uid = /*#__PURE__*/new WeakMap();
+var _gid = /*#__PURE__*/new WeakMap();
+var _rdev = /*#__PURE__*/new WeakMap();
+var _blksize = /*#__PURE__*/new WeakMap();
+var _ino = /*#__PURE__*/new WeakMap();
+var esm_size = /*#__PURE__*/new WeakMap();
+var _blocks = /*#__PURE__*/new WeakMap();
+var _atimeMs = /*#__PURE__*/new WeakMap();
+var _mtimeMs = /*#__PURE__*/new WeakMap();
+var _ctimeMs = /*#__PURE__*/new WeakMap();
+var _birthtimeMs = /*#__PURE__*/new WeakMap();
+var _atime = /*#__PURE__*/new WeakMap();
+var _mtime = /*#__PURE__*/new WeakMap();
+var _ctime = /*#__PURE__*/new WeakMap();
+var _birthtime = /*#__PURE__*/new WeakMap();
+var _matchName = /*#__PURE__*/new WeakMap();
+var _depth = /*#__PURE__*/new WeakMap();
+var _fullpath = /*#__PURE__*/new WeakMap();
+var _fullpathPosix = /*#__PURE__*/new WeakMap();
+var _relative = /*#__PURE__*/new WeakMap();
+var _relativePosix = /*#__PURE__*/new WeakMap();
+var _type = /*#__PURE__*/new WeakMap();
+var _children = /*#__PURE__*/new WeakMap();
+var _linkTarget = /*#__PURE__*/new WeakMap();
+var _realpath = /*#__PURE__*/new WeakMap();
+var _PathBase_brand = /*#__PURE__*/new WeakSet();
+var _onReaddirCB = /*#__PURE__*/new WeakMap();
+var _readdirCBInFlight = /*#__PURE__*/new WeakMap();
+var _asyncReaddirInFlight = /*#__PURE__*/new WeakMap();
+var PathBase = /*#__PURE__*/function () {
+  /**
+   * Do not create new Path objects directly.  They should always be accessed
+   * via the PathScurry class or other methods on the Path class.
+   *
+   * @internal
+   */
+  function PathBase(_name) {
+    var _type2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : UNKNOWN;
+    var root = arguments.length > 2 ? arguments[2] : undefined;
+    var roots = arguments.length > 3 ? arguments[3] : undefined;
+    var nocase = arguments.length > 4 ? arguments[4] : undefined;
+    var _children2 = arguments.length > 5 ? arguments[5] : undefined;
+    var opts = arguments.length > 6 ? arguments[6] : undefined;
+    (0,classCallCheck/* default */.A)(this, PathBase);
+    _classPrivateMethodInitSpec(this, _PathBase_brand);
+    /**
+     * the basename of this path
+     *
+     * **Important**: *always* test the path name against any test string
+     * usingthe {@link isNamed} method, and not by directly comparing this
+     * string. Otherwise, unicode path strings that the system sees as identical
+     * will not be properly treated as the same path, leading to incorrect
+     * behavior and possible security issues.
+     */
+    (0,defineProperty/* default */.A)(this, "name", void 0);
+    /**
+     * the Path entry corresponding to the path root.
+     *
+     * @internal
+     */
+    (0,defineProperty/* default */.A)(this, "root", void 0);
+    /**
+     * All roots found within the current PathScurry family
+     *
+     * @internal
+     */
+    (0,defineProperty/* default */.A)(this, "roots", void 0);
+    /**
+     * a reference to the parent path, or undefined in the case of root entries
+     *
+     * @internal
+     */
+    (0,defineProperty/* default */.A)(this, "parent", void 0);
+    /**
+     * boolean indicating whether paths are compared case-insensitively
+     * @internal
+     */
+    (0,defineProperty/* default */.A)(this, "nocase", void 0);
+    /**
+     * boolean indicating that this path is the current working directory
+     * of the PathScurry collection that contains it.
+     */
+    (0,defineProperty/* default */.A)(this, "isCWD", false);
+    // potential default fs override
+    _classPrivateFieldInitSpec(this, _fs, void 0);
+    // Stats fields
+    _classPrivateFieldInitSpec(this, _dev, void 0);
+    _classPrivateFieldInitSpec(this, _mode, void 0);
+    _classPrivateFieldInitSpec(this, _nlink, void 0);
+    _classPrivateFieldInitSpec(this, _uid, void 0);
+    _classPrivateFieldInitSpec(this, _gid, void 0);
+    _classPrivateFieldInitSpec(this, _rdev, void 0);
+    _classPrivateFieldInitSpec(this, _blksize, void 0);
+    _classPrivateFieldInitSpec(this, _ino, void 0);
+    _classPrivateFieldInitSpec(this, esm_size, void 0);
+    _classPrivateFieldInitSpec(this, _blocks, void 0);
+    _classPrivateFieldInitSpec(this, _atimeMs, void 0);
+    _classPrivateFieldInitSpec(this, _mtimeMs, void 0);
+    _classPrivateFieldInitSpec(this, _ctimeMs, void 0);
+    _classPrivateFieldInitSpec(this, _birthtimeMs, void 0);
+    _classPrivateFieldInitSpec(this, _atime, void 0);
+    _classPrivateFieldInitSpec(this, _mtime, void 0);
+    _classPrivateFieldInitSpec(this, _ctime, void 0);
+    _classPrivateFieldInitSpec(this, _birthtime, void 0);
+    _classPrivateFieldInitSpec(this, _matchName, void 0);
+    _classPrivateFieldInitSpec(this, _depth, void 0);
+    _classPrivateFieldInitSpec(this, _fullpath, void 0);
+    _classPrivateFieldInitSpec(this, _fullpathPosix, void 0);
+    _classPrivateFieldInitSpec(this, _relative, void 0);
+    _classPrivateFieldInitSpec(this, _relativePosix, void 0);
+    _classPrivateFieldInitSpec(this, _type, void 0);
+    _classPrivateFieldInitSpec(this, _children, void 0);
+    _classPrivateFieldInitSpec(this, _linkTarget, void 0);
+    _classPrivateFieldInitSpec(this, _realpath, void 0);
+    _classPrivateFieldInitSpec(this, _onReaddirCB, []);
+    _classPrivateFieldInitSpec(this, _readdirCBInFlight, false);
+    _classPrivateFieldInitSpec(this, _asyncReaddirInFlight, void 0);
+    this.name = _name;
+    _classPrivateFieldSet2(_matchName, this, nocase ? normalizeNocase(_name) : normalize(_name));
+    _classPrivateFieldSet2(_type, this, _type2 & TYPEMASK);
+    this.nocase = nocase;
+    this.roots = roots;
+    this.root = root || this;
+    _classPrivateFieldSet2(_children, this, _children2);
+    _classPrivateFieldSet2(_fullpath, this, opts.fullpath);
+    _classPrivateFieldSet2(_relative, this, opts.relative);
+    _classPrivateFieldSet2(_relativePosix, this, opts.relativePosix);
+    this.parent = opts.parent;
+    if (this.parent) {
+      _classPrivateFieldSet2(_fs, this, classPrivateFieldGet2_classPrivateFieldGet2(_fs, this.parent));
+    } else {
+      _classPrivateFieldSet2(_fs, this, fsFromOption(opts.fs));
+    }
+  }
+  /**
+   * Returns the depth of the Path object from its root.
+   *
+   * For example, a path at `/foo/bar` would have a depth of 2.
+   */
+  return (0,createClass/* default */.A)(PathBase, [{
+    key: "dev",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_dev, this);
+    }
+  }, {
+    key: "mode",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_mode, this);
+    }
+  }, {
+    key: "nlink",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_nlink, this);
+    }
+  }, {
+    key: "uid",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_uid, this);
+    }
+  }, {
+    key: "gid",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_gid, this);
+    }
+  }, {
+    key: "rdev",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_rdev, this);
+    }
+  }, {
+    key: "blksize",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_blksize, this);
+    }
+  }, {
+    key: "ino",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_ino, this);
+    }
+  }, {
+    key: "size",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(esm_size, this);
+    }
+  }, {
+    key: "blocks",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_blocks, this);
+    }
+  }, {
+    key: "atimeMs",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_atimeMs, this);
+    }
+  }, {
+    key: "mtimeMs",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_mtimeMs, this);
+    }
+  }, {
+    key: "ctimeMs",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_ctimeMs, this);
+    }
+  }, {
+    key: "birthtimeMs",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_birthtimeMs, this);
+    }
+  }, {
+    key: "atime",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_atime, this);
+    }
+  }, {
+    key: "mtime",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_mtime, this);
+    }
+  }, {
+    key: "ctime",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_ctime, this);
+    }
+  }, {
+    key: "birthtime",
+    get: function get() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_birthtime, this);
+    }
+  }, {
+    key: "parentPath",
+    get:
+    /**
+     * This property is for compatibility with the Dirent class as of
+     * Node v20, where Dirent['parentPath'] refers to the path of the
+     * directory that was passed to readdir. For root entries, it's the path
+     * to the entry itself.
+     */
+    function get() {
+      return (this.parent || this).fullpath();
+    }
+    /**
+     * Deprecated alias for Dirent['parentPath'] Somewhat counterintuitively,
+     * this property refers to the *parent* path, not the path object itself.
+     *
+     * @deprecated
+     */
+  }, {
+    key: "path",
+    get: function get() {
+      return this.parentPath;
+    }
+  }, {
+    key: "depth",
+    value: function depth() {
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_depth, this) !== undefined) return classPrivateFieldGet2_classPrivateFieldGet2(_depth, this);
+      if (!this.parent) return _classPrivateFieldSet2(_depth, this, 0);
+      return _classPrivateFieldSet2(_depth, this, this.parent.depth() + 1);
+    }
+    /**
+     * @internal
+     */
+  }, {
+    key: "childrenCache",
+    value: function childrenCache() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_children, this);
+    }
+    /**
+     * Get the Path object referenced by the string path, resolved from this Path
+     */
+  }, {
+    key: "resolve",
+    value: function resolve(path) {
+      var _this$getRoot;
+      if (!path) {
+        return this;
+      }
+      var rootPath = this.getRootString(path);
+      var dir = path.substring(rootPath.length);
+      var dirParts = dir.split(this.splitSep);
+      var result = rootPath ? _assertClassBrand(_PathBase_brand, _this$getRoot = this.getRoot(rootPath), _resolveParts).call(_this$getRoot, dirParts) : _assertClassBrand(_PathBase_brand, this, _resolveParts).call(this, dirParts);
+      return result;
+    }
+  }, {
+    key: "children",
+    value:
+    /**
+     * Returns the cached children Path objects, if still available.  If they
+     * have fallen out of the cache, then returns an empty array, and resets the
+     * READDIR_CALLED bit, so that future calls to readdir() will require an fs
+     * lookup.
+     *
+     * @internal
+     */
+    function children() {
+      var cached = classPrivateFieldGet2_classPrivateFieldGet2(_children, this).get(this);
+      if (cached) {
+        return cached;
+      }
+      var children = Object.assign([], {
+        provisional: 0
+      });
+      classPrivateFieldGet2_classPrivateFieldGet2(_children, this).set(this, children);
+      _classPrivateFieldSet2(_type, this, classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & ~READDIR_CALLED);
+      return children;
+    }
+    /**
+     * Resolves a path portion and returns or creates the child Path.
+     *
+     * Returns `this` if pathPart is `''` or `'.'`, or `parent` if pathPart is
+     * `'..'`.
+     *
+     * This should not be called directly.  If `pathPart` contains any path
+     * separators, it will lead to unsafe undefined behavior.
+     *
+     * Use `Path.resolve()` instead.
+     *
+     * @internal
+     */
+  }, {
+    key: "child",
+    value: function child(pathPart, opts) {
+      if (pathPart === '' || pathPart === '.') {
+        return this;
+      }
+      if (pathPart === '..') {
+        return this.parent || this;
+      }
+      // find the child
+      var children = this.children();
+      var name = this.nocase ? normalizeNocase(pathPart) : normalize(pathPart);
+      var _iterator = (0,createForOfIteratorHelper/* default */.A)(children),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var p = _step.value;
+          if (classPrivateFieldGet2_classPrivateFieldGet2(_matchName, p) === name) {
+            return p;
+          }
+        }
+        // didn't find it, create provisional child, since it might not
+        // actually exist.  If we know the parent isn't a dir, then
+        // in fact it CAN'T exist.
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      var s = this.parent ? this.sep : '';
+      var fullpath = classPrivateFieldGet2_classPrivateFieldGet2(_fullpath, this) ? classPrivateFieldGet2_classPrivateFieldGet2(_fullpath, this) + s + pathPart : undefined;
+      var pchild = this.newChild(pathPart, UNKNOWN, (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, opts), {}, {
+        parent: this,
+        fullpath: fullpath
+      }));
+      if (!this.canReaddir()) {
+        _classPrivateFieldSet2(_type, pchild, classPrivateFieldGet2_classPrivateFieldGet2(_type, pchild) | ENOENT);
+      }
+      // don't have to update provisional, because if we have real children,
+      // then provisional is set to children.length, otherwise a lower number
+      children.push(pchild);
+      return pchild;
+    }
+    /**
+     * The relative path from the cwd. If it does not share an ancestor with
+     * the cwd, then this ends up being equivalent to the fullpath()
+     */
+  }, {
+    key: "relative",
+    value: function relative() {
+      if (this.isCWD) return '';
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_relative, this) !== undefined) {
+        return classPrivateFieldGet2_classPrivateFieldGet2(_relative, this);
+      }
+      var name = this.name;
+      var p = this.parent;
+      if (!p) {
+        return _classPrivateFieldSet2(_relative, this, this.name);
+      }
+      var pv = p.relative();
+      return pv + (!pv || !p.parent ? '' : this.sep) + name;
+    }
+    /**
+     * The relative path from the cwd, using / as the path separator.
+     * If it does not share an ancestor with
+     * the cwd, then this ends up being equivalent to the fullpathPosix()
+     * On posix systems, this is identical to relative().
+     */
+  }, {
+    key: "relativePosix",
+    value: function relativePosix() {
+      if (this.sep === '/') return this.relative();
+      if (this.isCWD) return '';
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_relativePosix, this) !== undefined) return classPrivateFieldGet2_classPrivateFieldGet2(_relativePosix, this);
+      var name = this.name;
+      var p = this.parent;
+      if (!p) {
+        return _classPrivateFieldSet2(_relativePosix, this, this.fullpathPosix());
+      }
+      var pv = p.relativePosix();
+      return pv + (!pv || !p.parent ? '' : '/') + name;
+    }
+    /**
+     * The fully resolved path string for this Path entry
+     */
+  }, {
+    key: "fullpath",
+    value: function fullpath() {
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_fullpath, this) !== undefined) {
+        return classPrivateFieldGet2_classPrivateFieldGet2(_fullpath, this);
+      }
+      var name = this.name;
+      var p = this.parent;
+      if (!p) {
+        return _classPrivateFieldSet2(_fullpath, this, this.name);
+      }
+      var pv = p.fullpath();
+      var fp = pv + (!p.parent ? '' : this.sep) + name;
+      return _classPrivateFieldSet2(_fullpath, this, fp);
+    }
+    /**
+     * On platforms other than windows, this is identical to fullpath.
+     *
+     * On windows, this is overridden to return the forward-slash form of the
+     * full UNC path.
+     */
+  }, {
+    key: "fullpathPosix",
+    value: function fullpathPosix() {
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_fullpathPosix, this) !== undefined) return classPrivateFieldGet2_classPrivateFieldGet2(_fullpathPosix, this);
+      if (this.sep === '/') return _classPrivateFieldSet2(_fullpathPosix, this, this.fullpath());
+      if (!this.parent) {
+        var _p = this.fullpath().replace(/\\/g, '/');
+        if (/^[a-z]:\//i.test(_p)) {
+          return _classPrivateFieldSet2(_fullpathPosix, this, "//?/".concat(_p));
+        } else {
+          return _classPrivateFieldSet2(_fullpathPosix, this, _p);
+        }
+      }
+      var p = this.parent;
+      var pfpp = p.fullpathPosix();
+      var fpp = pfpp + (!pfpp || !p.parent ? '' : '/') + this.name;
+      return _classPrivateFieldSet2(_fullpathPosix, this, fpp);
+    }
+    /**
+     * Is the Path of an unknown type?
+     *
+     * Note that we might know *something* about it if there has been a previous
+     * filesystem operation, for example that it does not exist, or is not a
+     * link, or whether it has child entries.
+     */
+  }, {
+    key: "isUnknown",
+    value: function isUnknown() {
+      return (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFMT) === UNKNOWN;
+    }
+  }, {
+    key: "isType",
+    value: function isType(type) {
+      return this["is".concat(type)]();
+    }
+  }, {
+    key: "getType",
+    value: function getType() {
+      return this.isUnknown() ? 'Unknown' : this.isDirectory() ? 'Directory' : this.isFile() ? 'File' : this.isSymbolicLink() ? 'SymbolicLink' : this.isFIFO() ? 'FIFO' : this.isCharacterDevice() ? 'CharacterDevice' : this.isBlockDevice() ? 'BlockDevice' : /* c8 ignore start */this.isSocket() ? 'Socket' : 'Unknown';
+      /* c8 ignore stop */
+    }
+    /**
+     * Is the Path a regular file?
+     */
+  }, {
+    key: "isFile",
+    value: function isFile() {
+      return (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFMT) === IFREG;
+    }
+    /**
+     * Is the Path a directory?
+     */
+  }, {
+    key: "isDirectory",
+    value: function isDirectory() {
+      return (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFMT) === IFDIR;
+    }
+    /**
+     * Is the path a character device?
+     */
+  }, {
+    key: "isCharacterDevice",
+    value: function isCharacterDevice() {
+      return (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFMT) === IFCHR;
+    }
+    /**
+     * Is the path a block device?
+     */
+  }, {
+    key: "isBlockDevice",
+    value: function isBlockDevice() {
+      return (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFMT) === IFBLK;
+    }
+    /**
+     * Is the path a FIFO pipe?
+     */
+  }, {
+    key: "isFIFO",
+    value: function isFIFO() {
+      return (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFMT) === IFIFO;
+    }
+    /**
+     * Is the path a socket?
+     */
+  }, {
+    key: "isSocket",
+    value: function isSocket() {
+      return (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFMT) === IFSOCK;
+    }
+    /**
+     * Is the path a symbolic link?
+     */
+  }, {
+    key: "isSymbolicLink",
+    value: function isSymbolicLink() {
+      return (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFLNK) === IFLNK;
+    }
+    /**
+     * Return the entry if it has been subject of a successful lstat, or
+     * undefined otherwise.
+     *
+     * Does not read the filesystem, so an undefined result *could* simply
+     * mean that we haven't called lstat on it.
+     */
+  }, {
+    key: "lstatCached",
+    value: function lstatCached() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & LSTAT_CALLED ? this : undefined;
+    }
+    /**
+     * Return the cached link target if the entry has been the subject of a
+     * successful readlink, or undefined otherwise.
+     *
+     * Does not read the filesystem, so an undefined result *could* just mean we
+     * don't have any cached data. Only use it if you are very sure that a
+     * readlink() has been called at some point.
+     */
+  }, {
+    key: "readlinkCached",
+    value: function readlinkCached() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_linkTarget, this);
+    }
+    /**
+     * Returns the cached realpath target if the entry has been the subject
+     * of a successful realpath, or undefined otherwise.
+     *
+     * Does not read the filesystem, so an undefined result *could* just mean we
+     * don't have any cached data. Only use it if you are very sure that a
+     * realpath() has been called at some point.
+     */
+  }, {
+    key: "realpathCached",
+    value: function realpathCached() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_realpath, this);
+    }
+    /**
+     * Returns the cached child Path entries array if the entry has been the
+     * subject of a successful readdir(), or [] otherwise.
+     *
+     * Does not read the filesystem, so an empty array *could* just mean we
+     * don't have any cached data. Only use it if you are very sure that a
+     * readdir() has been called recently enough to still be valid.
+     */
+  }, {
+    key: "readdirCached",
+    value: function readdirCached() {
+      var children = this.children();
+      return children.slice(0, children.provisional);
+    }
+    /**
+     * Return true if it's worth trying to readlink.  Ie, we don't (yet) have
+     * any indication that readlink will definitely fail.
+     *
+     * Returns false if the path is known to not be a symlink, if a previous
+     * readlink failed, or if the entry does not exist.
+     */
+  }, {
+    key: "canReadlink",
+    value: function canReadlink() {
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_linkTarget, this)) return true;
+      if (!this.parent) return false;
+      // cases where it cannot possibly succeed
+      var ifmt = classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFMT;
+      return !(ifmt !== UNKNOWN && ifmt !== IFLNK || classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & ENOREADLINK || classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & ENOENT);
+    }
+    /**
+     * Return true if readdir has previously been successfully called on this
+     * path, indicating that cachedReaddir() is likely valid.
+     */
+  }, {
+    key: "calledReaddir",
+    value: function calledReaddir() {
+      return !!(classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & READDIR_CALLED);
+    }
+    /**
+     * Returns true if the path is known to not exist. That is, a previous lstat
+     * or readdir failed to verify its existence when that would have been
+     * expected, or a parent entry was marked either enoent or enotdir.
+     */
+  }, {
+    key: "isENOENT",
+    value: function isENOENT() {
+      return !!(classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & ENOENT);
+    }
+    /**
+     * Return true if the path is a match for the given path name.  This handles
+     * case sensitivity and unicode normalization.
+     *
+     * Note: even on case-sensitive systems, it is **not** safe to test the
+     * equality of the `.name` property to determine whether a given pathname
+     * matches, due to unicode normalization mismatches.
+     *
+     * Always use this method instead of testing the `path.name` property
+     * directly.
+     */
+  }, {
+    key: "isNamed",
+    value: function isNamed(n) {
+      return !this.nocase ? classPrivateFieldGet2_classPrivateFieldGet2(_matchName, this) === normalize(n) : classPrivateFieldGet2_classPrivateFieldGet2(_matchName, this) === normalizeNocase(n);
+    }
+    /**
+     * Return the Path object corresponding to the target of a symbolic link.
+     *
+     * If the Path is not a symbolic link, or if the readlink call fails for any
+     * reason, `undefined` is returned.
+     *
+     * Result is cached, and thus may be outdated if the filesystem is mutated.
+     */
+  }, {
+    key: "readlink",
+    value: (function () {
+      var _readlink = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee() {
+        var target, _yield$this$parent$re, read, linkTarget;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              target = classPrivateFieldGet2_classPrivateFieldGet2(_linkTarget, this);
+              if (!target) {
+                _context.next = 3;
+                break;
+              }
+              return _context.abrupt("return", target);
+            case 3:
+              if (this.canReadlink()) {
+                _context.next = 5;
+                break;
+              }
+              return _context.abrupt("return", undefined);
+            case 5:
+              if (this.parent) {
+                _context.next = 7;
+                break;
+              }
+              return _context.abrupt("return", undefined);
+            case 7:
+              _context.prev = 7;
+              _context.next = 10;
+              return classPrivateFieldGet2_classPrivateFieldGet2(_fs, this).promises.readlink(this.fullpath());
+            case 10:
+              read = _context.sent;
+              _context.next = 13;
+              return this.parent.realpath();
+            case 13:
+              _context.t1 = _yield$this$parent$re = _context.sent;
+              _context.t0 = _context.t1 === null;
+              if (_context.t0) {
+                _context.next = 17;
+                break;
+              }
+              _context.t0 = _yield$this$parent$re === void 0;
+            case 17:
+              if (!_context.t0) {
+                _context.next = 21;
+                break;
+              }
+              _context.t2 = void 0;
+              _context.next = 22;
+              break;
+            case 21:
+              _context.t2 = _yield$this$parent$re.resolve(read);
+            case 22:
+              linkTarget = _context.t2;
+              if (!linkTarget) {
+                _context.next = 25;
+                break;
+              }
+              return _context.abrupt("return", _classPrivateFieldSet2(_linkTarget, this, linkTarget));
+            case 25:
+              _context.next = 31;
+              break;
+            case 27:
+              _context.prev = 27;
+              _context.t3 = _context["catch"](7);
+              _assertClassBrand(_PathBase_brand, this, _readlinkFail).call(this, _context.t3.code);
+              return _context.abrupt("return", undefined);
+            case 31:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this, [[7, 27]]);
+      }));
+      function readlink() {
+        return _readlink.apply(this, arguments);
+      }
+      return readlink;
+    }()
+    /**
+     * Synchronous {@link PathBase.readlink}
+     */
+    )
+  }, {
+    key: "readlinkSync",
+    value: function readlinkSync() {
+      var target = classPrivateFieldGet2_classPrivateFieldGet2(_linkTarget, this);
+      if (target) {
+        return target;
+      }
+      if (!this.canReadlink()) {
+        return undefined;
+      }
+      /* c8 ignore start */
+      // already covered by the canReadlink test, here for ts grumples
+      if (!this.parent) {
+        return undefined;
+      }
+      /* c8 ignore stop */
+      try {
+        var _this$parent$realpath;
+        var read = classPrivateFieldGet2_classPrivateFieldGet2(_fs, this).readlinkSync(this.fullpath());
+        var linkTarget = (_this$parent$realpath = this.parent.realpathSync()) === null || _this$parent$realpath === void 0 ? void 0 : _this$parent$realpath.resolve(read);
+        if (linkTarget) {
+          return _classPrivateFieldSet2(_linkTarget, this, linkTarget);
+        }
+      } catch (er) {
+        _assertClassBrand(_PathBase_brand, this, _readlinkFail).call(this, er.code);
+        return undefined;
+      }
+    }
+  }, {
+    key: "lstat",
+    value: (
+    /**
+     * Call lstat() on this Path, and update all known information that can be
+     * determined.
+     *
+     * Note that unlike `fs.lstat()`, the returned value does not contain some
+     * information, such as `mode`, `dev`, `nlink`, and `ino`.  If that
+     * information is required, you will need to call `fs.lstat` yourself.
+     *
+     * If the Path refers to a nonexistent file, or if the lstat call fails for
+     * any reason, `undefined` is returned.  Otherwise the updated Path object is
+     * returned.
+     *
+     * Results are cached, and thus may be out of date if the filesystem is
+     * mutated.
+     */
+    function () {
+      var _lstat = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee2() {
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              if (!((classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & ENOENT) === 0)) {
+                _context2.next = 14;
+                break;
+              }
+              _context2.prev = 1;
+              _context2.t0 = _assertClassBrand(_PathBase_brand, this, _applyStat);
+              _context2.t1 = this;
+              _context2.next = 6;
+              return classPrivateFieldGet2_classPrivateFieldGet2(_fs, this).promises.lstat(this.fullpath());
+            case 6:
+              _context2.t2 = _context2.sent;
+              _context2.t0.call.call(_context2.t0, _context2.t1, _context2.t2);
+              return _context2.abrupt("return", this);
+            case 11:
+              _context2.prev = 11;
+              _context2.t3 = _context2["catch"](1);
+              _assertClassBrand(_PathBase_brand, this, _lstatFail).call(this, _context2.t3.code);
+            case 14:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, this, [[1, 11]]);
+      }));
+      function lstat() {
+        return _lstat.apply(this, arguments);
+      }
+      return lstat;
+    }()
+    /**
+     * synchronous {@link PathBase.lstat}
+     */
+    )
+  }, {
+    key: "lstatSync",
+    value: function lstatSync() {
+      if ((classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & ENOENT) === 0) {
+        try {
+          _assertClassBrand(_PathBase_brand, this, _applyStat).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_fs, this).lstatSync(this.fullpath()));
+          return this;
+        } catch (er) {
+          _assertClassBrand(_PathBase_brand, this, _lstatFail).call(this, er.code);
+        }
+      }
+    }
+  }, {
+    key: "readdirCB",
+    value:
+    /**
+     * Standard node-style callback interface to get list of directory entries.
+     *
+     * If the Path cannot or does not contain any children, then an empty array
+     * is returned.
+     *
+     * Results are cached, and thus may be out of date if the filesystem is
+     * mutated.
+     *
+     * @param cb The callback called with (er, entries).  Note that the `er`
+     * param is somewhat extraneous, as all readdir() errors are handled and
+     * simply result in an empty set of entries being returned.
+     * @param allowZalgo Boolean indicating that immediately known results should
+     * *not* be deferred with `queueMicrotask`. Defaults to `false`. Release
+     * zalgo at your peril, the dark pony lord is devious and unforgiving.
+     */
+    function readdirCB(cb) {
+      var _this = this;
+      var allowZalgo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      if (!this.canReaddir()) {
+        if (allowZalgo) cb(null, []);else queueMicrotask(function () {
+          return cb(null, []);
+        });
+        return;
+      }
+      var children = this.children();
+      if (this.calledReaddir()) {
+        var c = children.slice(0, children.provisional);
+        if (allowZalgo) cb(null, c);else queueMicrotask(function () {
+          return cb(null, c);
+        });
+        return;
+      }
+      // don't have to worry about zalgo at this point.
+      classPrivateFieldGet2_classPrivateFieldGet2(_onReaddirCB, this).push(cb);
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_readdirCBInFlight, this)) {
+        return;
+      }
+      _classPrivateFieldSet2(_readdirCBInFlight, this, true);
+      // else read the directory, fill up children
+      // de-provisionalize any provisional children.
+      var fullpath = this.fullpath();
+      classPrivateFieldGet2_classPrivateFieldGet2(_fs, this).readdir(fullpath, {
+        withFileTypes: true
+      }, function (er, entries) {
+        if (er) {
+          _assertClassBrand(_PathBase_brand, _this, _readdirFail).call(_this, er.code);
+          children.provisional = 0;
+        } else {
+          // if we didn't get an error, we always get entries.
+          //@ts-ignore
+          var _iterator2 = (0,createForOfIteratorHelper/* default */.A)(entries),
+            _step2;
+          try {
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var e = _step2.value;
+              _assertClassBrand(_PathBase_brand, _this, _readdirAddChild).call(_this, e, children);
+            }
+          } catch (err) {
+            _iterator2.e(err);
+          } finally {
+            _iterator2.f();
+          }
+          _assertClassBrand(_PathBase_brand, _this, _readdirSuccess).call(_this, children);
+        }
+        _assertClassBrand(_PathBase_brand, _this, _callOnReaddirCB).call(_this, children.slice(0, children.provisional));
+        return;
+      });
+    }
+  }, {
+    key: "readdir",
+    value: (
+    /**
+     * Return an array of known child entries.
+     *
+     * If the Path cannot or does not contain any children, then an empty array
+     * is returned.
+     *
+     * Results are cached, and thus may be out of date if the filesystem is
+     * mutated.
+     */
+    function () {
+      var _readdir = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee3() {
+        var children, fullpath, resolve, _iterator3, _step3, e;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              if (this.canReaddir()) {
+                _context3.next = 2;
+                break;
+              }
+              return _context3.abrupt("return", []);
+            case 2:
+              children = this.children();
+              if (!this.calledReaddir()) {
+                _context3.next = 5;
+                break;
+              }
+              return _context3.abrupt("return", children.slice(0, children.provisional));
+            case 5:
+              // else read the directory, fill up children
+              // de-provisionalize any provisional children.
+              fullpath = this.fullpath();
+              if (!classPrivateFieldGet2_classPrivateFieldGet2(_asyncReaddirInFlight, this)) {
+                _context3.next = 11;
+                break;
+              }
+              _context3.next = 9;
+              return classPrivateFieldGet2_classPrivateFieldGet2(_asyncReaddirInFlight, this);
+            case 9:
+              _context3.next = 29;
+              break;
+            case 11:
+              /* c8 ignore start */
+              resolve = function resolve() {};
+              /* c8 ignore stop */
+              _classPrivateFieldSet2(_asyncReaddirInFlight, this, new Promise(function (res) {
+                return resolve = res;
+              }));
+              _context3.prev = 13;
+              _context3.t0 = createForOfIteratorHelper/* default */.A;
+              _context3.next = 17;
+              return classPrivateFieldGet2_classPrivateFieldGet2(_fs, this).promises.readdir(fullpath, {
+                withFileTypes: true
+              });
+            case 17:
+              _context3.t1 = _context3.sent;
+              _iterator3 = (0, _context3.t0)(_context3.t1);
+              try {
+                for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+                  e = _step3.value;
+                  _assertClassBrand(_PathBase_brand, this, _readdirAddChild).call(this, e, children);
+                }
+              } catch (err) {
+                _iterator3.e(err);
+              } finally {
+                _iterator3.f();
+              }
+              _assertClassBrand(_PathBase_brand, this, _readdirSuccess).call(this, children);
+              _context3.next = 27;
+              break;
+            case 23:
+              _context3.prev = 23;
+              _context3.t2 = _context3["catch"](13);
+              _assertClassBrand(_PathBase_brand, this, _readdirFail).call(this, _context3.t2.code);
+              children.provisional = 0;
+            case 27:
+              _classPrivateFieldSet2(_asyncReaddirInFlight, this, undefined);
+              resolve();
+            case 29:
+              return _context3.abrupt("return", children.slice(0, children.provisional));
+            case 30:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, this, [[13, 23]]);
+      }));
+      function readdir() {
+        return _readdir.apply(this, arguments);
+      }
+      return readdir;
+    }()
+    /**
+     * synchronous {@link PathBase.readdir}
+     */
+    )
+  }, {
+    key: "readdirSync",
+    value: function readdirSync() {
+      if (!this.canReaddir()) {
+        return [];
+      }
+      var children = this.children();
+      if (this.calledReaddir()) {
+        return children.slice(0, children.provisional);
+      }
+      // else read the directory, fill up children
+      // de-provisionalize any provisional children.
+      var fullpath = this.fullpath();
+      try {
+        var _iterator4 = (0,createForOfIteratorHelper/* default */.A)(classPrivateFieldGet2_classPrivateFieldGet2(_fs, this).readdirSync(fullpath, {
+            withFileTypes: true
+          })),
+          _step4;
+        try {
+          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+            var e = _step4.value;
+            _assertClassBrand(_PathBase_brand, this, _readdirAddChild).call(this, e, children);
+          }
+        } catch (err) {
+          _iterator4.e(err);
+        } finally {
+          _iterator4.f();
+        }
+        _assertClassBrand(_PathBase_brand, this, _readdirSuccess).call(this, children);
+      } catch (er) {
+        _assertClassBrand(_PathBase_brand, this, _readdirFail).call(this, er.code);
+        children.provisional = 0;
+      }
+      return children.slice(0, children.provisional);
+    }
+  }, {
+    key: "canReaddir",
+    value: function canReaddir() {
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & ENOCHILD) return false;
+      var ifmt = IFMT & classPrivateFieldGet2_classPrivateFieldGet2(_type, this);
+      // we always set ENOTDIR when setting IFMT, so should be impossible
+      /* c8 ignore start */
+      if (!(ifmt === UNKNOWN || ifmt === IFDIR || ifmt === IFLNK)) {
+        return false;
+      }
+      /* c8 ignore stop */
+      return true;
+    }
+  }, {
+    key: "shouldWalk",
+    value: function shouldWalk(dirs, walkFilter) {
+      return (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFDIR) === IFDIR && !(classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & ENOCHILD) && !dirs.has(this) && (!walkFilter || walkFilter(this));
+    }
+    /**
+     * Return the Path object corresponding to path as resolved
+     * by realpath(3).
+     *
+     * If the realpath call fails for any reason, `undefined` is returned.
+     *
+     * Result is cached, and thus may be outdated if the filesystem is mutated.
+     * On success, returns a Path object.
+     */
+  }, {
+    key: "realpath",
+    value: (function () {
+      var _realpath2 = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee4() {
+        var rp;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              if (!classPrivateFieldGet2_classPrivateFieldGet2(_realpath, this)) {
+                _context4.next = 2;
+                break;
+              }
+              return _context4.abrupt("return", classPrivateFieldGet2_classPrivateFieldGet2(_realpath, this));
+            case 2:
+              if (!((ENOREALPATH | ENOREADLINK | ENOENT) & classPrivateFieldGet2_classPrivateFieldGet2(_type, this))) {
+                _context4.next = 4;
+                break;
+              }
+              return _context4.abrupt("return", undefined);
+            case 4:
+              _context4.prev = 4;
+              _context4.next = 7;
+              return classPrivateFieldGet2_classPrivateFieldGet2(_fs, this).promises.realpath(this.fullpath());
+            case 7:
+              rp = _context4.sent;
+              return _context4.abrupt("return", _classPrivateFieldSet2(_realpath, this, this.resolve(rp)));
+            case 11:
+              _context4.prev = 11;
+              _context4.t0 = _context4["catch"](4);
+              _assertClassBrand(_PathBase_brand, this, _markENOREALPATH).call(this);
+            case 14:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, this, [[4, 11]]);
+      }));
+      function realpath() {
+        return _realpath2.apply(this, arguments);
+      }
+      return realpath;
+    }()
+    /**
+     * Synchronous {@link realpath}
+     */
+    )
+  }, {
+    key: "realpathSync",
+    value: function realpathSync() {
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_realpath, this)) return classPrivateFieldGet2_classPrivateFieldGet2(_realpath, this);
+      if ((ENOREALPATH | ENOREADLINK | ENOENT) & classPrivateFieldGet2_classPrivateFieldGet2(_type, this)) return undefined;
+      try {
+        var rp = classPrivateFieldGet2_classPrivateFieldGet2(_fs, this).realpathSync(this.fullpath());
+        return _classPrivateFieldSet2(_realpath, this, this.resolve(rp));
+      } catch (_) {
+        _assertClassBrand(_PathBase_brand, this, _markENOREALPATH).call(this);
+      }
+    }
+    /**
+     * Internal method to mark this Path object as the scurry cwd,
+     * called by {@link PathScurry#chdir}
+     *
+     * @internal
+     */
+  }, {
+    key: setAsCwd,
+    value: function value(oldCwd) {
+      if (oldCwd === this) return;
+      oldCwd.isCWD = false;
+      this.isCWD = true;
+      var changed = new Set([]);
+      var rp = [];
+      var p = this;
+      while (p && p.parent) {
+        changed.add(p);
+        _classPrivateFieldSet2(_relative, p, rp.join(this.sep));
+        _classPrivateFieldSet2(_relativePosix, p, rp.join('/'));
+        p = p.parent;
+        rp.push('..');
+      }
+      // now un-memoize parents of old cwd
+      p = oldCwd;
+      while (p && p.parent && !changed.has(p)) {
+        _classPrivateFieldSet2(_relative, p, undefined);
+        _classPrivateFieldSet2(_relativePosix, p, undefined);
+        p = p.parent;
+      }
+    }
+  }]);
+}();
+/**
+ * Path class used on win32 systems
+ *
+ * Uses `'\\'` as the path separator for returned paths, either `'\\'` or `'/'`
+ * as the path separator for parsing paths.
+ */
+function _resolveParts(dirParts) {
+  var p = this;
+  var _iterator16 = (0,createForOfIteratorHelper/* default */.A)(dirParts),
+    _step16;
+  try {
+    for (_iterator16.s(); !(_step16 = _iterator16.n()).done;) {
+      var part = _step16.value;
+      p = p.child(part);
+    }
+  } catch (err) {
+    _iterator16.e(err);
+  } finally {
+    _iterator16.f();
+  }
+  return p;
+}
+function _readdirSuccess(children) {
+  // succeeded, mark readdir called bit
+  _classPrivateFieldSet2(_type, this, classPrivateFieldGet2_classPrivateFieldGet2(_type, this) | READDIR_CALLED);
+  // mark all remaining provisional children as ENOENT
+  for (var p = children.provisional; p < children.length; p++) {
+    var c = children[p];
+    if (c) _assertClassBrand(_PathBase_brand, c, _markENOENT).call(c);
+  }
+}
+function _markENOENT() {
+  // mark as UNKNOWN and ENOENT
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & ENOENT) return;
+  _classPrivateFieldSet2(_type, this, (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) | ENOENT) & IFMT_UNKNOWN);
+  _assertClassBrand(_PathBase_brand, this, _markChildrenENOENT).call(this);
+}
+function _markChildrenENOENT() {
+  // all children are provisional and do not exist
+  var children = this.children();
+  children.provisional = 0;
+  var _iterator17 = (0,createForOfIteratorHelper/* default */.A)(children),
+    _step17;
+  try {
+    for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
+      var p = _step17.value;
+      _assertClassBrand(_PathBase_brand, p, _markENOENT).call(p);
+    }
+  } catch (err) {
+    _iterator17.e(err);
+  } finally {
+    _iterator17.f();
+  }
+}
+function _markENOREALPATH() {
+  _classPrivateFieldSet2(_type, this, classPrivateFieldGet2_classPrivateFieldGet2(_type, this) | ENOREALPATH);
+  _assertClassBrand(_PathBase_brand, this, _markENOTDIR).call(this);
+}
+// save the information when we know the entry is not a dir
+function _markENOTDIR() {
+  // entry is not a directory, so any children can't exist.
+  // this *should* be impossible, since any children created
+  // after it's been marked ENOTDIR should be marked ENOENT,
+  // so it won't even get to this point.
+  /* c8 ignore start */
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & ENOTDIR) return;
+  /* c8 ignore stop */
+  var t = classPrivateFieldGet2_classPrivateFieldGet2(_type, this);
+  // this could happen if we stat a dir, then delete it,
+  // then try to read it or one of its children.
+  if ((t & IFMT) === IFDIR) t &= IFMT_UNKNOWN;
+  _classPrivateFieldSet2(_type, this, t | ENOTDIR);
+  _assertClassBrand(_PathBase_brand, this, _markChildrenENOENT).call(this);
+}
+function _readdirFail() {
+  var code = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  // markENOTDIR and markENOENT also set provisional=0
+  if (code === 'ENOTDIR' || code === 'EPERM') {
+    _assertClassBrand(_PathBase_brand, this, _markENOTDIR).call(this);
+  } else if (code === 'ENOENT') {
+    _assertClassBrand(_PathBase_brand, this, _markENOENT).call(this);
+  } else {
+    this.children().provisional = 0;
+  }
+}
+function _lstatFail() {
+  var code = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  // Windows just raises ENOENT in this case, disable for win CI
+  /* c8 ignore start */
+  if (code === 'ENOTDIR') {
+    // already know it has a parent by this point
+    var p = this.parent;
+    _assertClassBrand(_PathBase_brand, p, _markENOTDIR).call(p);
+  } else if (code === 'ENOENT') {
+    /* c8 ignore stop */
+    _assertClassBrand(_PathBase_brand, this, _markENOENT).call(this);
+  }
+}
+function _readlinkFail() {
+  var code = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var ter = classPrivateFieldGet2_classPrivateFieldGet2(_type, this);
+  ter |= ENOREADLINK;
+  if (code === 'ENOENT') ter |= ENOENT;
+  // windows gets a weird error when you try to readlink a file
+  if (code === 'EINVAL' || code === 'UNKNOWN') {
+    // exists, but not a symlink, we don't know WHAT it is, so remove
+    // all IFMT bits.
+    ter &= IFMT_UNKNOWN;
+  }
+  _classPrivateFieldSet2(_type, this, ter);
+  // windows just gets ENOENT in this case.  We do cover the case,
+  // just disabled because it's impossible on Windows CI
+  /* c8 ignore start */
+  if (code === 'ENOTDIR' && this.parent) {
+    var _this$parent;
+    _assertClassBrand(_PathBase_brand, _this$parent = this.parent, _markENOTDIR).call(_this$parent);
+  }
+  /* c8 ignore stop */
+}
+function _readdirAddChild(e, c) {
+  return _assertClassBrand(_PathBase_brand, this, _readdirMaybePromoteChild).call(this, e, c) || _assertClassBrand(_PathBase_brand, this, _readdirAddNewChild).call(this, e, c);
+}
+function _readdirAddNewChild(e, c) {
+  // alloc new entry at head, so it's never provisional
+  var type = entToType(e);
+  var child = this.newChild(e.name, type, {
+    parent: this
+  });
+  var ifmt = classPrivateFieldGet2_classPrivateFieldGet2(_type, child) & IFMT;
+  if (ifmt !== IFDIR && ifmt !== IFLNK && ifmt !== UNKNOWN) {
+    _classPrivateFieldSet2(_type, child, classPrivateFieldGet2_classPrivateFieldGet2(_type, child) | ENOTDIR);
+  }
+  c.unshift(child);
+  c.provisional++;
+  return child;
+}
+function _readdirMaybePromoteChild(e, c) {
+  for (var p = c.provisional; p < c.length; p++) {
+    var pchild = c[p];
+    var name = this.nocase ? normalizeNocase(e.name) : normalize(e.name);
+    if (name !== classPrivateFieldGet2_classPrivateFieldGet2(_matchName, pchild)) {
+      continue;
+    }
+    return _assertClassBrand(_PathBase_brand, this, _readdirPromoteChild).call(this, e, pchild, p, c);
+  }
+}
+function _readdirPromoteChild(e, p, index, c) {
+  var v = p.name;
+  // retain any other flags, but set ifmt from dirent
+  _classPrivateFieldSet2(_type, p, classPrivateFieldGet2_classPrivateFieldGet2(_type, p) & IFMT_UNKNOWN | entToType(e));
+  // case sensitivity fixing when we learn the true name.
+  if (v !== e.name) p.name = e.name;
+  // just advance provisional index (potentially off the list),
+  // otherwise we have to splice/pop it out and re-insert at head
+  if (index !== c.provisional) {
+    if (index === c.length - 1) c.pop();else c.splice(index, 1);
+    c.unshift(p);
+  }
+  c.provisional++;
+  return p;
+}
+function _applyStat(st) {
+  var atime = st.atime,
+    atimeMs = st.atimeMs,
+    birthtime = st.birthtime,
+    birthtimeMs = st.birthtimeMs,
+    blksize = st.blksize,
+    blocks = st.blocks,
+    ctime = st.ctime,
+    ctimeMs = st.ctimeMs,
+    dev = st.dev,
+    gid = st.gid,
+    ino = st.ino,
+    mode = st.mode,
+    mtime = st.mtime,
+    mtimeMs = st.mtimeMs,
+    nlink = st.nlink,
+    rdev = st.rdev,
+    size = st.size,
+    uid = st.uid;
+  _classPrivateFieldSet2(_atime, this, atime);
+  _classPrivateFieldSet2(_atimeMs, this, atimeMs);
+  _classPrivateFieldSet2(_birthtime, this, birthtime);
+  _classPrivateFieldSet2(_birthtimeMs, this, birthtimeMs);
+  _classPrivateFieldSet2(_blksize, this, blksize);
+  _classPrivateFieldSet2(_blocks, this, blocks);
+  _classPrivateFieldSet2(_ctime, this, ctime);
+  _classPrivateFieldSet2(_ctimeMs, this, ctimeMs);
+  _classPrivateFieldSet2(_dev, this, dev);
+  _classPrivateFieldSet2(_gid, this, gid);
+  _classPrivateFieldSet2(_ino, this, ino);
+  _classPrivateFieldSet2(_mode, this, mode);
+  _classPrivateFieldSet2(_mtime, this, mtime);
+  _classPrivateFieldSet2(_mtimeMs, this, mtimeMs);
+  _classPrivateFieldSet2(_nlink, this, nlink);
+  _classPrivateFieldSet2(_rdev, this, rdev);
+  _classPrivateFieldSet2(esm_size, this, size);
+  _classPrivateFieldSet2(_uid, this, uid);
+  var ifmt = entToType(st);
+  // retain any other flags, but set the ifmt
+  _classPrivateFieldSet2(_type, this, classPrivateFieldGet2_classPrivateFieldGet2(_type, this) & IFMT_UNKNOWN | ifmt | LSTAT_CALLED);
+  if (ifmt !== UNKNOWN && ifmt !== IFDIR && ifmt !== IFLNK) {
+    _classPrivateFieldSet2(_type, this, classPrivateFieldGet2_classPrivateFieldGet2(_type, this) | ENOTDIR);
+  }
+}
+function _callOnReaddirCB(children) {
+  _classPrivateFieldSet2(_readdirCBInFlight, this, false);
+  var cbs = classPrivateFieldGet2_classPrivateFieldGet2(_onReaddirCB, this).slice();
+  classPrivateFieldGet2_classPrivateFieldGet2(_onReaddirCB, this).length = 0;
+  cbs.forEach(function (cb) {
+    return cb(null, children);
+  });
+}
+var PathWin32 = /*#__PURE__*/function (_PathBase2) {
+  /**
+   * Do not create new Path objects directly.  They should always be accessed
+   * via the PathScurry class or other methods on the Path class.
+   *
+   * @internal
+   */
+  function PathWin32(name) {
+    var _this2;
+    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : UNKNOWN;
+    var root = arguments.length > 2 ? arguments[2] : undefined;
+    var roots = arguments.length > 3 ? arguments[3] : undefined;
+    var nocase = arguments.length > 4 ? arguments[4] : undefined;
+    var children = arguments.length > 5 ? arguments[5] : undefined;
+    var opts = arguments.length > 6 ? arguments[6] : undefined;
+    (0,classCallCheck/* default */.A)(this, PathWin32);
+    _this2 = (0,callSuper/* default */.A)(this, PathWin32, [name, type, root, roots, nocase, children, opts]);
+    /**
+     * Separator for generating path strings.
+     */
+    (0,defineProperty/* default */.A)(_this2, "sep", '\\');
+    /**
+     * Separator for parsing path strings.
+     */
+    (0,defineProperty/* default */.A)(_this2, "splitSep", eitherSep);
+    return _this2;
+  }
+  /**
+   * @internal
+   */
+  (0,inherits/* default */.A)(PathWin32, _PathBase2);
+  return (0,createClass/* default */.A)(PathWin32, [{
+    key: "newChild",
+    value: function newChild(name) {
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : UNKNOWN;
+      var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return new PathWin32(name, type, this.root, this.roots, this.nocase, this.childrenCache(), opts);
+    }
+    /**
+     * @internal
+     */
+  }, {
+    key: "getRootString",
+    value: function getRootString(path) {
+      return external_node_path_namespaceObject.win32.parse(path).root;
+    }
+    /**
+     * @internal
+     */
+  }, {
+    key: "getRoot",
+    value: function getRoot(rootPath) {
+      rootPath = uncToDrive(rootPath.toUpperCase());
+      if (rootPath === this.root.name) {
+        return this.root;
+      }
+      // ok, not that one, check if it matches another we know about
+      for (var _i = 0, _Object$entries = Object.entries(this.roots); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = (0,slicedToArray/* default */.A)(_Object$entries[_i], 2),
+          compare = _Object$entries$_i[0],
+          root = _Object$entries$_i[1];
+        if (this.sameRoot(rootPath, compare)) {
+          return this.roots[rootPath] = root;
+        }
+      }
+      // otherwise, have to create a new one.
+      return this.roots[rootPath] = new PathScurryWin32(rootPath, this).root;
+    }
+    /**
+     * @internal
+     */
+  }, {
+    key: "sameRoot",
+    value: function sameRoot(rootPath) {
+      var compare = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.root.name;
+      // windows can (rarely) have case-sensitive filesystem, but
+      // UNC and drive letters are always case-insensitive, and canonically
+      // represented uppercase.
+      rootPath = rootPath.toUpperCase().replace(/\//g, '\\').replace(uncDriveRegexp, '$1\\');
+      return rootPath === compare;
+    }
+  }]);
+}(PathBase);
+/**
+ * Path class used on all posix systems.
+ *
+ * Uses `'/'` as the path separator.
+ */
+var PathPosix = /*#__PURE__*/function (_PathBase3) {
+  /**
+   * Do not create new Path objects directly.  They should always be accessed
+   * via the PathScurry class or other methods on the Path class.
+   *
+   * @internal
+   */
+  function PathPosix(name) {
+    var _this3;
+    var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : UNKNOWN;
+    var root = arguments.length > 2 ? arguments[2] : undefined;
+    var roots = arguments.length > 3 ? arguments[3] : undefined;
+    var nocase = arguments.length > 4 ? arguments[4] : undefined;
+    var children = arguments.length > 5 ? arguments[5] : undefined;
+    var opts = arguments.length > 6 ? arguments[6] : undefined;
+    (0,classCallCheck/* default */.A)(this, PathPosix);
+    _this3 = (0,callSuper/* default */.A)(this, PathPosix, [name, type, root, roots, nocase, children, opts]);
+    /**
+     * separator for parsing path strings
+     */
+    (0,defineProperty/* default */.A)(_this3, "splitSep", '/');
+    /**
+     * separator for generating path strings
+     */
+    (0,defineProperty/* default */.A)(_this3, "sep", '/');
+    return _this3;
+  }
+  /**
+   * @internal
+   */
+  (0,inherits/* default */.A)(PathPosix, _PathBase3);
+  return (0,createClass/* default */.A)(PathPosix, [{
+    key: "getRootString",
+    value: function getRootString(path) {
+      return path.startsWith('/') ? '/' : '';
+    }
+    /**
+     * @internal
+     */
+  }, {
+    key: "getRoot",
+    value: function getRoot(_rootPath) {
+      return this.root;
+    }
+    /**
+     * @internal
+     */
+  }, {
+    key: "newChild",
+    value: function newChild(name) {
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : UNKNOWN;
+      var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      return new PathPosix(name, type, this.root, this.roots, this.nocase, this.childrenCache(), opts);
+    }
+  }]);
+}(PathBase);
+/**
+ * The base class for all PathScurry classes, providing the interface for path
+ * resolution and filesystem operations.
+ *
+ * Typically, you should *not* instantiate this class directly, but rather one
+ * of the platform-specific classes, or the exported {@link PathScurry} which
+ * defaults to the current platform.
+ */
+var _resolveCache = /*#__PURE__*/new WeakMap();
+var _resolvePosixCache = /*#__PURE__*/new WeakMap();
+var _children3 = /*#__PURE__*/new WeakMap();
+var _fs2 = /*#__PURE__*/new WeakMap();
+var PathScurryBase = /*#__PURE__*/function () {
+  /**
+   * This class should not be instantiated directly.
+   *
+   * Use PathScurryWin32, PathScurryDarwin, PathScurryPosix, or PathScurry
+   *
+   * @internal
+   */
+  function PathScurryBase() {
+    var cwd = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : process.cwd();
+    var pathImpl = arguments.length > 1 ? arguments[1] : undefined;
+    var sep = arguments.length > 2 ? arguments[2] : undefined;
+    var _ref = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {},
+      nocase = _ref.nocase,
+      _ref$childrenCacheSiz = _ref.childrenCacheSize,
+      childrenCacheSize = _ref$childrenCacheSiz === void 0 ? 16 * 1024 : _ref$childrenCacheSiz,
+      _ref$fs = _ref.fs,
+      fs = _ref$fs === void 0 ? defaultFS : _ref$fs;
+    (0,classCallCheck/* default */.A)(this, PathScurryBase);
+    /**
+     * The root Path entry for the current working directory of this Scurry
+     */
+    (0,defineProperty/* default */.A)(this, "root", void 0);
+    /**
+     * The string path for the root of this Scurry's current working directory
+     */
+    (0,defineProperty/* default */.A)(this, "rootPath", void 0);
+    /**
+     * A collection of all roots encountered, referenced by rootPath
+     */
+    (0,defineProperty/* default */.A)(this, "roots", void 0);
+    /**
+     * The Path entry corresponding to this PathScurry's current working directory.
+     */
+    (0,defineProperty/* default */.A)(this, "cwd", void 0);
+    _classPrivateFieldInitSpec(this, _resolveCache, void 0);
+    _classPrivateFieldInitSpec(this, _resolvePosixCache, void 0);
+    _classPrivateFieldInitSpec(this, _children3, void 0);
+    /**
+     * Perform path comparisons case-insensitively.
+     *
+     * Defaults true on Darwin and Windows systems, false elsewhere.
+     */
+    (0,defineProperty/* default */.A)(this, "nocase", void 0);
+    _classPrivateFieldInitSpec(this, _fs2, void 0);
+    _classPrivateFieldSet2(_fs2, this, fsFromOption(fs));
+    if (cwd instanceof URL || cwd.startsWith('file://')) {
+      cwd = (0,external_node_url_namespaceObject.fileURLToPath)(cwd);
+    }
+    // resolve and split root, and then add to the store.
+    // this is the only time we call path.resolve()
+    var cwdPath = pathImpl.resolve(cwd);
+    this.roots = Object.create(null);
+    this.rootPath = this.parseRootPath(cwdPath);
+    _classPrivateFieldSet2(_resolveCache, this, new ResolveCache());
+    _classPrivateFieldSet2(_resolvePosixCache, this, new ResolveCache());
+    _classPrivateFieldSet2(_children3, this, new ChildrenCache(childrenCacheSize));
+    var split = cwdPath.substring(this.rootPath.length).split(sep);
+    // resolve('/') leaves '', splits to [''], we don't want that.
+    if (split.length === 1 && !split[0]) {
+      split.pop();
+    }
+    /* c8 ignore start */
+    if (nocase === undefined) {
+      throw new TypeError('must provide nocase setting to PathScurryBase ctor');
+    }
+    /* c8 ignore stop */
+    this.nocase = nocase;
+    this.root = this.newRoot(classPrivateFieldGet2_classPrivateFieldGet2(_fs2, this));
+    this.roots[this.rootPath] = this.root;
+    var prev = this.root;
+    var len = split.length - 1;
+    var joinSep = pathImpl.sep;
+    var abs = this.rootPath;
+    var sawFirst = false;
+    var _iterator5 = (0,createForOfIteratorHelper/* default */.A)(split),
+      _step5;
+    try {
+      for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+        var part = _step5.value;
+        var l = len--;
+        prev = prev.child(part, {
+          relative: new Array(l).fill('..').join(joinSep),
+          relativePosix: new Array(l).fill('..').join('/'),
+          fullpath: abs += (sawFirst ? '' : joinSep) + part
+        });
+        sawFirst = true;
+      }
+    } catch (err) {
+      _iterator5.e(err);
+    } finally {
+      _iterator5.f();
+    }
+    this.cwd = prev;
+  }
+  /**
+   * Get the depth of a provided path, string, or the cwd
+   */
+  return (0,createClass/* default */.A)(PathScurryBase, [{
+    key: "depth",
+    value: function depth() {
+      var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      if (typeof path === 'string') {
+        path = this.cwd.resolve(path);
+      }
+      return path.depth();
+    }
+    /**
+     * Return the cache of child entries.  Exposed so subclasses can create
+     * child Path objects in a platform-specific way.
+     *
+     * @internal
+     */
+  }, {
+    key: "childrenCache",
+    value: function childrenCache() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_children3, this);
+    }
+    /**
+     * Resolve one or more path strings to a resolved string
+     *
+     * Same interface as require('path').resolve.
+     *
+     * Much faster than path.resolve() when called multiple times for the same
+     * path, because the resolved Path objects are cached.  Much slower
+     * otherwise.
+     */
+  }, {
+    key: "resolve",
+    value: function resolve() {
+      // first figure out the minimum number of paths we have to test
+      // we always start at cwd, but any absolutes will bump the start
+      var r = '';
+      for (var i = arguments.length - 1; i >= 0; i--) {
+        var p = i < 0 || arguments.length <= i ? undefined : arguments[i];
+        if (!p || p === '.') continue;
+        r = r ? "".concat(p, "/").concat(r) : p;
+        if (this.isAbsolute(p)) {
+          break;
+        }
+      }
+      var cached = classPrivateFieldGet2_classPrivateFieldGet2(_resolveCache, this).get(r);
+      if (cached !== undefined) {
+        return cached;
+      }
+      var result = this.cwd.resolve(r).fullpath();
+      classPrivateFieldGet2_classPrivateFieldGet2(_resolveCache, this).set(r, result);
+      return result;
+    }
+    /**
+     * Resolve one or more path strings to a resolved string, returning
+     * the posix path.  Identical to .resolve() on posix systems, but on
+     * windows will return a forward-slash separated UNC path.
+     *
+     * Same interface as require('path').resolve.
+     *
+     * Much faster than path.resolve() when called multiple times for the same
+     * path, because the resolved Path objects are cached.  Much slower
+     * otherwise.
+     */
+  }, {
+    key: "resolvePosix",
+    value: function resolvePosix() {
+      // first figure out the minimum number of paths we have to test
+      // we always start at cwd, but any absolutes will bump the start
+      var r = '';
+      for (var i = arguments.length - 1; i >= 0; i--) {
+        var p = i < 0 || arguments.length <= i ? undefined : arguments[i];
+        if (!p || p === '.') continue;
+        r = r ? "".concat(p, "/").concat(r) : p;
+        if (this.isAbsolute(p)) {
+          break;
+        }
+      }
+      var cached = classPrivateFieldGet2_classPrivateFieldGet2(_resolvePosixCache, this).get(r);
+      if (cached !== undefined) {
+        return cached;
+      }
+      var result = this.cwd.resolve(r).fullpathPosix();
+      classPrivateFieldGet2_classPrivateFieldGet2(_resolvePosixCache, this).set(r, result);
+      return result;
+    }
+    /**
+     * find the relative path from the cwd to the supplied path string or entry
+     */
+  }, {
+    key: "relative",
+    value: function relative() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      }
+      return entry.relative();
+    }
+    /**
+     * find the relative path from the cwd to the supplied path string or
+     * entry, using / as the path delimiter, even on Windows.
+     */
+  }, {
+    key: "relativePosix",
+    value: function relativePosix() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      }
+      return entry.relativePosix();
+    }
+    /**
+     * Return the basename for the provided string or Path object
+     */
+  }, {
+    key: "basename",
+    value: function basename() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      }
+      return entry.name;
+    }
+    /**
+     * Return the dirname for the provided string or Path object
+     */
+  }, {
+    key: "dirname",
+    value: function dirname() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      }
+      return (entry.parent || entry).fullpath();
+    }
+  }, {
+    key: "readdir",
+    value: function () {
+      var _readdir2 = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee5() {
+        var entry,
+          opts,
+          _opts,
+          withFileTypes,
+          p,
+          _args5 = arguments;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
+            case 0:
+              entry = _args5.length > 0 && _args5[0] !== undefined ? _args5[0] : this.cwd;
+              opts = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : {
+                withFileTypes: true
+              };
+              if (typeof entry === 'string') {
+                entry = this.cwd.resolve(entry);
+              } else if (!(entry instanceof PathBase)) {
+                opts = entry;
+                entry = this.cwd;
+              }
+              _opts = opts, withFileTypes = _opts.withFileTypes;
+              if (entry.canReaddir()) {
+                _context5.next = 8;
+                break;
+              }
+              return _context5.abrupt("return", []);
+            case 8:
+              _context5.next = 10;
+              return entry.readdir();
+            case 10:
+              p = _context5.sent;
+              return _context5.abrupt("return", withFileTypes ? p : p.map(function (e) {
+                return e.name;
+              }));
+            case 12:
+            case "end":
+              return _context5.stop();
+          }
+        }, _callee5, this);
+      }));
+      function readdir() {
+        return _readdir2.apply(this, arguments);
+      }
+      return readdir;
+    }()
+  }, {
+    key: "readdirSync",
+    value: function readdirSync() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+        withFileTypes: true
+      };
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      } else if (!(entry instanceof PathBase)) {
+        opts = entry;
+        entry = this.cwd;
+      }
+      var _opts2 = opts,
+        _opts2$withFileTypes = _opts2.withFileTypes,
+        withFileTypes = _opts2$withFileTypes === void 0 ? true : _opts2$withFileTypes;
+      if (!entry.canReaddir()) {
+        return [];
+      } else if (withFileTypes) {
+        return entry.readdirSync();
+      } else {
+        return entry.readdirSync().map(function (e) {
+          return e.name;
+        });
+      }
+    }
+    /**
+     * Call lstat() on the string or Path object, and update all known
+     * information that can be determined.
+     *
+     * Note that unlike `fs.lstat()`, the returned value does not contain some
+     * information, such as `mode`, `dev`, `nlink`, and `ino`.  If that
+     * information is required, you will need to call `fs.lstat` yourself.
+     *
+     * If the Path refers to a nonexistent file, or if the lstat call fails for
+     * any reason, `undefined` is returned.  Otherwise the updated Path object is
+     * returned.
+     *
+     * Results are cached, and thus may be out of date if the filesystem is
+     * mutated.
+     */
+  }, {
+    key: "lstat",
+    value: (function () {
+      var _lstat2 = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee6() {
+        var entry,
+          _args6 = arguments;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee6$(_context6) {
+          while (1) switch (_context6.prev = _context6.next) {
+            case 0:
+              entry = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : this.cwd;
+              if (typeof entry === 'string') {
+                entry = this.cwd.resolve(entry);
+              }
+              return _context6.abrupt("return", entry.lstat());
+            case 3:
+            case "end":
+              return _context6.stop();
+          }
+        }, _callee6, this);
+      }));
+      function lstat() {
+        return _lstat2.apply(this, arguments);
+      }
+      return lstat;
+    }()
+    /**
+     * synchronous {@link PathScurryBase.lstat}
+     */
+    )
+  }, {
+    key: "lstatSync",
+    value: function lstatSync() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      }
+      return entry.lstatSync();
+    }
+  }, {
+    key: "readlink",
+    value: function () {
+      var _readlink2 = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee7() {
+        var entry,
+          _ref2,
+          withFileTypes,
+          e,
+          _args7 = arguments;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee7$(_context7) {
+          while (1) switch (_context7.prev = _context7.next) {
+            case 0:
+              entry = _args7.length > 0 && _args7[0] !== undefined ? _args7[0] : this.cwd;
+              _ref2 = _args7.length > 1 && _args7[1] !== undefined ? _args7[1] : {
+                withFileTypes: false
+              }, withFileTypes = _ref2.withFileTypes;
+              if (typeof entry === 'string') {
+                entry = this.cwd.resolve(entry);
+              } else if (!(entry instanceof PathBase)) {
+                withFileTypes = entry.withFileTypes;
+                entry = this.cwd;
+              }
+              _context7.next = 5;
+              return entry.readlink();
+            case 5:
+              e = _context7.sent;
+              return _context7.abrupt("return", withFileTypes ? e : e === null || e === void 0 ? void 0 : e.fullpath());
+            case 7:
+            case "end":
+              return _context7.stop();
+          }
+        }, _callee7, this);
+      }));
+      function readlink() {
+        return _readlink2.apply(this, arguments);
+      }
+      return readlink;
+    }()
+  }, {
+    key: "readlinkSync",
+    value: function readlinkSync() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+          withFileTypes: false
+        },
+        withFileTypes = _ref3.withFileTypes;
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      } else if (!(entry instanceof PathBase)) {
+        withFileTypes = entry.withFileTypes;
+        entry = this.cwd;
+      }
+      var e = entry.readlinkSync();
+      return withFileTypes ? e : e === null || e === void 0 ? void 0 : e.fullpath();
+    }
+  }, {
+    key: "realpath",
+    value: function () {
+      var _realpath3 = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee8() {
+        var entry,
+          _ref4,
+          withFileTypes,
+          e,
+          _args8 = arguments;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee8$(_context8) {
+          while (1) switch (_context8.prev = _context8.next) {
+            case 0:
+              entry = _args8.length > 0 && _args8[0] !== undefined ? _args8[0] : this.cwd;
+              _ref4 = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : {
+                withFileTypes: false
+              }, withFileTypes = _ref4.withFileTypes;
+              if (typeof entry === 'string') {
+                entry = this.cwd.resolve(entry);
+              } else if (!(entry instanceof PathBase)) {
+                withFileTypes = entry.withFileTypes;
+                entry = this.cwd;
+              }
+              _context8.next = 5;
+              return entry.realpath();
+            case 5:
+              e = _context8.sent;
+              return _context8.abrupt("return", withFileTypes ? e : e === null || e === void 0 ? void 0 : e.fullpath());
+            case 7:
+            case "end":
+              return _context8.stop();
+          }
+        }, _callee8, this);
+      }));
+      function realpath() {
+        return _realpath3.apply(this, arguments);
+      }
+      return realpath;
+    }()
+  }, {
+    key: "realpathSync",
+    value: function realpathSync() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+          withFileTypes: false
+        },
+        withFileTypes = _ref5.withFileTypes;
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      } else if (!(entry instanceof PathBase)) {
+        withFileTypes = entry.withFileTypes;
+        entry = this.cwd;
+      }
+      var e = entry.realpathSync();
+      return withFileTypes ? e : e === null || e === void 0 ? void 0 : e.fullpath();
+    }
+  }, {
+    key: "walk",
+    value: function () {
+      var _walk = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee9() {
+        var entry,
+          opts,
+          _opts3,
+          _opts3$withFileTypes,
+          withFileTypes,
+          _opts3$follow,
+          follow,
+          filter,
+          walkFilter,
+          results,
+          dirs,
+          _walk2,
+          start,
+          _args9 = arguments;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee9$(_context9) {
+          while (1) switch (_context9.prev = _context9.next) {
+            case 0:
+              entry = _args9.length > 0 && _args9[0] !== undefined ? _args9[0] : this.cwd;
+              opts = _args9.length > 1 && _args9[1] !== undefined ? _args9[1] : {};
+              if (typeof entry === 'string') {
+                entry = this.cwd.resolve(entry);
+              } else if (!(entry instanceof PathBase)) {
+                opts = entry;
+                entry = this.cwd;
+              }
+              _opts3 = opts, _opts3$withFileTypes = _opts3.withFileTypes, withFileTypes = _opts3$withFileTypes === void 0 ? true : _opts3$withFileTypes, _opts3$follow = _opts3.follow, follow = _opts3$follow === void 0 ? false : _opts3$follow, filter = _opts3.filter, walkFilter = _opts3.walkFilter;
+              results = [];
+              if (!filter || filter(entry)) {
+                results.push(withFileTypes ? entry : entry.fullpath());
+              }
+              dirs = new Set();
+              _walk2 = function walk(dir, cb) {
+                dirs.add(dir);
+                dir.readdirCB(function (er, entries) {
+                  /* c8 ignore start */
+                  if (er) {
+                    return cb(er);
+                  }
+                  /* c8 ignore stop */
+                  var len = entries.length;
+                  if (!len) return cb();
+                  var next = function next() {
+                    if (--len === 0) {
+                      cb();
+                    }
+                  };
+                  var _iterator6 = (0,createForOfIteratorHelper/* default */.A)(entries),
+                    _step6;
+                  try {
+                    for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+                      var e = _step6.value;
+                      if (!filter || filter(e)) {
+                        results.push(withFileTypes ? e : e.fullpath());
+                      }
+                      if (follow && e.isSymbolicLink()) {
+                        e.realpath().then(function (r) {
+                          return r !== null && r !== void 0 && r.isUnknown() ? r.lstat() : r;
+                        }).then(function (r) {
+                          return r !== null && r !== void 0 && r.shouldWalk(dirs, walkFilter) ? _walk2(r, next) : next();
+                        });
+                      } else {
+                        if (e.shouldWalk(dirs, walkFilter)) {
+                          _walk2(e, next);
+                        } else {
+                          next();
+                        }
+                      }
+                    }
+                  } catch (err) {
+                    _iterator6.e(err);
+                  } finally {
+                    _iterator6.f();
+                  }
+                }, true); // zalgooooooo
+              };
+              start = entry;
+              return _context9.abrupt("return", new Promise(function (res, rej) {
+                _walk2(start, function (er) {
+                  /* c8 ignore start */
+                  if (er) return rej(er);
+                  /* c8 ignore stop */
+                  res(results);
+                });
+              }));
+            case 10:
+            case "end":
+              return _context9.stop();
+          }
+        }, _callee9, this);
+      }));
+      function walk() {
+        return _walk.apply(this, arguments);
+      }
+      return walk;
+    }()
+  }, {
+    key: "walkSync",
+    value: function walkSync() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      } else if (!(entry instanceof PathBase)) {
+        opts = entry;
+        entry = this.cwd;
+      }
+      var _opts4 = opts,
+        _opts4$withFileTypes = _opts4.withFileTypes,
+        withFileTypes = _opts4$withFileTypes === void 0 ? true : _opts4$withFileTypes,
+        _opts4$follow = _opts4.follow,
+        follow = _opts4$follow === void 0 ? false : _opts4$follow,
+        filter = _opts4.filter,
+        walkFilter = _opts4.walkFilter;
+      var results = [];
+      if (!filter || filter(entry)) {
+        results.push(withFileTypes ? entry : entry.fullpath());
+      }
+      var dirs = new Set([entry]);
+      var _iterator7 = (0,createForOfIteratorHelper/* default */.A)(dirs),
+        _step7;
+      try {
+        for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+          var dir = _step7.value;
+          var entries = dir.readdirSync();
+          var _iterator8 = (0,createForOfIteratorHelper/* default */.A)(entries),
+            _step8;
+          try {
+            for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+              var e = _step8.value;
+              if (!filter || filter(e)) {
+                results.push(withFileTypes ? e : e.fullpath());
+              }
+              var r = e;
+              if (e.isSymbolicLink()) {
+                if (!(follow && (r = e.realpathSync()))) continue;
+                if (r.isUnknown()) r.lstatSync();
+              }
+              if (r.shouldWalk(dirs, walkFilter)) {
+                dirs.add(r);
+              }
+            }
+          } catch (err) {
+            _iterator8.e(err);
+          } finally {
+            _iterator8.f();
+          }
+        }
+      } catch (err) {
+        _iterator7.e(err);
+      } finally {
+        _iterator7.f();
+      }
+      return results;
+    }
+    /**
+     * Support for `for await`
+     *
+     * Alias for {@link PathScurryBase.iterate}
+     *
+     * Note: As of Node 19, this is very slow, compared to other methods of
+     * walking.  Consider using {@link PathScurryBase.stream} if memory overhead
+     * and backpressure are concerns, or {@link PathScurryBase.walk} if not.
+     */
+  }, {
+    key: Symbol.asyncIterator,
+    value: function value() {
+      return this.iterate();
+    }
+  }, {
+    key: "iterate",
+    value: function iterate() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      // iterating async over the stream is significantly more performant,
+      // especially in the warm-cache scenario, because it buffers up directory
+      // entries in the background instead of waiting for a yield for each one.
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      } else if (!(entry instanceof PathBase)) {
+        options = entry;
+        entry = this.cwd;
+      }
+      return this.stream(entry, options)[Symbol.asyncIterator]();
+    }
+    /**
+     * Iterating over a PathScurry performs a synchronous walk.
+     *
+     * Alias for {@link PathScurryBase.iterateSync}
+     */
+  }, {
+    key: Symbol.iterator,
+    value: function value() {
+      return this.iterateSync();
+    }
+  }, {
+    key: "iterateSync",
+    value: function iterateSync() {
+      var _this4 = this;
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      return /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee10() {
+        var _opts5, _opts5$withFileTypes, withFileTypes, _opts5$follow, follow, filter, walkFilter, dirs, _iterator9, _step9, dir, entries, _iterator10, _step10, e, r;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee10$(_context10) {
+          while (1) switch (_context10.prev = _context10.next) {
+            case 0:
+              if (typeof entry === 'string') {
+                entry = _this4.cwd.resolve(entry);
+              } else if (!(entry instanceof PathBase)) {
+                opts = entry;
+                entry = _this4.cwd;
+              }
+              _opts5 = opts, _opts5$withFileTypes = _opts5.withFileTypes, withFileTypes = _opts5$withFileTypes === void 0 ? true : _opts5$withFileTypes, _opts5$follow = _opts5.follow, follow = _opts5$follow === void 0 ? false : _opts5$follow, filter = _opts5.filter, walkFilter = _opts5.walkFilter;
+              if (!(!filter || filter(entry))) {
+                _context10.next = 5;
+                break;
+              }
+              _context10.next = 5;
+              return withFileTypes ? entry : entry.fullpath();
+            case 5:
+              dirs = new Set([entry]);
+              _iterator9 = (0,createForOfIteratorHelper/* default */.A)(dirs);
+              _context10.prev = 7;
+              _iterator9.s();
+            case 9:
+              if ((_step9 = _iterator9.n()).done) {
+                _context10.next = 38;
+                break;
+              }
+              dir = _step9.value;
+              entries = dir.readdirSync();
+              _iterator10 = (0,createForOfIteratorHelper/* default */.A)(entries);
+              _context10.prev = 13;
+              _iterator10.s();
+            case 15:
+              if ((_step10 = _iterator10.n()).done) {
+                _context10.next = 28;
+                break;
+              }
+              e = _step10.value;
+              if (!(!filter || filter(e))) {
+                _context10.next = 20;
+                break;
+              }
+              _context10.next = 20;
+              return withFileTypes ? e : e.fullpath();
+            case 20:
+              r = e;
+              if (!e.isSymbolicLink()) {
+                _context10.next = 25;
+                break;
+              }
+              if (follow && (r = e.realpathSync())) {
+                _context10.next = 24;
+                break;
+              }
+              return _context10.abrupt("continue", 26);
+            case 24:
+              if (r.isUnknown()) r.lstatSync();
+            case 25:
+              if (r.shouldWalk(dirs, walkFilter)) {
+                dirs.add(r);
+              }
+            case 26:
+              _context10.next = 15;
+              break;
+            case 28:
+              _context10.next = 33;
+              break;
+            case 30:
+              _context10.prev = 30;
+              _context10.t0 = _context10["catch"](13);
+              _iterator10.e(_context10.t0);
+            case 33:
+              _context10.prev = 33;
+              _iterator10.f();
+              return _context10.finish(33);
+            case 36:
+              _context10.next = 9;
+              break;
+            case 38:
+              _context10.next = 43;
+              break;
+            case 40:
+              _context10.prev = 40;
+              _context10.t1 = _context10["catch"](7);
+              _iterator9.e(_context10.t1);
+            case 43:
+              _context10.prev = 43;
+              _iterator9.f();
+              return _context10.finish(43);
+            case 46:
+            case "end":
+              return _context10.stop();
+          }
+        }, _callee10, null, [[7, 40, 43, 46], [13, 30, 33, 36]]);
+      })();
+    }
+  }, {
+    key: "stream",
+    value: function stream() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      } else if (!(entry instanceof PathBase)) {
+        opts = entry;
+        entry = this.cwd;
+      }
+      var _opts6 = opts,
+        _opts6$withFileTypes = _opts6.withFileTypes,
+        withFileTypes = _opts6$withFileTypes === void 0 ? true : _opts6$withFileTypes,
+        _opts6$follow = _opts6.follow,
+        follow = _opts6$follow === void 0 ? false : _opts6$follow,
+        filter = _opts6.filter,
+        walkFilter = _opts6.walkFilter;
+      var results = new Minipass({
+        objectMode: true
+      });
+      if (!filter || filter(entry)) {
+        results.write(withFileTypes ? entry : entry.fullpath());
+      }
+      var dirs = new Set();
+      var queue = [entry];
+      var processing = 0;
+      var process = function (_process) {
+        function process() {
+          return _process.apply(this, arguments);
+        }
+        process.toString = function () {
+          return _process.toString();
+        };
+        return process;
+      }(function () {
+        var paused = false;
+        var _loop = function _loop() {
+            var dir = queue.shift();
+            if (!dir) {
+              if (processing === 0) results.end();
+              return {
+                v: void 0
+              };
+            }
+            processing++;
+            dirs.add(dir);
+            var _onReaddir = function onReaddir(er, entries) {
+              var didRealpaths = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+              /* c8 ignore start */
+              if (er) return results.emit('error', er);
+              /* c8 ignore stop */
+              if (follow && !didRealpaths) {
+                var promises = [];
+                var _iterator11 = (0,createForOfIteratorHelper/* default */.A)(entries),
+                  _step11;
+                try {
+                  for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+                    var e = _step11.value;
+                    if (e.isSymbolicLink()) {
+                      promises.push(e.realpath().then(function (r) {
+                        return r !== null && r !== void 0 && r.isUnknown() ? r.lstat() : r;
+                      }));
+                    }
+                  }
+                } catch (err) {
+                  _iterator11.e(err);
+                } finally {
+                  _iterator11.f();
+                }
+                if (promises.length) {
+                  Promise.all(promises).then(function () {
+                    return _onReaddir(null, entries, true);
+                  });
+                  return;
+                }
+              }
+              var _iterator12 = (0,createForOfIteratorHelper/* default */.A)(entries),
+                _step12;
+              try {
+                for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+                  var _e = _step12.value;
+                  if (_e && (!filter || filter(_e))) {
+                    if (!results.write(withFileTypes ? _e : _e.fullpath())) {
+                      paused = true;
+                    }
+                  }
+                }
+              } catch (err) {
+                _iterator12.e(err);
+              } finally {
+                _iterator12.f();
+              }
+              processing--;
+              var _iterator13 = (0,createForOfIteratorHelper/* default */.A)(entries),
+                _step13;
+              try {
+                for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
+                  var _e2 = _step13.value;
+                  var r = _e2.realpathCached() || _e2;
+                  if (r.shouldWalk(dirs, walkFilter)) {
+                    queue.push(r);
+                  }
+                }
+              } catch (err) {
+                _iterator13.e(err);
+              } finally {
+                _iterator13.f();
+              }
+              if (paused && !results.flowing) {
+                results.once('drain', process);
+              } else if (!sync) {
+                process();
+              }
+            };
+            // zalgo containment
+            var sync = true;
+            dir.readdirCB(_onReaddir, true);
+            sync = false;
+          },
+          _ret;
+        while (!paused) {
+          _ret = _loop();
+          if (_ret) return _ret.v;
+        }
+      });
+      process();
+      return results;
+    }
+  }, {
+    key: "streamSync",
+    value: function streamSync() {
+      var entry = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      if (typeof entry === 'string') {
+        entry = this.cwd.resolve(entry);
+      } else if (!(entry instanceof PathBase)) {
+        opts = entry;
+        entry = this.cwd;
+      }
+      var _opts7 = opts,
+        _opts7$withFileTypes = _opts7.withFileTypes,
+        withFileTypes = _opts7$withFileTypes === void 0 ? true : _opts7$withFileTypes,
+        _opts7$follow = _opts7.follow,
+        follow = _opts7$follow === void 0 ? false : _opts7$follow,
+        filter = _opts7.filter,
+        walkFilter = _opts7.walkFilter;
+      var results = new Minipass({
+        objectMode: true
+      });
+      var dirs = new Set();
+      if (!filter || filter(entry)) {
+        results.write(withFileTypes ? entry : entry.fullpath());
+      }
+      var queue = [entry];
+      var processing = 0;
+      var process = function (_process2) {
+        function process() {
+          return _process2.apply(this, arguments);
+        }
+        process.toString = function () {
+          return _process2.toString();
+        };
+        return process;
+      }(function () {
+        var paused = false;
+        while (!paused) {
+          var dir = queue.shift();
+          if (!dir) {
+            if (processing === 0) results.end();
+            return;
+          }
+          processing++;
+          dirs.add(dir);
+          var entries = dir.readdirSync();
+          var _iterator14 = (0,createForOfIteratorHelper/* default */.A)(entries),
+            _step14;
+          try {
+            for (_iterator14.s(); !(_step14 = _iterator14.n()).done;) {
+              var e = _step14.value;
+              if (!filter || filter(e)) {
+                if (!results.write(withFileTypes ? e : e.fullpath())) {
+                  paused = true;
+                }
+              }
+            }
+          } catch (err) {
+            _iterator14.e(err);
+          } finally {
+            _iterator14.f();
+          }
+          processing--;
+          var _iterator15 = (0,createForOfIteratorHelper/* default */.A)(entries),
+            _step15;
+          try {
+            for (_iterator15.s(); !(_step15 = _iterator15.n()).done;) {
+              var _e3 = _step15.value;
+              var r = _e3;
+              if (_e3.isSymbolicLink()) {
+                if (!(follow && (r = _e3.realpathSync()))) continue;
+                if (r.isUnknown()) r.lstatSync();
+              }
+              if (r.shouldWalk(dirs, walkFilter)) {
+                queue.push(r);
+              }
+            }
+          } catch (err) {
+            _iterator15.e(err);
+          } finally {
+            _iterator15.f();
+          }
+        }
+        if (paused && !results.flowing) results.once('drain', process);
+      });
+      process();
+      return results;
+    }
+  }, {
+    key: "chdir",
+    value: function chdir() {
+      var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.cwd;
+      var oldCwd = this.cwd;
+      this.cwd = typeof path === 'string' ? this.cwd.resolve(path) : path;
+      this.cwd[setAsCwd](oldCwd);
+    }
+  }]);
+}();
+/**
+ * Windows implementation of {@link PathScurryBase}
+ *
+ * Defaults to case insensitve, uses `'\\'` to generate path strings.  Uses
+ * {@link PathWin32} for Path objects.
+ */
+var PathScurryWin32 = /*#__PURE__*/function (_PathScurryBase2) {
+  function PathScurryWin32() {
+    var _this5;
+    var cwd = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : process.cwd();
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    (0,classCallCheck/* default */.A)(this, PathScurryWin32);
+    var _opts$nocase = opts.nocase,
+      nocase = _opts$nocase === void 0 ? true : _opts$nocase;
+    _this5 = (0,callSuper/* default */.A)(this, PathScurryWin32, [cwd, external_node_path_namespaceObject.win32, '\\', (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, opts), {}, {
+      nocase: nocase
+    })]);
+    /**
+     * separator for generating path strings
+     */
+    (0,defineProperty/* default */.A)(_this5, "sep", '\\');
+    _this5.nocase = nocase;
+    for (var p = _this5.cwd; p; p = p.parent) {
+      p.nocase = _this5.nocase;
+    }
+    return _this5;
+  }
+  /**
+   * @internal
+   */
+  (0,inherits/* default */.A)(PathScurryWin32, _PathScurryBase2);
+  return (0,createClass/* default */.A)(PathScurryWin32, [{
+    key: "parseRootPath",
+    value: function parseRootPath(dir) {
+      // if the path starts with a single separator, it's not a UNC, and we'll
+      // just get separator as the root, and driveFromUNC will return \
+      // In that case, mount \ on the root from the cwd.
+      return external_node_path_namespaceObject.win32.parse(dir).root.toUpperCase();
+    }
+    /**
+     * @internal
+     */
+  }, {
+    key: "newRoot",
+    value: function newRoot(fs) {
+      return new PathWin32(this.rootPath, IFDIR, undefined, this.roots, this.nocase, this.childrenCache(), {
+        fs: fs
+      });
+    }
+    /**
+     * Return true if the provided path string is an absolute path
+     */
+  }, {
+    key: "isAbsolute",
+    value: function isAbsolute(p) {
+      return p.startsWith('/') || p.startsWith('\\') || /^[a-z]:(\/|\\)/i.test(p);
+    }
+  }]);
+}(PathScurryBase);
+/**
+ * {@link PathScurryBase} implementation for all posix systems other than Darwin.
+ *
+ * Defaults to case-sensitive matching, uses `'/'` to generate path strings.
+ *
+ * Uses {@link PathPosix} for Path objects.
+ */
+var PathScurryPosix = /*#__PURE__*/function (_PathScurryBase3) {
+  function PathScurryPosix() {
+    var _this6;
+    var cwd = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : process.cwd();
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    (0,classCallCheck/* default */.A)(this, PathScurryPosix);
+    var _opts$nocase2 = opts.nocase,
+      nocase = _opts$nocase2 === void 0 ? false : _opts$nocase2;
+    _this6 = (0,callSuper/* default */.A)(this, PathScurryPosix, [cwd, external_node_path_namespaceObject.posix, '/', (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, opts), {}, {
+      nocase: nocase
+    })]);
+    /**
+     * separator for generating path strings
+     */
+    (0,defineProperty/* default */.A)(_this6, "sep", '/');
+    _this6.nocase = nocase;
+    return _this6;
+  }
+  /**
+   * @internal
+   */
+  (0,inherits/* default */.A)(PathScurryPosix, _PathScurryBase3);
+  return (0,createClass/* default */.A)(PathScurryPosix, [{
+    key: "parseRootPath",
+    value: function parseRootPath(_dir) {
+      return '/';
+    }
+    /**
+     * @internal
+     */
+  }, {
+    key: "newRoot",
+    value: function newRoot(fs) {
+      return new PathPosix(this.rootPath, IFDIR, undefined, this.roots, this.nocase, this.childrenCache(), {
+        fs: fs
+      });
+    }
+    /**
+     * Return true if the provided path string is an absolute path
+     */
+  }, {
+    key: "isAbsolute",
+    value: function isAbsolute(p) {
+      return p.startsWith('/');
+    }
+  }]);
+}(PathScurryBase);
+/**
+ * {@link PathScurryBase} implementation for Darwin (macOS) systems.
+ *
+ * Defaults to case-insensitive matching, uses `'/'` for generating path
+ * strings.
+ *
+ * Uses {@link PathPosix} for Path objects.
+ */
+var PathScurryDarwin = /*#__PURE__*/function (_PathScurryPosix2) {
+  function PathScurryDarwin() {
+    var cwd = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : process.cwd();
+    var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    (0,classCallCheck/* default */.A)(this, PathScurryDarwin);
+    var _opts$nocase3 = opts.nocase,
+      nocase = _opts$nocase3 === void 0 ? true : _opts$nocase3;
+    return (0,callSuper/* default */.A)(this, PathScurryDarwin, [cwd, (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, opts), {}, {
+      nocase: nocase
+    })]);
+  }
+  (0,inherits/* default */.A)(PathScurryDarwin, _PathScurryPosix2);
+  return (0,createClass/* default */.A)(PathScurryDarwin);
+}(PathScurryPosix);
+/**
+ * Default {@link PathBase} implementation for the current platform.
+ *
+ * {@link PathWin32} on Windows systems, {@link PathPosix} on all others.
+ */
+var Path = process.platform === 'win32' ? PathWin32 : PathPosix;
+/**
+ * Default {@link PathScurryBase} implementation for the current platform.
+ *
+ * {@link PathScurryWin32} on Windows systems, {@link PathScurryDarwin} on
+ * Darwin (macOS) systems, {@link PathScurryPosix} on all others.
+ */
+var PathScurry = process.platform === 'win32' ? PathScurryWin32 : process.platform === 'darwin' ? PathScurryDarwin : PathScurryPosix;
+//# sourceMappingURL=index.js.map
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+var arrayWithHoles = __webpack_require__(6369);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
+var iterableToArray = __webpack_require__(3893);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+var unsupportedIterableToArray = __webpack_require__(5419);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+var nonIterableRest = __webpack_require__(6562);
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toArray.js
+
+
+
+
+function _toArray(r) {
+  return (0,arrayWithHoles/* default */.A)(r) || (0,iterableToArray/* default */.A)(r) || (0,unsupportedIterableToArray/* default */.A)(r) || (0,nonIterableRest/* default */.A)();
+}
+
+;// CONCATENATED MODULE: ./node_modules/glob/dist/esm/pattern.js
+
+
+
+
+
+
+
+
+// this is just a very light wrapper around 2 arrays with an offset index
+
+var isPatternList = function isPatternList(pl) {
+  return pl.length >= 1;
+};
+var isGlobList = function isGlobList(gl) {
+  return gl.length >= 1;
+};
+/**
+ * An immutable-ish view on an array of glob parts and their parsed
+ * results
+ */
+var _patternList = /*#__PURE__*/new WeakMap();
+var _globList = /*#__PURE__*/new WeakMap();
+var _index = /*#__PURE__*/new WeakMap();
+var _platform = /*#__PURE__*/new WeakMap();
+var _rest = /*#__PURE__*/new WeakMap();
+var _globString = /*#__PURE__*/new WeakMap();
+var _isDrive = /*#__PURE__*/new WeakMap();
+var _isUNC = /*#__PURE__*/new WeakMap();
+var _isAbsolute = /*#__PURE__*/new WeakMap();
+var _followGlobstar = /*#__PURE__*/new WeakMap();
+var Pattern = /*#__PURE__*/function () {
+  function Pattern(patternList, globList, index, platform) {
+    (0,classCallCheck/* default */.A)(this, Pattern);
+    _classPrivateFieldInitSpec(this, _patternList, void 0);
+    _classPrivateFieldInitSpec(this, _globList, void 0);
+    _classPrivateFieldInitSpec(this, _index, void 0);
+    (0,defineProperty/* default */.A)(this, "length", void 0);
+    _classPrivateFieldInitSpec(this, _platform, void 0);
+    _classPrivateFieldInitSpec(this, _rest, void 0);
+    _classPrivateFieldInitSpec(this, _globString, void 0);
+    _classPrivateFieldInitSpec(this, _isDrive, void 0);
+    _classPrivateFieldInitSpec(this, _isUNC, void 0);
+    _classPrivateFieldInitSpec(this, _isAbsolute, void 0);
+    _classPrivateFieldInitSpec(this, _followGlobstar, true);
+    if (!isPatternList(patternList)) {
+      throw new TypeError('empty pattern list');
+    }
+    if (!isGlobList(globList)) {
+      throw new TypeError('empty glob list');
+    }
+    if (globList.length !== patternList.length) {
+      throw new TypeError('mismatched pattern list and glob list lengths');
+    }
+    this.length = patternList.length;
+    if (index < 0 || index >= this.length) {
+      throw new TypeError('index out of range');
+    }
+    _classPrivateFieldSet2(_patternList, this, patternList);
+    _classPrivateFieldSet2(_globList, this, globList);
+    _classPrivateFieldSet2(_index, this, index);
+    _classPrivateFieldSet2(_platform, this, platform);
+    // normalize root entries of absolute patterns on initial creation.
+    if (classPrivateFieldGet2_classPrivateFieldGet2(_index, this) === 0) {
+      // c: => ['c:/']
+      // C:/ => ['C:/']
+      // C:/x => ['C:/', 'x']
+      // //host/share => ['//host/share/']
+      // //host/share/ => ['//host/share/']
+      // //host/share/x => ['//host/share/', 'x']
+      // /etc => ['/', 'etc']
+      // / => ['/']
+      if (this.isUNC()) {
+        // '' / '' / 'host' / 'share'
+        var _classPrivateFieldGet2 = classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this),
+          _classPrivateFieldGet3 = _toArray(_classPrivateFieldGet2),
+          p0 = _classPrivateFieldGet3[0],
+          p1 = _classPrivateFieldGet3[1],
+          p2 = _classPrivateFieldGet3[2],
+          p3 = _classPrivateFieldGet3[3],
+          prest = _classPrivateFieldGet3.slice(4);
+        var _classPrivateFieldGet4 = classPrivateFieldGet2_classPrivateFieldGet2(_globList, this),
+          _classPrivateFieldGet5 = _toArray(_classPrivateFieldGet4),
+          g0 = _classPrivateFieldGet5[0],
+          g1 = _classPrivateFieldGet5[1],
+          g2 = _classPrivateFieldGet5[2],
+          g3 = _classPrivateFieldGet5[3],
+          grest = _classPrivateFieldGet5.slice(4);
+        if (prest[0] === '') {
+          // ends in /
+          prest.shift();
+          grest.shift();
+        }
+        var p = [p0, p1, p2, p3, ''].join('/');
+        var g = [g0, g1, g2, g3, ''].join('/');
+        _classPrivateFieldSet2(_patternList, this, [p].concat((0,toConsumableArray/* default */.A)(prest)));
+        _classPrivateFieldSet2(_globList, this, [g].concat((0,toConsumableArray/* default */.A)(grest)));
+        this.length = classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this).length;
+      } else if (this.isDrive() || this.isAbsolute()) {
+        var _classPrivateFieldGet6 = classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this),
+          _classPrivateFieldGet7 = _toArray(_classPrivateFieldGet6),
+          _p = _classPrivateFieldGet7[0],
+          _prest = _classPrivateFieldGet7.slice(1);
+        var _classPrivateFieldGet8 = classPrivateFieldGet2_classPrivateFieldGet2(_globList, this),
+          _classPrivateFieldGet9 = _toArray(_classPrivateFieldGet8),
+          _g = _classPrivateFieldGet9[0],
+          _grest = _classPrivateFieldGet9.slice(1);
+        if (_prest[0] === '') {
+          // ends in /
+          _prest.shift();
+          _grest.shift();
+        }
+        var _p2 = _p + '/';
+        var _g2 = _g + '/';
+        _classPrivateFieldSet2(_patternList, this, [_p2].concat((0,toConsumableArray/* default */.A)(_prest)));
+        _classPrivateFieldSet2(_globList, this, [_g2].concat((0,toConsumableArray/* default */.A)(_grest)));
+        this.length = classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this).length;
+      }
+    }
+  }
+  /**
+   * The first entry in the parsed list of patterns
+   */
+  return (0,createClass/* default */.A)(Pattern, [{
+    key: "pattern",
+    value: function pattern() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this)[classPrivateFieldGet2_classPrivateFieldGet2(_index, this)];
+    }
+    /**
+     * true of if pattern() returns a string
+     */
+  }, {
+    key: "isString",
+    value: function isString() {
+      return typeof classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this)[classPrivateFieldGet2_classPrivateFieldGet2(_index, this)] === 'string';
+    }
+    /**
+     * true of if pattern() returns GLOBSTAR
+     */
+  }, {
+    key: "isGlobstar",
+    value: function isGlobstar() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this)[classPrivateFieldGet2_classPrivateFieldGet2(_index, this)] === GLOBSTAR;
+    }
+    /**
+     * true if pattern() returns a regexp
+     */
+  }, {
+    key: "isRegExp",
+    value: function isRegExp() {
+      return classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this)[classPrivateFieldGet2_classPrivateFieldGet2(_index, this)] instanceof RegExp;
+    }
+    /**
+     * The /-joined set of glob parts that make up this pattern
+     */
+  }, {
+    key: "globString",
+    value: function globString() {
+      return _classPrivateFieldSet2(_globString, this, classPrivateFieldGet2_classPrivateFieldGet2(_globString, this) || (classPrivateFieldGet2_classPrivateFieldGet2(_index, this) === 0 ? this.isAbsolute() ? classPrivateFieldGet2_classPrivateFieldGet2(_globList, this)[0] + classPrivateFieldGet2_classPrivateFieldGet2(_globList, this).slice(1).join('/') : classPrivateFieldGet2_classPrivateFieldGet2(_globList, this).join('/') : classPrivateFieldGet2_classPrivateFieldGet2(_globList, this).slice(classPrivateFieldGet2_classPrivateFieldGet2(_index, this)).join('/')));
+    }
+    /**
+     * true if there are more pattern parts after this one
+     */
+  }, {
+    key: "hasMore",
+    value: function hasMore() {
+      return this.length > classPrivateFieldGet2_classPrivateFieldGet2(_index, this) + 1;
+    }
+    /**
+     * The rest of the pattern after this part, or null if this is the end
+     */
+  }, {
+    key: "rest",
+    value: function rest() {
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_rest, this) !== undefined) return classPrivateFieldGet2_classPrivateFieldGet2(_rest, this);
+      if (!this.hasMore()) return _classPrivateFieldSet2(_rest, this, null);
+      _classPrivateFieldSet2(_rest, this, new Pattern(classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this), classPrivateFieldGet2_classPrivateFieldGet2(_globList, this), classPrivateFieldGet2_classPrivateFieldGet2(_index, this) + 1, classPrivateFieldGet2_classPrivateFieldGet2(_platform, this)));
+      _classPrivateFieldSet2(_isAbsolute, classPrivateFieldGet2_classPrivateFieldGet2(_rest, this), classPrivateFieldGet2_classPrivateFieldGet2(_isAbsolute, this));
+      _classPrivateFieldSet2(_isUNC, classPrivateFieldGet2_classPrivateFieldGet2(_rest, this), classPrivateFieldGet2_classPrivateFieldGet2(_isUNC, this));
+      _classPrivateFieldSet2(_isDrive, classPrivateFieldGet2_classPrivateFieldGet2(_rest, this), classPrivateFieldGet2_classPrivateFieldGet2(_isDrive, this));
+      return classPrivateFieldGet2_classPrivateFieldGet2(_rest, this);
+    }
+    /**
+     * true if the pattern represents a //unc/path/ on windows
+     */
+  }, {
+    key: "isUNC",
+    value: function isUNC() {
+      var pl = classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this);
+      return classPrivateFieldGet2_classPrivateFieldGet2(_isUNC, this) !== undefined ? classPrivateFieldGet2_classPrivateFieldGet2(_isUNC, this) : _classPrivateFieldSet2(_isUNC, this, classPrivateFieldGet2_classPrivateFieldGet2(_platform, this) === 'win32' && classPrivateFieldGet2_classPrivateFieldGet2(_index, this) === 0 && pl[0] === '' && pl[1] === '' && typeof pl[2] === 'string' && !!pl[2] && typeof pl[3] === 'string' && !!pl[3]);
+    }
+    // pattern like C:/...
+    // split = ['C:', ...]
+    // XXX: would be nice to handle patterns like `c:*` to test the cwd
+    // in c: for *, but I don't know of a way to even figure out what that
+    // cwd is without actually chdir'ing into it?
+    /**
+     * True if the pattern starts with a drive letter on Windows
+     */
+  }, {
+    key: "isDrive",
+    value: function isDrive() {
+      var pl = classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this);
+      return classPrivateFieldGet2_classPrivateFieldGet2(_isDrive, this) !== undefined ? classPrivateFieldGet2_classPrivateFieldGet2(_isDrive, this) : _classPrivateFieldSet2(_isDrive, this, classPrivateFieldGet2_classPrivateFieldGet2(_platform, this) === 'win32' && classPrivateFieldGet2_classPrivateFieldGet2(_index, this) === 0 && this.length > 1 && typeof pl[0] === 'string' && /^[a-z]:$/i.test(pl[0]));
+    }
+    // pattern = '/' or '/...' or '/x/...'
+    // split = ['', ''] or ['', ...] or ['', 'x', ...]
+    // Drive and UNC both considered absolute on windows
+    /**
+     * True if the pattern is rooted on an absolute path
+     */
+  }, {
+    key: "isAbsolute",
+    value: function isAbsolute() {
+      var pl = classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this);
+      return classPrivateFieldGet2_classPrivateFieldGet2(_isAbsolute, this) !== undefined ? classPrivateFieldGet2_classPrivateFieldGet2(_isAbsolute, this) : _classPrivateFieldSet2(_isAbsolute, this, pl[0] === '' && pl.length > 1 || this.isDrive() || this.isUNC());
+    }
+    /**
+     * consume the root of the pattern, and return it
+     */
+  }, {
+    key: "root",
+    value: function root() {
+      var p = classPrivateFieldGet2_classPrivateFieldGet2(_patternList, this)[0];
+      return typeof p === 'string' && this.isAbsolute() && classPrivateFieldGet2_classPrivateFieldGet2(_index, this) === 0 ? p : '';
+    }
+    /**
+     * Check to see if the current globstar pattern is allowed to follow
+     * a symbolic link.
+     */
+  }, {
+    key: "checkFollowGlobstar",
+    value: function checkFollowGlobstar() {
+      return !(classPrivateFieldGet2_classPrivateFieldGet2(_index, this) === 0 || !this.isGlobstar() || !classPrivateFieldGet2_classPrivateFieldGet2(_followGlobstar, this));
+    }
+    /**
+     * Mark that the current globstar pattern is following a symbolic link
+     */
+  }, {
+    key: "markFollowGlobstar",
+    value: function markFollowGlobstar() {
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_index, this) === 0 || !this.isGlobstar() || !classPrivateFieldGet2_classPrivateFieldGet2(_followGlobstar, this)) return false;
+      _classPrivateFieldSet2(_followGlobstar, this, false);
+      return true;
+    }
+  }]);
+}();
+//# sourceMappingURL=pattern.js.map
+;// CONCATENATED MODULE: ./node_modules/glob/dist/esm/ignore.js
+
+
+
+
+// give it a pattern, and it'll be able to tell you if
+// a given path should be ignored.
+// Ignoring a path ignores its children if the pattern ends in /**
+// Ignores are always parsed in dot:true mode
+
+
+var ignore_defaultPlatform = typeof process === 'object' && process && typeof process.platform === 'string' ? process.platform : 'linux';
+/**
+ * Class used to process ignored patterns
+ */
+var Ignore = /*#__PURE__*/function () {
+  function Ignore(ignored, _ref) {
+    var nobrace = _ref.nobrace,
+      nocase = _ref.nocase,
+      noext = _ref.noext,
+      noglobstar = _ref.noglobstar,
+      _ref$platform = _ref.platform,
+      platform = _ref$platform === void 0 ? ignore_defaultPlatform : _ref$platform;
+    (0,classCallCheck/* default */.A)(this, Ignore);
+    (0,defineProperty/* default */.A)(this, "relative", void 0);
+    (0,defineProperty/* default */.A)(this, "relativeChildren", void 0);
+    (0,defineProperty/* default */.A)(this, "absolute", void 0);
+    (0,defineProperty/* default */.A)(this, "absoluteChildren", void 0);
+    (0,defineProperty/* default */.A)(this, "platform", void 0);
+    (0,defineProperty/* default */.A)(this, "mmopts", void 0);
+    this.relative = [];
+    this.absolute = [];
+    this.relativeChildren = [];
+    this.absoluteChildren = [];
+    this.platform = platform;
+    this.mmopts = {
+      dot: true,
+      nobrace: nobrace,
+      nocase: nocase,
+      noext: noext,
+      noglobstar: noglobstar,
+      optimizationLevel: 2,
+      platform: platform,
+      nocomment: true,
+      nonegate: true
+    };
+    var _iterator = (0,createForOfIteratorHelper/* default */.A)(ignored),
+      _step;
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var ign = _step.value;
+        this.add(ign);
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  }
+  return (0,createClass/* default */.A)(Ignore, [{
+    key: "add",
+    value: function add(ign) {
+      // this is a little weird, but it gives us a clean set of optimized
+      // minimatch matchers, without getting tripped up if one of them
+      // ends in /** inside a brace section, and it's only inefficient at
+      // the start of the walk, not along it.
+      // It'd be nice if the Pattern class just had a .test() method, but
+      // handling globstars is a bit of a pita, and that code already lives
+      // in minimatch anyway.
+      // Another way would be if maybe Minimatch could take its set/globParts
+      // as an option, and then we could at least just use Pattern to test
+      // for absolute-ness.
+      // Yet another way, Minimatch could take an array of glob strings, and
+      // a cwd option, and do the right thing.
+      var mm = new Minimatch(ign, this.mmopts);
+      for (var i = 0; i < mm.set.length; i++) {
+        var parsed = mm.set[i];
+        var globParts = mm.globParts[i];
+        /* c8 ignore start */
+        if (!parsed || !globParts) {
+          throw new Error('invalid pattern object');
+        }
+        // strip off leading ./ portions
+        // https://github.com/isaacs/node-glob/issues/570
+        while (parsed[0] === '.' && globParts[0] === '.') {
+          parsed.shift();
+          globParts.shift();
+        }
+        /* c8 ignore stop */
+        var p = new Pattern(parsed, globParts, 0, this.platform);
+        var m = new Minimatch(p.globString(), this.mmopts);
+        var children = globParts[globParts.length - 1] === '**';
+        var absolute = p.isAbsolute();
+        if (absolute) this.absolute.push(m);else this.relative.push(m);
+        if (children) {
+          if (absolute) this.absoluteChildren.push(m);else this.relativeChildren.push(m);
+        }
+      }
+    }
+  }, {
+    key: "ignored",
+    value: function ignored(p) {
+      var fullpath = p.fullpath();
+      var fullpaths = "".concat(fullpath, "/");
+      var relative = p.relative() || '.';
+      var relatives = "".concat(relative, "/");
+      var _iterator2 = (0,createForOfIteratorHelper/* default */.A)(this.relative),
+        _step2;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var m = _step2.value;
+          if (m.match(relative) || m.match(relatives)) return true;
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+      var _iterator3 = (0,createForOfIteratorHelper/* default */.A)(this.absolute),
+        _step3;
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var _m = _step3.value;
+          if (_m.match(fullpath) || _m.match(fullpaths)) return true;
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+      return false;
+    }
+  }, {
+    key: "childrenIgnored",
+    value: function childrenIgnored(p) {
+      var fullpath = p.fullpath() + '/';
+      var relative = (p.relative() || '.') + '/';
+      var _iterator4 = (0,createForOfIteratorHelper/* default */.A)(this.relativeChildren),
+        _step4;
+      try {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var m = _step4.value;
+          if (m.match(relative)) return true;
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
+      var _iterator5 = (0,createForOfIteratorHelper/* default */.A)(this.absoluteChildren),
+        _step5;
+      try {
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var _m2 = _step5.value;
+          if (_m2.match(fullpath)) return true;
+        }
+      } catch (err) {
+        _iterator5.e(err);
+      } finally {
+        _iterator5.f();
+      }
+      return false;
+    }
+  }]);
+}();
+//# sourceMappingURL=ignore.js.map
+;// CONCATENATED MODULE: ./node_modules/glob/dist/esm/processor.js
+
+
+
+
+
+
+// synchronous utility for filtering entries and calculating subwalks
+
+/**
+ * A cache of which patterns have been processed for a given Path
+ */
+var HasWalkedCache = /*#__PURE__*/function () {
+  function HasWalkedCache() {
+    var store = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Map();
+    (0,classCallCheck/* default */.A)(this, HasWalkedCache);
+    (0,defineProperty/* default */.A)(this, "store", void 0);
+    this.store = store;
+  }
+  return (0,createClass/* default */.A)(HasWalkedCache, [{
+    key: "copy",
+    value: function copy() {
+      return new HasWalkedCache(new Map(this.store));
+    }
+  }, {
+    key: "hasWalked",
+    value: function hasWalked(target, pattern) {
+      var _this$store$get;
+      return (_this$store$get = this.store.get(target.fullpath())) === null || _this$store$get === void 0 ? void 0 : _this$store$get.has(pattern.globString());
+    }
+  }, {
+    key: "storeWalked",
+    value: function storeWalked(target, pattern) {
+      var fullpath = target.fullpath();
+      var cached = this.store.get(fullpath);
+      if (cached) cached.add(pattern.globString());else this.store.set(fullpath, new Set([pattern.globString()]));
+    }
+  }]);
+}();
+/**
+ * A record of which paths have been matched in a given walk step,
+ * and whether they only are considered a match if they are a directory,
+ * and whether their absolute or relative path should be returned.
+ */
+var MatchRecord = /*#__PURE__*/function () {
+  function MatchRecord() {
+    (0,classCallCheck/* default */.A)(this, MatchRecord);
+    (0,defineProperty/* default */.A)(this, "store", new Map());
+  }
+  return (0,createClass/* default */.A)(MatchRecord, [{
+    key: "add",
+    value: function add(target, absolute, ifDir) {
+      var n = (absolute ? 2 : 0) | (ifDir ? 1 : 0);
+      var current = this.store.get(target);
+      this.store.set(target, current === undefined ? n : n & current);
+    }
+    // match, absolute, ifdir
+  }, {
+    key: "entries",
+    value: function entries() {
+      return (0,toConsumableArray/* default */.A)(this.store.entries()).map(function (_ref) {
+        var _ref2 = (0,slicedToArray/* default */.A)(_ref, 2),
+          path = _ref2[0],
+          n = _ref2[1];
+        return [path, !!(n & 2), !!(n & 1)];
+      });
+    }
+  }]);
+}();
+/**
+ * A collection of patterns that must be processed in a subsequent step
+ * for a given path.
+ */
+var SubWalks = /*#__PURE__*/function () {
+  function SubWalks() {
+    (0,classCallCheck/* default */.A)(this, SubWalks);
+    (0,defineProperty/* default */.A)(this, "store", new Map());
+  }
+  return (0,createClass/* default */.A)(SubWalks, [{
+    key: "add",
+    value: function add(target, pattern) {
+      if (!target.canReaddir()) {
+        return;
+      }
+      var subs = this.store.get(target);
+      if (subs) {
+        if (!subs.find(function (p) {
+          return p.globString() === pattern.globString();
+        })) {
+          subs.push(pattern);
+        }
+      } else this.store.set(target, [pattern]);
+    }
+  }, {
+    key: "get",
+    value: function get(target) {
+      var subs = this.store.get(target);
+      /* c8 ignore start */
+      if (!subs) {
+        throw new Error('attempting to walk unknown path');
+      }
+      /* c8 ignore stop */
+      return subs;
+    }
+  }, {
+    key: "entries",
+    value: function entries() {
+      var _this = this;
+      return this.keys().map(function (k) {
+        return [k, _this.store.get(k)];
+      });
+    }
+  }, {
+    key: "keys",
+    value: function keys() {
+      return (0,toConsumableArray/* default */.A)(this.store.keys()).filter(function (t) {
+        return t.canReaddir();
+      });
+    }
+  }]);
+}();
+/**
+ * The class that processes patterns for a given path.
+ *
+ * Handles child entry filtering, and determining whether a path's
+ * directory contents must be read.
+ */
+var Processor = /*#__PURE__*/function () {
+  function Processor(opts, hasWalkedCache) {
+    (0,classCallCheck/* default */.A)(this, Processor);
+    (0,defineProperty/* default */.A)(this, "hasWalkedCache", void 0);
+    (0,defineProperty/* default */.A)(this, "matches", new MatchRecord());
+    (0,defineProperty/* default */.A)(this, "subwalks", new SubWalks());
+    (0,defineProperty/* default */.A)(this, "patterns", void 0);
+    (0,defineProperty/* default */.A)(this, "follow", void 0);
+    (0,defineProperty/* default */.A)(this, "dot", void 0);
+    (0,defineProperty/* default */.A)(this, "opts", void 0);
+    this.opts = opts;
+    this.follow = !!opts.follow;
+    this.dot = !!opts.dot;
+    this.hasWalkedCache = hasWalkedCache ? hasWalkedCache.copy() : new HasWalkedCache();
+  }
+  return (0,createClass/* default */.A)(Processor, [{
+    key: "processPatterns",
+    value: function processPatterns(target, patterns) {
+      this.patterns = patterns;
+      var processingSet = patterns.map(function (p) {
+        return [target, p];
+      });
+      // map of paths to the magic-starting subwalks they need to walk
+      // first item in patterns is the filter
+      var _iterator = (0,createForOfIteratorHelper/* default */.A)(processingSet),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var _step$value = (0,slicedToArray/* default */.A)(_step.value, 2),
+            t = _step$value[0],
+            pattern = _step$value[1];
+          this.hasWalkedCache.storeWalked(t, pattern);
+          var root = pattern.root();
+          var absolute = pattern.isAbsolute() && this.opts.absolute !== false;
+          // start absolute patterns at root
+          if (root) {
+            t = t.resolve(root === '/' && this.opts.root !== undefined ? this.opts.root : root);
+            var _rest = pattern.rest();
+            if (!_rest) {
+              this.matches.add(t, true, false);
+              continue;
+            } else {
+              pattern = _rest;
+            }
+          }
+          if (t.isENOENT()) continue;
+          var p = void 0;
+          var rest = void 0;
+          var changed = false;
+          while (typeof (p = pattern.pattern()) === 'string' && (rest = pattern.rest())) {
+            var c = t.resolve(p);
+            t = c;
+            pattern = rest;
+            changed = true;
+          }
+          p = pattern.pattern();
+          rest = pattern.rest();
+          if (changed) {
+            if (this.hasWalkedCache.hasWalked(t, pattern)) continue;
+            this.hasWalkedCache.storeWalked(t, pattern);
+          }
+          // now we have either a final string for a known entry,
+          // more strings for an unknown entry,
+          // or a pattern starting with magic, mounted on t.
+          if (typeof p === 'string') {
+            // must not be final entry, otherwise we would have
+            // concatenated it earlier.
+            var ifDir = p === '..' || p === '' || p === '.';
+            this.matches.add(t.resolve(p), absolute, ifDir);
+            continue;
+          } else if (p === GLOBSTAR) {
+            var _rest2, _rest3;
+            // if no rest, match and subwalk pattern
+            // if rest, process rest and subwalk pattern
+            // if it's a symlink, but we didn't get here by way of a
+            // globstar match (meaning it's the first time THIS globstar
+            // has traversed a symlink), then we follow it. Otherwise, stop.
+            if (!t.isSymbolicLink() || this.follow || pattern.checkFollowGlobstar()) {
+              this.subwalks.add(t, pattern);
+            }
+            var rp = (_rest2 = rest) === null || _rest2 === void 0 ? void 0 : _rest2.pattern();
+            var rrest = (_rest3 = rest) === null || _rest3 === void 0 ? void 0 : _rest3.rest();
+            if (!rest || (rp === '' || rp === '.') && !rrest) {
+              // only HAS to be a dir if it ends in **/ or **/.
+              // but ending in ** will match files as well.
+              this.matches.add(t, absolute, rp === '' || rp === '.');
+            } else {
+              if (rp === '..') {
+                // this would mean you're matching **/.. at the fs root,
+                // and no thanks, I'm not gonna test that specific case.
+                /* c8 ignore start */
+                var tp = t.parent || t;
+                /* c8 ignore stop */
+                if (!rrest) this.matches.add(tp, absolute, true);else if (!this.hasWalkedCache.hasWalked(tp, rrest)) {
+                  this.subwalks.add(tp, rrest);
+                }
+              }
+            }
+          } else if (p instanceof RegExp) {
+            this.subwalks.add(t, pattern);
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      return this;
+    }
+  }, {
+    key: "subwalkTargets",
+    value: function subwalkTargets() {
+      return this.subwalks.keys();
+    }
+  }, {
+    key: "child",
+    value: function child() {
+      return new Processor(this.opts, this.hasWalkedCache);
+    }
+    // return a new Processor containing the subwalks for each
+    // child entry, and a set of matches, and
+    // a hasWalkedCache that's a copy of this one
+    // then we're going to call
+  }, {
+    key: "filterEntries",
+    value: function filterEntries(parent, entries) {
+      var patterns = this.subwalks.get(parent);
+      // put matches and entry walks into the results processor
+      var results = this.child();
+      var _iterator2 = (0,createForOfIteratorHelper/* default */.A)(entries),
+        _step2;
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var e = _step2.value;
+          var _iterator3 = (0,createForOfIteratorHelper/* default */.A)(patterns),
+            _step3;
+          try {
+            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+              var pattern = _step3.value;
+              var absolute = pattern.isAbsolute();
+              var p = pattern.pattern();
+              var rest = pattern.rest();
+              if (p === GLOBSTAR) {
+                results.testGlobstar(e, pattern, rest, absolute);
+              } else if (p instanceof RegExp) {
+                results.testRegExp(e, p, rest, absolute);
+              } else {
+                results.testString(e, p, rest, absolute);
+              }
+            }
+          } catch (err) {
+            _iterator3.e(err);
+          } finally {
+            _iterator3.f();
+          }
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+      return results;
+    }
+  }, {
+    key: "testGlobstar",
+    value: function testGlobstar(e, pattern, rest, absolute) {
+      if (this.dot || !e.name.startsWith('.')) {
+        if (!pattern.hasMore()) {
+          this.matches.add(e, absolute, false);
+        }
+        if (e.canReaddir()) {
+          // if we're in follow mode or it's not a symlink, just keep
+          // testing the same pattern. If there's more after the globstar,
+          // then this symlink consumes the globstar. If not, then we can
+          // follow at most ONE symlink along the way, so we mark it, which
+          // also checks to ensure that it wasn't already marked.
+          if (this.follow || !e.isSymbolicLink()) {
+            this.subwalks.add(e, pattern);
+          } else if (e.isSymbolicLink()) {
+            if (rest && pattern.checkFollowGlobstar()) {
+              this.subwalks.add(e, rest);
+            } else if (pattern.markFollowGlobstar()) {
+              this.subwalks.add(e, pattern);
+            }
+          }
+        }
+      }
+      // if the NEXT thing matches this entry, then also add
+      // the rest.
+      if (rest) {
+        var rp = rest.pattern();
+        if (typeof rp === 'string' &&
+        // dots and empty were handled already
+        rp !== '..' && rp !== '' && rp !== '.') {
+          this.testString(e, rp, rest.rest(), absolute);
+        } else if (rp === '..') {
+          /* c8 ignore start */
+          var ep = e.parent || e;
+          /* c8 ignore stop */
+          this.subwalks.add(ep, rest);
+        } else if (rp instanceof RegExp) {
+          this.testRegExp(e, rp, rest.rest(), absolute);
+        }
+      }
+    }
+  }, {
+    key: "testRegExp",
+    value: function testRegExp(e, p, rest, absolute) {
+      if (!p.test(e.name)) return;
+      if (!rest) {
+        this.matches.add(e, absolute, false);
+      } else {
+        this.subwalks.add(e, rest);
+      }
+    }
+  }, {
+    key: "testString",
+    value: function testString(e, p, rest, absolute) {
+      // should never happen?
+      if (!e.isNamed(p)) return;
+      if (!rest) {
+        this.matches.add(e, absolute, false);
+      } else {
+        this.subwalks.add(e, rest);
+      }
+    }
+  }]);
+}();
+//# sourceMappingURL=processor.js.map
+;// CONCATENATED MODULE: ./node_modules/glob/dist/esm/walker.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Single-use utility classes to provide functionality to the {@link Glob}
+ * methods.
+ *
+ * @module
+ */
+
+
+
+var makeIgnore = function makeIgnore(ignore, opts) {
+  return typeof ignore === 'string' ? new Ignore([ignore], opts) : Array.isArray(ignore) ? new Ignore(ignore, opts) : ignore;
+};
+/**
+ * basic walking utilities that all the glob walker types use
+ */
+var _onResume = /*#__PURE__*/new WeakMap();
+var _ignore = /*#__PURE__*/new WeakMap();
+var _sep = /*#__PURE__*/new WeakMap();
+var _GlobUtil_brand = /*#__PURE__*/new WeakSet();
+var GlobUtil = /*#__PURE__*/function () {
+  function GlobUtil(patterns, _path, opts) {
+    var _this = this;
+    (0,classCallCheck/* default */.A)(this, GlobUtil);
+    _classPrivateMethodInitSpec(this, _GlobUtil_brand);
+    (0,defineProperty/* default */.A)(this, "path", void 0);
+    (0,defineProperty/* default */.A)(this, "patterns", void 0);
+    (0,defineProperty/* default */.A)(this, "opts", void 0);
+    (0,defineProperty/* default */.A)(this, "seen", new Set());
+    (0,defineProperty/* default */.A)(this, "paused", false);
+    (0,defineProperty/* default */.A)(this, "aborted", false);
+    _classPrivateFieldInitSpec(this, _onResume, []);
+    _classPrivateFieldInitSpec(this, _ignore, void 0);
+    _classPrivateFieldInitSpec(this, _sep, void 0);
+    (0,defineProperty/* default */.A)(this, "signal", void 0);
+    (0,defineProperty/* default */.A)(this, "maxDepth", void 0);
+    (0,defineProperty/* default */.A)(this, "includeChildMatches", void 0);
+    this.patterns = patterns;
+    this.path = _path;
+    this.opts = opts;
+    _classPrivateFieldSet2(_sep, this, !opts.posix && opts.platform === 'win32' ? '\\' : '/');
+    this.includeChildMatches = opts.includeChildMatches !== false;
+    if (opts.ignore || !this.includeChildMatches) {
+      var _opts$ignore;
+      _classPrivateFieldSet2(_ignore, this, makeIgnore((_opts$ignore = opts.ignore) !== null && _opts$ignore !== void 0 ? _opts$ignore : [], opts));
+      if (!this.includeChildMatches && typeof classPrivateFieldGet2_classPrivateFieldGet2(_ignore, this).add !== 'function') {
+        var m = 'cannot ignore child matches, ignore lacks add() method.';
+        throw new Error(m);
+      }
+    }
+    // ignore, always set with maxDepth, but it's optional on the
+    // GlobOptions type
+    /* c8 ignore start */
+    this.maxDepth = opts.maxDepth || Infinity;
+    /* c8 ignore stop */
+    if (opts.signal) {
+      this.signal = opts.signal;
+      this.signal.addEventListener('abort', function () {
+        classPrivateFieldGet2_classPrivateFieldGet2(_onResume, _this).length = 0;
+      });
+    }
+  }
+  return (0,createClass/* default */.A)(GlobUtil, [{
+    key: "pause",
+    value:
+    // backpressure mechanism
+    function pause() {
+      this.paused = true;
+    }
+  }, {
+    key: "resume",
+    value: function resume() {
+      var _this$signal;
+      /* c8 ignore start */
+      if ((_this$signal = this.signal) !== null && _this$signal !== void 0 && _this$signal.aborted) return;
+      /* c8 ignore stop */
+      this.paused = false;
+      var fn = undefined;
+      while (!this.paused && (fn = classPrivateFieldGet2_classPrivateFieldGet2(_onResume, this).shift())) {
+        fn();
+      }
+    }
+  }, {
+    key: "onResume",
+    value: function onResume(fn) {
+      var _this$signal2;
+      if ((_this$signal2 = this.signal) !== null && _this$signal2 !== void 0 && _this$signal2.aborted) return;
+      /* c8 ignore start */
+      if (!this.paused) {
+        fn();
+      } else {
+        /* c8 ignore stop */
+        classPrivateFieldGet2_classPrivateFieldGet2(_onResume, this).push(fn);
+      }
+    }
+    // do the requisite realpath/stat checking, and return the path
+    // to add or undefined to filter it out.
+  }, {
+    key: "matchCheck",
+    value: function () {
+      var _matchCheck = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee(e, ifDir) {
+        var rpc, needStat, s, target;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              if (!(ifDir && this.opts.nodir)) {
+                _context.next = 2;
+                break;
+              }
+              return _context.abrupt("return", undefined);
+            case 2:
+              if (!this.opts.realpath) {
+                _context.next = 12;
+                break;
+              }
+              _context.t0 = e.realpathCached();
+              if (_context.t0) {
+                _context.next = 8;
+                break;
+              }
+              _context.next = 7;
+              return e.realpath();
+            case 7:
+              _context.t0 = _context.sent;
+            case 8:
+              rpc = _context.t0;
+              if (rpc) {
+                _context.next = 11;
+                break;
+              }
+              return _context.abrupt("return", undefined);
+            case 11:
+              e = rpc;
+            case 12:
+              needStat = e.isUnknown() || this.opts.stat;
+              if (!needStat) {
+                _context.next = 19;
+                break;
+              }
+              _context.next = 16;
+              return e.lstat();
+            case 16:
+              _context.t1 = _context.sent;
+              _context.next = 20;
+              break;
+            case 19:
+              _context.t1 = e;
+            case 20:
+              s = _context.t1;
+              if (!(this.opts.follow && this.opts.nodir && s !== null && s !== void 0 && s.isSymbolicLink())) {
+                _context.next = 28;
+                break;
+              }
+              _context.next = 24;
+              return s.realpath();
+            case 24:
+              target = _context.sent;
+              if (!(target && (target.isUnknown() || this.opts.stat))) {
+                _context.next = 28;
+                break;
+              }
+              _context.next = 28;
+              return target.lstat();
+            case 28:
+              return _context.abrupt("return", this.matchCheckTest(s, ifDir));
+            case 29:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this);
+      }));
+      function matchCheck(_x, _x2) {
+        return _matchCheck.apply(this, arguments);
+      }
+      return matchCheck;
+    }()
+  }, {
+    key: "matchCheckTest",
+    value: function matchCheckTest(e, ifDir) {
+      var _e$realpathCached;
+      return e && (this.maxDepth === Infinity || e.depth() <= this.maxDepth) && (!ifDir || e.canReaddir()) && (!this.opts.nodir || !e.isDirectory()) && (!this.opts.nodir || !this.opts.follow || !e.isSymbolicLink() || !((_e$realpathCached = e.realpathCached()) !== null && _e$realpathCached !== void 0 && _e$realpathCached.isDirectory())) && !_assertClassBrand(_GlobUtil_brand, this, _ignored).call(this, e) ? e : undefined;
+    }
+  }, {
+    key: "matchCheckSync",
+    value: function matchCheckSync(e, ifDir) {
+      if (ifDir && this.opts.nodir) return undefined;
+      var rpc;
+      if (this.opts.realpath) {
+        rpc = e.realpathCached() || e.realpathSync();
+        if (!rpc) return undefined;
+        e = rpc;
+      }
+      var needStat = e.isUnknown() || this.opts.stat;
+      var s = needStat ? e.lstatSync() : e;
+      if (this.opts.follow && this.opts.nodir && s !== null && s !== void 0 && s.isSymbolicLink()) {
+        var target = s.realpathSync();
+        if (target && (target !== null && target !== void 0 && target.isUnknown() || this.opts.stat)) {
+          target.lstatSync();
+        }
+      }
+      return this.matchCheckTest(s, ifDir);
+    }
+  }, {
+    key: "matchFinish",
+    value: function matchFinish(e, absolute) {
+      var _classPrivateFieldGet2;
+      if (_assertClassBrand(_GlobUtil_brand, this, _ignored).call(this, e)) return;
+      // we know we have an ignore if this is false, but TS doesn't
+      if (!this.includeChildMatches && (_classPrivateFieldGet2 = classPrivateFieldGet2_classPrivateFieldGet2(_ignore, this)) !== null && _classPrivateFieldGet2 !== void 0 && _classPrivateFieldGet2.add) {
+        var ign = "".concat(e.relativePosix(), "/**");
+        classPrivateFieldGet2_classPrivateFieldGet2(_ignore, this).add(ign);
+      }
+      var abs = this.opts.absolute === undefined ? absolute : this.opts.absolute;
+      this.seen.add(e);
+      var mark = this.opts.mark && e.isDirectory() ? classPrivateFieldGet2_classPrivateFieldGet2(_sep, this) : '';
+      // ok, we have what we need!
+      if (this.opts.withFileTypes) {
+        this.matchEmit(e);
+      } else if (abs) {
+        var _abs = this.opts.posix ? e.fullpathPosix() : e.fullpath();
+        this.matchEmit(_abs + mark);
+      } else {
+        var rel = this.opts.posix ? e.relativePosix() : e.relative();
+        var pre = this.opts.dotRelative && !rel.startsWith('..' + classPrivateFieldGet2_classPrivateFieldGet2(_sep, this)) ? '.' + classPrivateFieldGet2_classPrivateFieldGet2(_sep, this) : '';
+        this.matchEmit(!rel ? '.' + mark : pre + rel + mark);
+      }
+    }
+  }, {
+    key: "match",
+    value: function () {
+      var _match = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee2(e, absolute, ifDir) {
+        var p;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return this.matchCheck(e, ifDir);
+            case 2:
+              p = _context2.sent;
+              if (p) this.matchFinish(p, absolute);
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, this);
+      }));
+      function match(_x3, _x4, _x5) {
+        return _match.apply(this, arguments);
+      }
+      return match;
+    }()
+  }, {
+    key: "matchSync",
+    value: function matchSync(e, absolute, ifDir) {
+      var p = this.matchCheckSync(e, ifDir);
+      if (p) this.matchFinish(p, absolute);
+    }
+  }, {
+    key: "walkCB",
+    value: function walkCB(target, patterns, cb) {
+      var _this$signal3;
+      /* c8 ignore start */
+      if ((_this$signal3 = this.signal) !== null && _this$signal3 !== void 0 && _this$signal3.aborted) cb();
+      /* c8 ignore stop */
+      this.walkCB2(target, patterns, new Processor(this.opts), cb);
+    }
+  }, {
+    key: "walkCB2",
+    value: function walkCB2(target, patterns, processor, cb) {
+      var _this$signal4,
+        _this2 = this;
+      if (_assertClassBrand(_GlobUtil_brand, this, _childrenIgnored).call(this, target)) return cb();
+      if ((_this$signal4 = this.signal) !== null && _this$signal4 !== void 0 && _this$signal4.aborted) cb();
+      if (this.paused) {
+        this.onResume(function () {
+          return _this2.walkCB2(target, patterns, processor, cb);
+        });
+        return;
+      }
+      processor.processPatterns(target, patterns);
+      // done processing.  all of the above is sync, can be abstracted out.
+      // subwalks is a map of paths to the entry filters they need
+      // matches is a map of paths to [absolute, ifDir] tuples.
+      var tasks = 1;
+      var next = function next() {
+        if (--tasks === 0) cb();
+      };
+      var _iterator = (0,createForOfIteratorHelper/* default */.A)(processor.matches.entries()),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var _step$value = (0,slicedToArray/* default */.A)(_step.value, 3),
+            m = _step$value[0],
+            absolute = _step$value[1],
+            ifDir = _step$value[2];
+          if (_assertClassBrand(_GlobUtil_brand, this, _ignored).call(this, m)) continue;
+          tasks++;
+          this.match(m, absolute, ifDir).then(function () {
+            return next();
+          });
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      var _iterator2 = (0,createForOfIteratorHelper/* default */.A)(processor.subwalkTargets()),
+        _step2;
+      try {
+        var _loop = function _loop() {
+          var t = _step2.value;
+          if (_this2.maxDepth !== Infinity && t.depth() >= _this2.maxDepth) {
+            return 1; // continue
+          }
+          tasks++;
+          var childrenCached = t.readdirCached();
+          if (t.calledReaddir()) _this2.walkCB3(t, childrenCached, processor, next);else {
+            t.readdirCB(function (_, entries) {
+              return _this2.walkCB3(t, entries, processor, next);
+            }, true);
+          }
+        };
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          if (_loop()) continue;
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+      next();
+    }
+  }, {
+    key: "walkCB3",
+    value: function walkCB3(target, entries, processor, cb) {
+      processor = processor.filterEntries(target, entries);
+      var tasks = 1;
+      var next = function next() {
+        if (--tasks === 0) cb();
+      };
+      var _iterator3 = (0,createForOfIteratorHelper/* default */.A)(processor.matches.entries()),
+        _step3;
+      try {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+          var _step3$value = (0,slicedToArray/* default */.A)(_step3.value, 3),
+            m = _step3$value[0],
+            absolute = _step3$value[1],
+            ifDir = _step3$value[2];
+          if (_assertClassBrand(_GlobUtil_brand, this, _ignored).call(this, m)) continue;
+          tasks++;
+          this.match(m, absolute, ifDir).then(function () {
+            return next();
+          });
+        }
+      } catch (err) {
+        _iterator3.e(err);
+      } finally {
+        _iterator3.f();
+      }
+      var _iterator4 = (0,createForOfIteratorHelper/* default */.A)(processor.subwalks.entries()),
+        _step4;
+      try {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var _step4$value = (0,slicedToArray/* default */.A)(_step4.value, 2),
+            _target = _step4$value[0],
+            patterns = _step4$value[1];
+          tasks++;
+          this.walkCB2(_target, patterns, processor.child(), next);
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
+      next();
+    }
+  }, {
+    key: "walkCBSync",
+    value: function walkCBSync(target, patterns, cb) {
+      var _this$signal5;
+      /* c8 ignore start */
+      if ((_this$signal5 = this.signal) !== null && _this$signal5 !== void 0 && _this$signal5.aborted) cb();
+      /* c8 ignore stop */
+      this.walkCB2Sync(target, patterns, new Processor(this.opts), cb);
+    }
+  }, {
+    key: "walkCB2Sync",
+    value: function walkCB2Sync(target, patterns, processor, cb) {
+      var _this$signal6,
+        _this3 = this;
+      if (_assertClassBrand(_GlobUtil_brand, this, _childrenIgnored).call(this, target)) return cb();
+      if ((_this$signal6 = this.signal) !== null && _this$signal6 !== void 0 && _this$signal6.aborted) cb();
+      if (this.paused) {
+        this.onResume(function () {
+          return _this3.walkCB2Sync(target, patterns, processor, cb);
+        });
+        return;
+      }
+      processor.processPatterns(target, patterns);
+      // done processing.  all of the above is sync, can be abstracted out.
+      // subwalks is a map of paths to the entry filters they need
+      // matches is a map of paths to [absolute, ifDir] tuples.
+      var tasks = 1;
+      var next = function next() {
+        if (--tasks === 0) cb();
+      };
+      var _iterator5 = (0,createForOfIteratorHelper/* default */.A)(processor.matches.entries()),
+        _step5;
+      try {
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var _step5$value = (0,slicedToArray/* default */.A)(_step5.value, 3),
+            m = _step5$value[0],
+            absolute = _step5$value[1],
+            ifDir = _step5$value[2];
+          if (_assertClassBrand(_GlobUtil_brand, this, _ignored).call(this, m)) continue;
+          this.matchSync(m, absolute, ifDir);
+        }
+      } catch (err) {
+        _iterator5.e(err);
+      } finally {
+        _iterator5.f();
+      }
+      var _iterator6 = (0,createForOfIteratorHelper/* default */.A)(processor.subwalkTargets()),
+        _step6;
+      try {
+        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+          var t = _step6.value;
+          if (this.maxDepth !== Infinity && t.depth() >= this.maxDepth) {
+            continue;
+          }
+          tasks++;
+          var children = t.readdirSync();
+          this.walkCB3Sync(t, children, processor, next);
+        }
+      } catch (err) {
+        _iterator6.e(err);
+      } finally {
+        _iterator6.f();
+      }
+      next();
+    }
+  }, {
+    key: "walkCB3Sync",
+    value: function walkCB3Sync(target, entries, processor, cb) {
+      processor = processor.filterEntries(target, entries);
+      var tasks = 1;
+      var next = function next() {
+        if (--tasks === 0) cb();
+      };
+      var _iterator7 = (0,createForOfIteratorHelper/* default */.A)(processor.matches.entries()),
+        _step7;
+      try {
+        for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+          var _step7$value = (0,slicedToArray/* default */.A)(_step7.value, 3),
+            m = _step7$value[0],
+            absolute = _step7$value[1],
+            ifDir = _step7$value[2];
+          if (_assertClassBrand(_GlobUtil_brand, this, _ignored).call(this, m)) continue;
+          this.matchSync(m, absolute, ifDir);
+        }
+      } catch (err) {
+        _iterator7.e(err);
+      } finally {
+        _iterator7.f();
+      }
+      var _iterator8 = (0,createForOfIteratorHelper/* default */.A)(processor.subwalks.entries()),
+        _step8;
+      try {
+        for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+          var _step8$value = (0,slicedToArray/* default */.A)(_step8.value, 2),
+            _target2 = _step8$value[0],
+            patterns = _step8$value[1];
+          tasks++;
+          this.walkCB2Sync(_target2, patterns, processor.child(), next);
+        }
+      } catch (err) {
+        _iterator8.e(err);
+      } finally {
+        _iterator8.f();
+      }
+      next();
+    }
+  }]);
+}();
+function _ignored(path) {
+  var _classPrivateFieldGet3, _classPrivateFieldGet4;
+  return this.seen.has(path) || !!((_classPrivateFieldGet3 = classPrivateFieldGet2_classPrivateFieldGet2(_ignore, this)) !== null && _classPrivateFieldGet3 !== void 0 && (_classPrivateFieldGet4 = _classPrivateFieldGet3.ignored) !== null && _classPrivateFieldGet4 !== void 0 && _classPrivateFieldGet4.call(_classPrivateFieldGet3, path));
+}
+function _childrenIgnored(path) {
+  var _classPrivateFieldGet5, _classPrivateFieldGet6;
+  return !!((_classPrivateFieldGet5 = classPrivateFieldGet2_classPrivateFieldGet2(_ignore, this)) !== null && _classPrivateFieldGet5 !== void 0 && (_classPrivateFieldGet6 = _classPrivateFieldGet5.childrenIgnored) !== null && _classPrivateFieldGet6 !== void 0 && _classPrivateFieldGet6.call(_classPrivateFieldGet5, path));
+}
+var GlobWalker = /*#__PURE__*/function (_GlobUtil2) {
+  function GlobWalker(patterns, path, opts) {
+    var _this4;
+    (0,classCallCheck/* default */.A)(this, GlobWalker);
+    _this4 = (0,callSuper/* default */.A)(this, GlobWalker, [patterns, path, opts]);
+    (0,defineProperty/* default */.A)(_this4, "matches", new Set());
+    return _this4;
+  }
+  (0,inherits/* default */.A)(GlobWalker, _GlobUtil2);
+  return (0,createClass/* default */.A)(GlobWalker, [{
+    key: "matchEmit",
+    value: function matchEmit(e) {
+      this.matches.add(e);
+    }
+  }, {
+    key: "walk",
+    value: function () {
+      var _walk = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee3() {
+        var _this$signal7,
+          _this5 = this;
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              if (!((_this$signal7 = this.signal) !== null && _this$signal7 !== void 0 && _this$signal7.aborted)) {
+                _context3.next = 2;
+                break;
+              }
+              throw this.signal.reason;
+            case 2:
+              if (!this.path.isUnknown()) {
+                _context3.next = 5;
+                break;
+              }
+              _context3.next = 5;
+              return this.path.lstat();
+            case 5:
+              _context3.next = 7;
+              return new Promise(function (res, rej) {
+                _this5.walkCB(_this5.path, _this5.patterns, function () {
+                  var _this5$signal;
+                  if ((_this5$signal = _this5.signal) !== null && _this5$signal !== void 0 && _this5$signal.aborted) {
+                    rej(_this5.signal.reason);
+                  } else {
+                    res(_this5.matches);
+                  }
+                });
+              });
+            case 7:
+              return _context3.abrupt("return", this.matches);
+            case 8:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, this);
+      }));
+      function walk() {
+        return _walk.apply(this, arguments);
+      }
+      return walk;
+    }()
+  }, {
+    key: "walkSync",
+    value: function walkSync() {
+      var _this$signal8,
+        _this6 = this;
+      if ((_this$signal8 = this.signal) !== null && _this$signal8 !== void 0 && _this$signal8.aborted) throw this.signal.reason;
+      if (this.path.isUnknown()) {
+        this.path.lstatSync();
+      }
+      // nothing for the callback to do, because this never pauses
+      this.walkCBSync(this.path, this.patterns, function () {
+        var _this6$signal;
+        if ((_this6$signal = _this6.signal) !== null && _this6$signal !== void 0 && _this6$signal.aborted) throw _this6.signal.reason;
+      });
+      return this.matches;
+    }
+  }]);
+}(GlobUtil);
+var GlobStream = /*#__PURE__*/function (_GlobUtil3) {
+  function GlobStream(patterns, path, opts) {
+    var _this7;
+    (0,classCallCheck/* default */.A)(this, GlobStream);
+    _this7 = (0,callSuper/* default */.A)(this, GlobStream, [patterns, path, opts]);
+    (0,defineProperty/* default */.A)(_this7, "results", void 0);
+    _this7.results = new Minipass({
+      signal: _this7.signal,
+      objectMode: true
+    });
+    _this7.results.on('drain', function () {
+      return _this7.resume();
+    });
+    _this7.results.on('resume', function () {
+      return _this7.resume();
+    });
+    return _this7;
+  }
+  (0,inherits/* default */.A)(GlobStream, _GlobUtil3);
+  return (0,createClass/* default */.A)(GlobStream, [{
+    key: "matchEmit",
+    value: function matchEmit(e) {
+      this.results.write(e);
+      if (!this.results.flowing) this.pause();
+    }
+  }, {
+    key: "stream",
+    value: function stream() {
+      var _this8 = this;
+      var target = this.path;
+      if (target.isUnknown()) {
+        target.lstat().then(function () {
+          _this8.walkCB(target, _this8.patterns, function () {
+            return _this8.results.end();
+          });
+        });
+      } else {
+        this.walkCB(target, this.patterns, function () {
+          return _this8.results.end();
+        });
+      }
+      return this.results;
+    }
+  }, {
+    key: "streamSync",
+    value: function streamSync() {
+      var _this9 = this;
+      if (this.path.isUnknown()) {
+        this.path.lstatSync();
+      }
+      this.walkCBSync(this.path, this.patterns, function () {
+        return _this9.results.end();
+      });
+      return this.results;
+    }
+  }]);
+}(GlobUtil);
+//# sourceMappingURL=walker.js.map
+;// CONCATENATED MODULE: ./node_modules/glob/dist/esm/glob.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+// if no process global, just call it linux.
+// so we default to case-sensitive, / separators
+var glob_defaultPlatform = typeof process === 'object' && process && typeof process.platform === 'string' ? process.platform : 'linux';
+/**
+ * An object that can perform glob pattern traversals.
+ */
+var Glob = /*#__PURE__*/function () {
+  /**
+   * All options are stored as properties on the `Glob` object.
+   *
+   * See {@link GlobOptions} for full options descriptions.
+   *
+   * Note that a previous `Glob` object can be passed as the
+   * `GlobOptions` to another `Glob` instantiation to re-use settings
+   * and caches with a new pattern.
+   *
+   * Traversal functions can be called multiple times to run the walk
+   * again.
+   */
+  function Glob(pattern, opts) {
+    var _this = this;
+    (0,classCallCheck/* default */.A)(this, Glob);
+    (0,defineProperty/* default */.A)(this, "absolute", void 0);
+    (0,defineProperty/* default */.A)(this, "cwd", void 0);
+    (0,defineProperty/* default */.A)(this, "root", void 0);
+    (0,defineProperty/* default */.A)(this, "dot", void 0);
+    (0,defineProperty/* default */.A)(this, "dotRelative", void 0);
+    (0,defineProperty/* default */.A)(this, "follow", void 0);
+    (0,defineProperty/* default */.A)(this, "ignore", void 0);
+    (0,defineProperty/* default */.A)(this, "magicalBraces", void 0);
+    (0,defineProperty/* default */.A)(this, "mark", void 0);
+    (0,defineProperty/* default */.A)(this, "matchBase", void 0);
+    (0,defineProperty/* default */.A)(this, "maxDepth", void 0);
+    (0,defineProperty/* default */.A)(this, "nobrace", void 0);
+    (0,defineProperty/* default */.A)(this, "nocase", void 0);
+    (0,defineProperty/* default */.A)(this, "nodir", void 0);
+    (0,defineProperty/* default */.A)(this, "noext", void 0);
+    (0,defineProperty/* default */.A)(this, "noglobstar", void 0);
+    (0,defineProperty/* default */.A)(this, "pattern", void 0);
+    (0,defineProperty/* default */.A)(this, "platform", void 0);
+    (0,defineProperty/* default */.A)(this, "realpath", void 0);
+    (0,defineProperty/* default */.A)(this, "scurry", void 0);
+    (0,defineProperty/* default */.A)(this, "stat", void 0);
+    (0,defineProperty/* default */.A)(this, "signal", void 0);
+    (0,defineProperty/* default */.A)(this, "windowsPathsNoEscape", void 0);
+    (0,defineProperty/* default */.A)(this, "withFileTypes", void 0);
+    (0,defineProperty/* default */.A)(this, "includeChildMatches", void 0);
+    /**
+     * The options provided to the constructor.
+     */
+    (0,defineProperty/* default */.A)(this, "opts", void 0);
+    /**
+     * An array of parsed immutable {@link Pattern} objects.
+     */
+    (0,defineProperty/* default */.A)(this, "patterns", void 0);
+    /* c8 ignore start */
+    if (!opts) throw new TypeError('glob options required');
+    /* c8 ignore stop */
+    this.withFileTypes = !!opts.withFileTypes;
+    this.signal = opts.signal;
+    this.follow = !!opts.follow;
+    this.dot = !!opts.dot;
+    this.dotRelative = !!opts.dotRelative;
+    this.nodir = !!opts.nodir;
+    this.mark = !!opts.mark;
+    if (!opts.cwd) {
+      this.cwd = '';
+    } else if (opts.cwd instanceof URL || opts.cwd.startsWith('file://')) {
+      opts.cwd = (0,external_node_url_namespaceObject.fileURLToPath)(opts.cwd);
+    }
+    this.cwd = opts.cwd || '';
+    this.root = opts.root;
+    this.magicalBraces = !!opts.magicalBraces;
+    this.nobrace = !!opts.nobrace;
+    this.noext = !!opts.noext;
+    this.realpath = !!opts.realpath;
+    this.absolute = opts.absolute;
+    this.includeChildMatches = opts.includeChildMatches !== false;
+    this.noglobstar = !!opts.noglobstar;
+    this.matchBase = !!opts.matchBase;
+    this.maxDepth = typeof opts.maxDepth === 'number' ? opts.maxDepth : Infinity;
+    this.stat = !!opts.stat;
+    this.ignore = opts.ignore;
+    if (this.withFileTypes && this.absolute !== undefined) {
+      throw new Error('cannot set absolute and withFileTypes:true');
+    }
+    if (typeof pattern === 'string') {
+      pattern = [pattern];
+    }
+    this.windowsPathsNoEscape = !!opts.windowsPathsNoEscape || opts.allowWindowsEscape === false;
+    if (this.windowsPathsNoEscape) {
+      pattern = pattern.map(function (p) {
+        return p.replace(/\\/g, '/');
+      });
+    }
+    if (this.matchBase) {
+      if (opts.noglobstar) {
+        throw new TypeError('base matching requires globstar');
+      }
+      pattern = pattern.map(function (p) {
+        return p.includes('/') ? p : "./**/".concat(p);
+      });
+    }
+    this.pattern = pattern;
+    this.platform = opts.platform || glob_defaultPlatform;
+    this.opts = (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, opts), {}, {
+      platform: this.platform
+    });
+    if (opts.scurry) {
+      this.scurry = opts.scurry;
+      if (opts.nocase !== undefined && opts.nocase !== opts.scurry.nocase) {
+        throw new Error('nocase option contradicts provided scurry option');
+      }
+    } else {
+      var Scurry = opts.platform === 'win32' ? PathScurryWin32 : opts.platform === 'darwin' ? PathScurryDarwin : opts.platform ? PathScurryPosix : PathScurry;
+      this.scurry = new Scurry(this.cwd, {
+        nocase: opts.nocase,
+        fs: opts.fs
+      });
+    }
+    this.nocase = this.scurry.nocase;
+    // If you do nocase:true on a case-sensitive file system, then
+    // we need to use regexps instead of strings for non-magic
+    // path portions, because statting `aBc` won't return results
+    // for the file `AbC` for example.
+    var nocaseMagicOnly = this.platform === 'darwin' || this.platform === 'win32';
+    var mmo = (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, opts), {}, {
+      dot: this.dot,
+      matchBase: this.matchBase,
+      nobrace: this.nobrace,
+      nocase: this.nocase,
+      nocaseMagicOnly: nocaseMagicOnly,
+      nocomment: true,
+      noext: this.noext,
+      nonegate: true,
+      optimizationLevel: 2,
+      platform: this.platform,
+      windowsPathsNoEscape: this.windowsPathsNoEscape,
+      debug: !!this.opts.debug
+    });
+    var mms = this.pattern.map(function (p) {
+      return new Minimatch(p, mmo);
+    });
+    var _mms$reduce = mms.reduce(function (set, m) {
+        var _set$, _set$2;
+        (_set$ = set[0]).push.apply(_set$, (0,toConsumableArray/* default */.A)(m.set));
+        (_set$2 = set[1]).push.apply(_set$2, (0,toConsumableArray/* default */.A)(m.globParts));
+        return set;
+      }, [[], []]),
+      _mms$reduce2 = (0,slicedToArray/* default */.A)(_mms$reduce, 2),
+      matchSet = _mms$reduce2[0],
+      globParts = _mms$reduce2[1];
+    this.patterns = matchSet.map(function (set, i) {
+      var g = globParts[i];
+      /* c8 ignore start */
+      if (!g) throw new Error('invalid pattern object');
+      /* c8 ignore stop */
+      return new Pattern(set, g, 0, _this.platform);
+    });
+  }
+  return (0,createClass/* default */.A)(Glob, [{
+    key: "walk",
+    value: function () {
+      var _walk = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee() {
+        return (0,regeneratorRuntime/* default */.A)().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.t0 = toConsumableArray/* default */.A;
+              _context.next = 3;
+              return new GlobWalker(this.patterns, this.scurry.cwd, (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, this.opts), {}, {
+                maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
+                platform: this.platform,
+                nocase: this.nocase,
+                includeChildMatches: this.includeChildMatches
+              })).walk();
+            case 3:
+              _context.t1 = _context.sent;
+              return _context.abrupt("return", (0, _context.t0)(_context.t1));
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this);
+      }));
+      function walk() {
+        return _walk.apply(this, arguments);
+      }
+      return walk;
+    }()
+  }, {
+    key: "walkSync",
+    value: function walkSync() {
+      return (0,toConsumableArray/* default */.A)(new GlobWalker(this.patterns, this.scurry.cwd, (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, this.opts), {}, {
+        maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
+        platform: this.platform,
+        nocase: this.nocase,
+        includeChildMatches: this.includeChildMatches
+      })).walkSync());
+    }
+  }, {
+    key: "stream",
+    value: function stream() {
+      return new GlobStream(this.patterns, this.scurry.cwd, (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, this.opts), {}, {
+        maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
+        platform: this.platform,
+        nocase: this.nocase,
+        includeChildMatches: this.includeChildMatches
+      })).stream();
+    }
+  }, {
+    key: "streamSync",
+    value: function streamSync() {
+      return new GlobStream(this.patterns, this.scurry.cwd, (0,objectSpread2/* default */.A)((0,objectSpread2/* default */.A)({}, this.opts), {}, {
+        maxDepth: this.maxDepth !== Infinity ? this.maxDepth + this.scurry.cwd.depth() : Infinity,
+        platform: this.platform,
+        nocase: this.nocase,
+        includeChildMatches: this.includeChildMatches
+      })).streamSync();
+    }
+    /**
+     * Default sync iteration function. Returns a Generator that
+     * iterates over the results.
+     */
+  }, {
+    key: "iterateSync",
+    value: function iterateSync() {
+      return this.streamSync()[Symbol.iterator]();
+    }
+  }, {
+    key: Symbol.iterator,
+    value: function value() {
+      return this.iterateSync();
+    }
+    /**
+     * Default async iteration function. Returns an AsyncGenerator that
+     * iterates over the results.
+     */
+  }, {
+    key: "iterate",
+    value: function iterate() {
+      return this.stream()[Symbol.asyncIterator]();
+    }
+  }, {
+    key: Symbol.asyncIterator,
+    value: function value() {
+      return this.iterate();
+    }
+  }]);
+}();
+//# sourceMappingURL=glob.js.map
+;// CONCATENATED MODULE: ./node_modules/glob/dist/esm/has-magic.js
+
+
+/**
+ * Return true if the patterns provided contain any magic glob characters,
+ * given the options provided.
+ *
+ * Brace expansion is not considered "magic" unless the `magicalBraces` option
+ * is set, as brace expansion just turns one string into an array of strings.
+ * So a pattern like `'x{a,b}y'` would return `false`, because `'xay'` and
+ * `'xby'` both do not contain any magic glob characters, and it's treated the
+ * same as if you had called it on `['xay', 'xby']`. When `magicalBraces:true`
+ * is in the options, brace expansion _is_ treated as a pattern having magic.
+ */
+var hasMagic = function hasMagic(pattern) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  if (!Array.isArray(pattern)) {
+    pattern = [pattern];
+  }
+  var _iterator = (0,createForOfIteratorHelper/* default */.A)(pattern),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var p = _step.value;
+      if (new Minimatch(p, options).hasMagic()) return true;
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  return false;
+};
+//# sourceMappingURL=has-magic.js.map
+;// CONCATENATED MODULE: ./node_modules/glob/dist/esm/index.js
+
+
+
+
+
+
+
+
+
+function globStreamSync(pattern) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return new Glob(pattern, options).streamSync();
+}
+function globStream(pattern) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return new Glob(pattern, options).stream();
+}
+function globSync(pattern) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return new Glob(pattern, options).walkSync();
+}
+function glob_(_x) {
+  return _glob_.apply(this, arguments);
+}
+function _glob_() {
+  _glob_ = (0,asyncToGenerator/* default */.A)( /*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee(pattern) {
+    var options,
+      _args = arguments;
+    return (0,regeneratorRuntime/* default */.A)().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          options = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
+          return _context.abrupt("return", new Glob(pattern, options).walk());
+        case 2:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _glob_.apply(this, arguments);
+}
+function globIterateSync(pattern) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return new Glob(pattern, options).iterateSync();
+}
+function globIterate(pattern) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return new Glob(pattern, options).iterate();
+}
+// aliases: glob.sync.stream() glob.stream.sync() glob.sync() etc
+var streamSync = globStreamSync;
+var stream = Object.assign(globStream, {
+  sync: globStreamSync
+});
+var iterateSync = globIterateSync;
+var iterate = Object.assign(globIterate, {
+  sync: globIterateSync
+});
+var sync = Object.assign(globSync, {
+  stream: globStreamSync,
+  iterate: globIterateSync
+});
+var glob = Object.assign(glob_, {
+  glob: glob_,
+  globSync: globSync,
+  sync: sync,
+  globStream: globStream,
+  stream: stream,
+  globStreamSync: globStreamSync,
+  streamSync: streamSync,
+  globIterate: globIterate,
+  iterate: iterate,
+  globIterateSync: globIterateSync,
+  iterateSync: iterateSync,
+  Glob: Glob,
+  hasMagic: hasMagic,
+  escape: escape_escape,
+  unescape: unescape_unescape
+});
+glob.glob = glob;
+//# sourceMappingURL=index.js.map
+// EXTERNAL MODULE: external "path"
+var external_path_ = __webpack_require__(6928);
+var external_path_default = /*#__PURE__*/__webpack_require__.n(external_path_);
 ;// CONCATENATED MODULE: ./src/index.ts
-function convertToNumber(str){var num=+str;return isNaN(num)?5:num;};(0,asyncToGenerator/* default */.A)(/*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee(){var folderPath,exclude,depth,_context$repo,owner,repo,dtreeOptions,dreeResult;return (0,regeneratorRuntime/* default */.A)().wrap(function _callee$(_context){while(1)switch(_context.prev=_context.next){case 0:folderPath=(0,core.getInput)('path')||".";exclude=(0,core.getInput)('exclude');depth=convertToNumber((0,core.getInput)('depth')||"5");_context$repo=github.context.repo,owner=_context$repo.owner,repo=_context$repo.repo;dtreeOptions={depth:depth};try{if(exclude){dtreeOptions.exclude=new RegExp(exclude);}dreeResult=Ie(folderPath,dtreeOptions);(0,core.startGroup)("\x1B[32;1m ".concat(owner,"/").concat(repo," \x1B[0m tree: "));(0,core.info)("".concat(dreeResult));(0,core.endGroup)();(0,core.setOutput)('content',dreeResult);}catch(error){(0,core.setFailed)(error);}case 6:case"end":return _context.stop();}},_callee);}))();
+/**
+ * get the release URL from the tag
+ * @param tag 'v1.12.23'
+ * @returns 
+ */function getReleaseURL(_x){return _getReleaseURL.apply(this,arguments);}function _getReleaseURL(){_getReleaseURL=(0,asyncToGenerator/* default */.A)(/*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee2(tag){var _context$repo,owner,repo,tagName,myToken,currentTag,octokit,getReleaseResponse;return (0,regeneratorRuntime/* default */.A)().wrap(function _callee2$(_context2){while(1)switch(_context2.prev=_context2.next){case 0:_context$repo=github.context.repo,owner=_context$repo.owner,repo=_context$repo.repo;// Get the tag name from the triggered action
+tagName=github.context.ref;myToken=(0,core.getInput)('token');// This removes the 'refs/tags' portion of the string, i.e. from 'refs/tags/v1.12.23' to 'v1.12.23'
+currentTag=tag||tagName.replace("refs/tags/","");octokit=(0,github.getOctokit)(myToken);// Get a release from the tag name
+// API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release
+// Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-create-release
+_context2.next=7;return octokit.rest.repos.getReleaseByTag({owner:owner,repo:repo,tag:currentTag});case 7:getReleaseResponse=_context2.sent;return _context2.abrupt("return",getReleaseResponse.data);case 9:case"end":return _context2.stop();}},_callee2);}));return _getReleaseURL.apply(this,arguments);}function getAssetName(assetPath){try{return JSON.parse(assetPath);}catch(error){if(assetPath){return assetPath;}}return undefined;};(0,asyncToGenerator/* default */.A)(/*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee(){var assetPath,tagName,myToken,files,octokit,release,downloadURLs,i,assetFile,contentLength,contentType,headers,assetName,data,response;return (0,regeneratorRuntime/* default */.A)().wrap(function _callee$(_context){while(1)switch(_context.prev=_context.next){case 0:/**
+   * Get the path to the file to upload
+   */assetPath=getAssetName((0,core.getInput)('asset-path',{required:true}));tagName=(0,core.getInput)('tag')||undefined;myToken=(0,core.getInput)('token');_context.prev=3;if(!(!assetPath||assetPath.length===0)){_context.next=6;break;}throw new Error('asset-path must contain a JSON array of quoted paths');case 6:_context.next=8;return glob(assetPath,{});case 8:files=_context.sent;if(!(files.length===0)){_context.next=11;break;}throw new Error('No files found');case 11:octokit=(0,github.getOctokit)(myToken);_context.next=14;return getReleaseURL(tagName);case 14:release=_context.sent;downloadURLs=[];i=0;case 17:if(!(i<files.length)){_context.next=32;break;}assetFile=files[i];// Determine content-length for header to upload asset
+contentLength=function contentLength(filePath){return external_fs_default().statSync(filePath).size;};contentType='application/octet-stream';//const contentType = "binary/octet-stream"
+// Setup headers for API call, see Octokit Documentation: https://octokit.github.io/rest.js/v20#repos-update-release-asset for more information
+headers={'content-type':contentType,'content-length':contentLength(assetFile)};assetName=external_path_default().basename(assetFile);data=external_fs_default().readFileSync(assetFile);// Upload a release asset
+// API Documentation: https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#update-a-release
+// Octokit Documentation: https://octokit.github.io/rest.js/v20#repos-update-release-asset
+_context.next=26;return octokit.rest.repos.uploadReleaseAsset({owner:github.context.repo.owner,repo:github.context.repo.repo,release_id:release.id,headers:headers,name:assetName,data:data.toString()});case 26:response=_context.sent;downloadURLs.push(response.data.browser_download_url);if(response.status<200||response.status>299){new Error("Asset upload failed \"".concat(assetPath,". Response:\" ").concat(response));}case 29:i++;_context.next=17;break;case 32:(0,core.setOutput)('browser_download_urls',JSON.stringify(downloadURLs));_context.next=38;break;case 35:_context.prev=35;_context.t0=_context["catch"](3);(0,core.setFailed)(_context.t0);case 38:case"end":return _context.stop();}},_callee,null,[[3,35]]);}))();
 })();
 
 module.exports = __webpack_exports__;
