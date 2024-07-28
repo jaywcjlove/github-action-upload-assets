@@ -17,7 +17,7 @@ export async function getReleaseURL(tag: string | undefined) {
   // This removes the 'refs/tags' portion of the string, i.e. from 'refs/tags/v1.12.23' to 'v1.12.23'
   const currentTag = tag || tagName.replace("refs/tags/", "");
   const octokit = getOctokit(myToken);
-  info(`Getting release for tag: ${currentTag}`);
+  info(`Getting release for tag: ${currentTag} \n owner: ${owner} \n  repo: ${repo}`);
   // Get a release from the tag name
   // API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release
   // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-create-release
