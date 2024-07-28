@@ -38,6 +38,19 @@ Continue on error
     asset-path: '["./target/release/sgo-*"]'
 ```
 
+```yml
+- name: Create Tag
+  id: create_tag
+  uses: jaywcjlove/create-tag-action@main
+
+- name: Release Upload Assets
+  uses: jaywcjlove/github-action-upload-assets@main
+  continue-on-error: true
+  with:
+    tag: ${{ steps.create_tag.outputs.version }}
+    asset-path: '["./target/release/sgo-*"]'
+```
+
 ## Inputs
 
 - `asset-path` The paths to the assets you want to upload as a JSON array. You can use a [glob](https://www.npmjs.com/package/glob) pattern.
