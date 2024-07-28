@@ -1,0 +1,27 @@
+name: 'Release Upload Assets'
+author: 'Kenny Wong'
+description: 'GitHub Action to upload multiple assets to a release'
+inputs:
+  token:
+    description: 'Your GITHUB_TOKEN'
+    default: ${{ github.token }}
+    required: false
+  asset-path:
+    description: 'The paths to the assets you want to upload as a JSON array. You can use a glob pattern.'
+    default: ''
+    required: true
+  tag:
+    description: "Specify the release tag name, for example: 'v1.23.12'"
+    default: ''
+    required: false
+outputs:
+  browser_download_urls:
+    description: 'The URL users can navigate to in order to download the uploaded asset'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'file'
+  color: 'purple'
