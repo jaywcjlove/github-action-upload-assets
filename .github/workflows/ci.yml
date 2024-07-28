@@ -96,9 +96,10 @@ jobs:
       
       - name: Release Upload Assets
         # uses: jaywcjlove/github-action-upload-assets@main
-        if: steps.create_tag.outputs.successful == 'true'
+        # if: steps.create_tag.outputs.successful == 'true'
         uses: ./
         with:
+          tag: ${{ steps.create_tag.outputs.version }}
           asset-path: test.*
     
 
