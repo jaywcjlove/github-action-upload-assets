@@ -20,7 +20,7 @@ jobs:
       - name: Create idoc config
         run: |
           cat > idoc.yml << EOF
-          site: "Folder Tree {{version}}"
+          site: "Upload Assets {{version}}"
           menus:
             Home: index.html
             Sponsor: https://jaywcjlove.github.io/#/sponsor
@@ -42,7 +42,7 @@ jobs:
         working-directory: dist
         run: |
           cat > README.md << EOF
-          Website: https://jaywcjlove.github.io/github-action-folder-tree  
+          Website: https://jaywcjlove.github.io/github-action-upload-assets
           EOF
 
       - name: Is a tag/release created auto? 
