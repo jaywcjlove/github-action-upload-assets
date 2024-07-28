@@ -35993,7 +35993,7 @@ var qmarksTestNoExtDot = function qmarksTestNoExtDot(_ref11) {
 };
 /* c8 ignore start */
 var defaultPlatform = typeof process === 'object' && process ? typeof process.env === 'object' && process.env && process.env.__MINIMATCH_TESTING_PLATFORM__ || process.platform : 'posix';
-var esm_path = {
+var path = {
   win32: {
     sep: '\\'
   },
@@ -36002,7 +36002,7 @@ var esm_path = {
   }
 };
 /* c8 ignore stop */
-var sep = defaultPlatform === 'win32' ? esm_path.win32.sep : esm_path.posix.sep;
+var sep = defaultPlatform === 'win32' ? path.win32.sep : path.posix.sep;
 minimatch.sep = sep;
 var GLOBSTAR = Symbol('globstar **');
 minimatch.GLOBSTAR = GLOBSTAR;
@@ -44974,17 +44974,8 @@ currentTag=tag||tagName.replace("refs/tags/","");octokit=(0,github.getOctokit)(m
 // API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release
 // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-create-release
 _context.next=8;return octokit.rest.repos.getReleaseByTag({owner:owner,repo:repo,tag:currentTag});case 8:getReleaseResponse=_context.sent;return _context.abrupt("return",getReleaseResponse.data);case 10:case"end":return _context.stop();}},_callee);}));return _getReleaseURL.apply(this,arguments);}function getAssetName(assetPath){try{return JSON.parse(assetPath);}catch(error){if(assetPath){return assetPath;}}return undefined;}// Function to upload the file
-function uploadFile(_x2,_x3,_x4,_x5){return _uploadFile.apply(this,arguments);}// Function to upload the file
-function _uploadFile(){_uploadFile=(0,asyncToGenerator/* default */.A)(/*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee2(owner,repo,releaseId,filePath){var myToken,octokit,fileContent,fileStream,fileStat,fileName,headers,response;return (0,regeneratorRuntime/* default */.A)().wrap(function _callee2$(_context2){while(1)switch(_context2.prev=_context2.next){case 0:myToken=(0,core.getInput)('token');octokit=(0,github.getOctokit)(myToken);fileContent=external_fs_default().readFileSync(filePath);// Read file content as Buffer
-fileStream=external_fs_default().createReadStream(filePath);fileStat=external_fs_default().statSync(filePath);fileName=external_path_default().basename(filePath);headers={'content-type':'application/octet-stream','content-length':fileStat.size,'X-GitHub-Api-Version':'2022-11-28'};_context2.next=9;return octokit.rest.repos.uploadReleaseAsset({owner:owner,repo:repo,release_id:releaseId,headers:headers,name:fileName,//data: fileContent.toString() // Use file content directly
-data:fileStream});case 9:response=_context2.sent;return _context2.abrupt("return",response);case 11:case"end":return _context2.stop();}},_callee2);}));return _uploadFile.apply(this,arguments);}function requestUploadFile(_x6,_x7){return _requestUploadFile.apply(this,arguments);}function _requestUploadFile(){_requestUploadFile=_asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(releaseId,filePath){var myToken,octokit,fileStream,fileName,fileStat,headers,_context$repo2,owner,repo,response;return _regeneratorRuntime().wrap(function _callee3$(_context3){while(1)switch(_context3.prev=_context3.next){case 0:myToken=getInput('token');octokit=getOctokit(myToken);// const fileStream = fs.createReadStream(filePath);
-// const fileName = path.basename(filePath);
-// const form = new FormData();
-// form.append('file', fileStream, {
-//   filename: fileName,
-//   contentType: 'application/octet-stream'
-// });
-fileStream=fs.createReadStream(filePath);fileName=path.basename(filePath);fileStat=fs.statSync(filePath);headers={'content-type':'application/octet-stream','content-length':fileStat.size,'X-GitHub-Api-Version':'2022-11-28'};_context$repo2=context.repo,owner=_context$repo2.owner,repo=_context$repo2.repo;_context3.next=9;return octokit.request('POST /repos/{owner}/{repo}/releases/{release_id}/assets{?name,label}',{owner:owner,repo:repo,release_id:releaseId,name:fileName,headers:headers,data:fileStream});case 9:response=_context3.sent;return _context3.abrupt("return",response);case 11:case"end":return _context3.stop();}},_callee3);}));return _requestUploadFile.apply(this,arguments);}
+function uploadFile(_x2,_x3,_x4,_x5){return _uploadFile.apply(this,arguments);}function _uploadFile(){_uploadFile=(0,asyncToGenerator/* default */.A)(/*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee2(owner,repo,releaseId,filePath){var myToken,octokit,fileStream,fileStat,fileName,headers,response;return (0,regeneratorRuntime/* default */.A)().wrap(function _callee2$(_context2){while(1)switch(_context2.prev=_context2.next){case 0:myToken=(0,core.getInput)('token');octokit=(0,github.getOctokit)(myToken);fileStream=external_fs_default().createReadStream(filePath);fileStat=external_fs_default().statSync(filePath);fileName=external_path_default().basename(filePath);headers={'content-type':'application/octet-stream','content-length':fileStat.size,'X-GitHub-Api-Version':'2022-11-28'};_context2.next=8;return octokit.rest.repos.uploadReleaseAsset({owner:owner,repo:repo,release_id:releaseId,headers:headers,name:fileName,//data: fileContent.toString() // Use file content directly
+data:fileStream});case 8:response=_context2.sent;return _context2.abrupt("return",response);case 10:case"end":return _context2.stop();}},_callee2);}));return _uploadFile.apply(this,arguments);}
 ;// CONCATENATED MODULE: ./src/index.ts
 ;(0,asyncToGenerator/* default */.A)(/*#__PURE__*/(0,regeneratorRuntime/* default */.A)().mark(function _callee(){var assetPath,tagName,files,release,downloadURLs,i,assetFile,response;return (0,regeneratorRuntime/* default */.A)().wrap(function _callee$(_context){while(1)switch(_context.prev=_context.next){case 0:/**
    * Get the path to the file to upload
