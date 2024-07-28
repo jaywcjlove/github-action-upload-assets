@@ -1,6 +1,6 @@
 {
   "name": "github-action-upload-assets",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "description": "GitHub Action to upload multiple assets to a release",
   "homepage": "https://jaywcjlove.github.io/github-action-upload-assets/",
