@@ -101,5 +101,13 @@ jobs:
         with:
           tag: ${{ steps.create_tag.outputs.version }}
           asset-path: test.*
+        
+      - run: echo "Hello World" > tag.txt
+      - name: Release Upload Assets
+        # uses: jaywcjlove/github-action-upload-assets@main
+        uses: ./
+        with:
+          tag: v0.3.0
+          asset-path: tag.*
     
 
