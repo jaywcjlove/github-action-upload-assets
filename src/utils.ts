@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import { context, getOctokit } from '@actions/github';
 import { getInput, info } from '@actions/core';
-import FormData from 'form-data';
 
 /**
  * get the release URL from the tag
@@ -45,8 +44,6 @@ export function getAssetName(assetPath: string): string | string[] | undefined {
 export async function uploadFile(owner: string, repo: string, releaseId: number, filePath: string) {
   const myToken = getInput('token')
   const octokit = getOctokit(myToken);
-
-  const fileContent = fs.readFileSync(filePath); // Read file content as Buffer
   const fileStream = fs.createReadStream(filePath);
   const fileStat = fs.statSync(filePath);
   const fileName = path.basename(filePath);
@@ -66,49 +63,6 @@ export async function uploadFile(owner: string, repo: string, releaseId: number,
     //data: fileContent.toString() // Use file content directly
     data: fileStream as unknown as string
   });
-
-  return response;
-}
-
-// Function to upload the file
-export async function requestUploadFile(releaseId: number, filePath: string) {
-  const myToken = getInput('token')
-  const octokit = getOctokit(myToken);
-  // const fileStream = fs.createReadStream(filePath);
-  // const fileName = path.basename(filePath);
-  // const form = new FormData();
-  // form.append('file', fileStream, {
-  //   filename: fileName,
-  //   contentType: 'application/octet-stream'
-  // });
-  const fileStream = fs.createReadStream(filePath);
-  const fileName = path.basename(filePath);
-  const fileStat = fs.statSync(filePath);
-
-  const headers = {
-    'content-type': 'application/octet-stream',
-    'content-length': fileStat.size,
-    'X-GitHub-Api-Version': '2022-11-28'
-  };
-  const { owner, repo } = context.repo;
-  const response = await octokit.request('POST /repos/{owner}/{repo}/releases/{release_id}/assets{?name,label}', {
-    owner,
-    repo,
-    release_id: releaseId,
-    name: fileName,
-    headers,
-    data: fileStream
-  });
-  // const headers = { ...form.getHeaders(), 'Authorization': `token ${myToken}` };
-  // const url = new URL(uploadUrl);
-  // url.searchParams.append('name', fileName);
-  // info(`URL: ${url.toString()}`);
-  // const response = await octokit.request({
-  //   method: 'POST',
-  //   url: url.toString(),
-  //   headers: headers,
-  //   data: form
-  // });
 
   return response;
 }

@@ -1,7 +1,7 @@
 import { context } from '@actions/github';
 import { getInput, setFailed, setOutput, info } from '@actions/core';
 import { glob } from 'glob';
-import { getAssetName, getReleaseURL, uploadFile, requestUploadFile } from './utils';
+import { getAssetName, getReleaseURL, uploadFile } from './utils';
 
 ;(async () => {
   /**
