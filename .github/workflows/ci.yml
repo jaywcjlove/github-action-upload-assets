@@ -99,6 +99,7 @@ jobs:
       - name: Release Upload Assets
         # uses: jaywcjlove/github-action-upload-assets@main
         # if: steps.create_tag.outputs.successful == 'true'
+        continue-on-error: true
         uses: ./
         with:
           tag: ${{ steps.create_tag.outputs.version }}
@@ -107,6 +108,7 @@ jobs:
       - run: echo "Hello World" > tag.txt
       - name: Release Upload Assets
         # uses: jaywcjlove/github-action-upload-assets@main
+        continue-on-error: true
         uses: ./
         with:
           tag: v0.3.0

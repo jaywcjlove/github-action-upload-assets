@@ -1,5 +1,5 @@
 import { context } from '@actions/github';
-import { getInput, setFailed, setOutput, info } from '@actions/core';
+import { getInput, setFailed, setOutput, info, warning } from '@actions/core';
 import { glob } from 'glob';
 import { getAssetName, getReleaseURL, uploadFile } from './utils';
 
@@ -32,7 +32,7 @@ import { getAssetName, getReleaseURL, uploadFile } from './utils';
     setOutput('browser_download_urls', JSON.stringify(downloadURLs));
   } catch (error) {
     if (error instanceof Error) {
-      info(`Error: ${error.message}`);
+      warning(`Error: ${error.message}`);
     }
     setFailed(error as Error);
   }
