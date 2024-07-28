@@ -16,6 +16,17 @@ GitHub Action to upload multiple assets to a release
     asset-path: '["./target/release/sgo-*"]'
 ```
 
+Upload a file to a specified tag
+
+```yml
+- name: Release Upload Assets
+  uses: jaywcjlove/github-action-upload-assets@main
+  if: steps.create_tag.outputs.successful == 'true'
+  with:
+    tag: v0.3.0
+    asset-path: '["./target/release/sgo-*"]'
+```
+
 ## Inputs
 
 - `asset-path` The paths to the assets you want to upload as a JSON array. You can use a [glob](https://www.npmjs.com/package/glob) pattern.

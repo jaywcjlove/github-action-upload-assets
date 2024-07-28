@@ -84,7 +84,7 @@ jobs:
             ${{ steps.changelog.outputs.changelog }}
 
             ```yml
-            - name: Print Folder Tree
+            - name: Release Upload Assets
               uses: jaywcjlove/github-action-upload-assets@main
               with:
                 asset-path: test.*
@@ -93,7 +93,9 @@ jobs:
       - run: echo "Hello World" > test.txt
       - name: Compress test Example.
         run: zip -r -y test.zip test.txt -x "node_modules/*"
-      
+
+      - run: echo "version - ${{ steps.create_tag.outputs.version }}"
+
       - name: Release Upload Assets
         # uses: jaywcjlove/github-action-upload-assets@main
         # if: steps.create_tag.outputs.successful == 'true'
