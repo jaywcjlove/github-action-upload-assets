@@ -20,19 +20,19 @@ import { getAssetName, getReleaseURL, uploadFile } from './utils';
     const release = await getReleaseURL(tagName)
     const downloadURLs = []
     for(let i = 0; i < files.length; i++) {
-      const assetFile = files[i];
-      info(`Uploading asset(${context.repo.owner}/${context.repo.repo}): ${assetFile}`);
+      const filePath = files[i];
+      info(`Uploading asset(${context.repo.owner}/${context.repo.repo}): ${filePath}`);
 
-      const response = await uploadFile(context.repo.owner, context.repo.repo, release.id, assetFile);
+      const response = await uploadFile(context.repo.owner, context.repo.repo, release.id, filePath);
       downloadURLs.push(response.data.browser_download_url)
       if (response.status < 200 || response.status > 299) {
-        new Error(`Asset upload failed "${assetPath}. Response:" ${response}`)
+        new Error(`Asset upload failed "${filePath}. Response:" ${response}`)
       }
     }
     setOutput('browser_download_urls', JSON.stringify(downloadURLs));
   } catch (error) {
     if (error instanceof Error) {
-      warning(`Error: ${error.message}`);
+      warning(`Error: ${error.message}\n  tag: ${tagName}\n  asset-path: ${assetPath}`);
     }
     setFailed(error as Error);
   }
