@@ -47,12 +47,14 @@ export async function uploadFile(owner: string, repo: string, releaseId: number,
   const octokit = getOctokit(myToken);
 
   const fileContent = fs.readFileSync(filePath); // Read file content as Buffer
+  const fileStream = fs.createReadStream(filePath);
   const fileStat = fs.statSync(filePath);
   const fileName = path.basename(filePath);
 
-  const headers = { 
+  const headers = {
     'content-type': 'application/octet-stream',
-    'content-length': fileStat.size
+    'content-length': fileStat.size,
+    'X-GitHub-Api-Version': '2022-11-28'
   };
 
   const response = await octokit.rest.repos.uploadReleaseAsset({
@@ -61,7 +63,8 @@ export async function uploadFile(owner: string, repo: string, releaseId: number,
     release_id: releaseId,
     headers,
     name: fileName,
-    data: fileContent.toString() // Use file content directly
+    //data: fileContent.toString() // Use file content directly
+    data: fileStream as unknown as string
   });
 
   return response;

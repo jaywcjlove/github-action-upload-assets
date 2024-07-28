@@ -1,7 +1,7 @@
 import { context } from '@actions/github';
-import { getInput, setFailed, info } from '@actions/core';
+import { getInput, setFailed, setOutput, info } from '@actions/core';
 import { glob } from 'glob';
-import { getAssetName, getReleaseURL, requestUploadFile } from './utils';
+import { getAssetName, getReleaseURL, uploadFile, requestUploadFile } from './utils';
 
 ;(async () => {
   /**
@@ -18,21 +18,18 @@ import { getAssetName, getReleaseURL, requestUploadFile } from './utils';
       throw new Error('No files found');
     }
     const release = await getReleaseURL(tagName)
-//    release.upload_url
     const downloadURLs = []
     for(let i = 0; i < files.length; i++) {
       const assetFile = files[i];
       info(`Uploading asset(${context.repo.owner}/${context.repo.repo}): ${assetFile}`);
 
-      const requestUploadResponse = await requestUploadFile(release.id, assetFile);
-      info(`requestUploadResponse: ${JSON.stringify(requestUploadResponse)}`);
-      // const response = await uploadFile(context.repo.owner, context.repo.repo, release.id, assetFile);
-      // downloadURLs.push(response.data.browser_download_url)
-      // if (response.status < 200 || response.status > 299) {
-      //   new Error(`Asset upload failed "${assetPath}. Response:" ${response}`)
-      // }
+      const response = await uploadFile(context.repo.owner, context.repo.repo, release.id, assetFile);
+      downloadURLs.push(response.data.browser_download_url)
+      if (response.status < 200 || response.status > 299) {
+        new Error(`Asset upload failed "${assetPath}. Response:" ${response}`)
+      }
     }
-    // setOutput('browser_download_urls', JSON.stringify(downloadURLs));
+    setOutput('browser_download_urls', JSON.stringify(downloadURLs));
   } catch (error) {
     setFailed(error as Error);
   }
