@@ -4,7 +4,7 @@ Release Upload Assets
 [![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-048754?logo=buymeacoffee)](https://jaywcjlove.github.io/#/sponsor)
 [![CI](https://github.com/jaywcjlove/github-action-upload-assets/actions/workflows/ci.yml/badge.svg)](https://github.com/jaywcjlove/github-action-upload-assets/actions/workflows/ci.yml)
 
-GitHub Action to upload multiple assets to a release
+Upload multiple assets to a release, or use GitHub Actions to upload assets to a specific release
 
 ## Example Usage
 
