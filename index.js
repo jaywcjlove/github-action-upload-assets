@@ -5710,7 +5710,6 @@ var Agent = /*#__PURE__*/function (_DispatcherBase) {
       connect = _ref.connect,
       options = _objectWithoutProperties(_ref, _excluded);
     _classCallCheck(this, Agent);
-    _this = _callSuper(this, Agent);
     if (typeof factory !== 'function') {
       throw new InvalidArgumentError('factory must be a function.');
     }
@@ -5720,6 +5719,7 @@ var Agent = /*#__PURE__*/function (_DispatcherBase) {
     if (!Number.isInteger(maxRedirections) || maxRedirections < 0) {
       throw new InvalidArgumentError('maxRedirections must be a positive number');
     }
+    _this = _callSuper(this, Agent, [options]);
     if (connect && typeof connect !== 'function') {
       connect = _objectSpread({}, connect);
     }
@@ -8329,9 +8329,12 @@ var Client = /*#__PURE__*/function (_DispatcherBase) {
       autoSelectFamily = _ref2.autoSelectFamily,
       autoSelectFamilyAttemptTimeout = _ref2.autoSelectFamilyAttemptTimeout,
       maxConcurrentStreams = _ref2.maxConcurrentStreams,
-      allowH2 = _ref2.allowH2;
+      allowH2 = _ref2.allowH2,
+      webSocket = _ref2.webSocket;
     _classCallCheck(this, Client);
-    _this = _callSuper(this, Client);
+    _this = _callSuper(this, Client, [{
+      webSocket: webSocket
+    }]);
     if (keepAlive !== undefined) {
       throw new InvalidArgumentError('unsupported keepAlive, use pipelining=0 instead');
     }
@@ -8880,8 +8883,10 @@ var _require2 = __webpack_require__(6771),
 var kOnDestroyed = Symbol('onDestroyed');
 var kOnClosed = Symbol('onClosed');
 var kInterceptedDispatch = Symbol('Intercepted Dispatch');
+var kWebSocketOptions = Symbol('webSocketOptions');
 var DispatcherBase = /*#__PURE__*/function (_Dispatcher) {
-  function DispatcherBase() {
+  function DispatcherBase(opts) {
+    var _opts$webSocket;
     var _this;
     _classCallCheck(this, DispatcherBase);
     _this = _callSuper(this, DispatcherBase);
@@ -8889,10 +8894,19 @@ var DispatcherBase = /*#__PURE__*/function (_Dispatcher) {
     _this[kOnDestroyed] = null;
     _this[kClosed] = false;
     _this[kOnClosed] = [];
+    _this[kWebSocketOptions] = (_opts$webSocket = opts === null || opts === void 0 ? void 0 : opts.webSocket) !== null && _opts$webSocket !== void 0 ? _opts$webSocket : {};
     return _this;
   }
   _inherits(DispatcherBase, _Dispatcher);
   return _createClass(DispatcherBase, [{
+    key: "webSocketOptions",
+    get: function get() {
+      var _this$kWebSocketOptio;
+      return {
+        maxPayloadSize: (_this$kWebSocketOptio = this[kWebSocketOptions].maxPayloadSize) !== null && _this$kWebSocketOptio !== void 0 ? _this$kWebSocketOptio : 128 * 1024 * 1024
+      };
+    }
+  }, {
     key: "destroyed",
     get: function get() {
       return this[kDestroyed];
@@ -9583,10 +9597,10 @@ var kAddClient = Symbol('add client');
 var kRemoveClient = Symbol('remove client');
 var kStats = Symbol('stats');
 var PoolBase = /*#__PURE__*/function (_DispatcherBase) {
-  function PoolBase() {
+  function PoolBase(opts) {
     var _this;
     _classCallCheck(this, PoolBase);
-    _this = _callSuper(this, PoolBase);
+    _this = _callSuper(this, PoolBase, [opts]);
     _this[kQueue] = new FixedQueue();
     _this[kClients] = [];
     _this[kQueued] = 0;
@@ -9940,7 +9954,6 @@ var Pool = /*#__PURE__*/function (_PoolBase) {
       allowH2 = _ref.allowH2,
       options = _objectWithoutProperties(_ref, _excluded);
     _classCallCheck(this, Pool);
-    _this = _callSuper(this, Pool);
     if (connections != null && (!Number.isFinite(connections) || connections < 0)) {
       throw new InvalidArgumentError('invalid connections');
     }
@@ -9961,6 +9974,7 @@ var Pool = /*#__PURE__*/function (_PoolBase) {
         autoSelectFamilyAttemptTimeout: autoSelectFamilyAttemptTimeout
       } : undefined), connect));
     }
+    _this = _callSuper(this, Pool, [options]);
     _this[kInterceptors] = (_options$interceptors = options.interceptors) !== null && _options$interceptors !== void 0 && _options$interceptors.Pool && Array.isArray(options.interceptors.Pool) ? options.interceptors.Pool : [];
     _this[kConnections] = connections || null;
     _this[kUrl] = util.parseOrigin(origin);
@@ -28978,29 +28992,30 @@ var _require3 = __webpack_require__(3515),
 var tail = Buffer.from([0x00, 0x00, 0xff, 0xff]);
 var kBuffer = Symbol('kBuffer');
 var kLength = Symbol('kLength');
-
-// Default maximum decompressed message size: 4 MB
-var kDefaultMaxDecompressedSize = 4 * 1024 * 1024;
 var _inflate = /*#__PURE__*/new WeakMap();
 var _options = /*#__PURE__*/new WeakMap();
-var _aborted = /*#__PURE__*/new WeakMap();
-var _currentCallback = /*#__PURE__*/new WeakMap();
+var _maxPayloadSize = /*#__PURE__*/new WeakMap();
 var PerMessageDeflate = /*#__PURE__*/function () {
   /**
    * @param {Map<string, string>} extensions
    */
-  function PerMessageDeflate(extensions) {
+  function PerMessageDeflate(extensions, options) {
     _classCallCheck(this, PerMessageDeflate);
     /** @type {import('node:zlib').InflateRaw} */
     _classPrivateFieldInitSpec(this, _inflate, void 0);
     _classPrivateFieldInitSpec(this, _options, {});
-    /** @type {boolean} */
-    _classPrivateFieldInitSpec(this, _aborted, false);
-    /** @type {Function|null} */
-    _classPrivateFieldInitSpec(this, _currentCallback, null);
+    _classPrivateFieldInitSpec(this, _maxPayloadSize, 0);
     _classPrivateFieldGet(_options, this).serverNoContextTakeover = extensions.has('server_no_context_takeover');
     _classPrivateFieldGet(_options, this).serverMaxWindowBits = extensions.get('server_max_window_bits');
+    _classPrivateFieldSet(_maxPayloadSize, this, options.maxPayloadSize);
   }
+
+  /**
+   * Decompress a compressed payload.
+   * @param {Buffer} chunk Compressed data
+   * @param {boolean} fin Final fragment flag
+   * @param {Function} callback Callback function
+   */
   return _createClass(PerMessageDeflate, [{
     key: "decompress",
     value: function decompress(chunk, fin, callback) {
@@ -29009,11 +29024,6 @@ var PerMessageDeflate = /*#__PURE__*/function () {
       // 1.  Append 4 octets of 0x00 0x00 0xff 0xff to the tail end of the
       //     payload of the message.
       // 2.  Decompress the resulting data using DEFLATE.
-
-      if (_classPrivateFieldGet(_aborted, this)) {
-        callback(new MessageSizeExceededError());
-        return;
-      }
       if (!_classPrivateFieldGet(_inflate, this)) {
         var windowBits = Z_DEFAULT_WINDOWBITS;
         if (_classPrivateFieldGet(_options, this).serverMaxWindowBits) {
@@ -29035,20 +29045,11 @@ var PerMessageDeflate = /*#__PURE__*/function () {
         _classPrivateFieldGet(_inflate, this)[kBuffer] = [];
         _classPrivateFieldGet(_inflate, this)[kLength] = 0;
         _classPrivateFieldGet(_inflate, this).on('data', function (data) {
-          if (_classPrivateFieldGet(_aborted, _this)) {
-            return;
-          }
           _classPrivateFieldGet(_inflate, _this)[kLength] += data.length;
-          if (_classPrivateFieldGet(_inflate, _this)[kLength] > kDefaultMaxDecompressedSize) {
-            _classPrivateFieldSet(_aborted, _this, true);
+          if (_classPrivateFieldGet(_maxPayloadSize, _this) > 0 && _classPrivateFieldGet(_inflate, _this)[kLength] > _classPrivateFieldGet(_maxPayloadSize, _this)) {
+            callback(new MessageSizeExceededError());
             _classPrivateFieldGet(_inflate, _this).removeAllListeners();
-            _classPrivateFieldGet(_inflate, _this).destroy();
             _classPrivateFieldSet(_inflate, _this, null);
-            if (_classPrivateFieldGet(_currentCallback, _this)) {
-              var cb = _classPrivateFieldGet(_currentCallback, _this);
-              _classPrivateFieldSet(_currentCallback, _this, null);
-              cb(new MessageSizeExceededError());
-            }
             return;
           }
           _classPrivateFieldGet(_inflate, _this)[kBuffer].push(data);
@@ -29058,19 +29059,17 @@ var PerMessageDeflate = /*#__PURE__*/function () {
           callback(err);
         });
       }
-      _classPrivateFieldSet(_currentCallback, this, callback);
       _classPrivateFieldGet(_inflate, this).write(chunk);
       if (fin) {
         _classPrivateFieldGet(_inflate, this).write(tail);
       }
       _classPrivateFieldGet(_inflate, this).flush(function () {
-        if (_classPrivateFieldGet(_aborted, _this) || !_classPrivateFieldGet(_inflate, _this)) {
+        if (!_classPrivateFieldGet(_inflate, _this)) {
           return;
         }
         var full = Buffer.concat(_classPrivateFieldGet(_inflate, _this)[kBuffer], _classPrivateFieldGet(_inflate, _this)[kLength]);
         _classPrivateFieldGet(_inflate, _this)[kBuffer].length = 0;
         _classPrivateFieldGet(_inflate, _this)[kLength] = 0;
-        _classPrivateFieldSet(_currentCallback, _this, null);
         callback(null, full);
       });
     }
@@ -29092,7 +29091,9 @@ var _classCallCheck = (__webpack_require__(7383)["default"]);
 var _createClass = (__webpack_require__(4579)["default"]);
 var _callSuper = (__webpack_require__(8336)["default"]);
 var _inherits = (__webpack_require__(9511)["default"]);
+var _classPrivateMethodInitSpec = (__webpack_require__(3312)["default"]);
 var _classPrivateFieldInitSpec = (__webpack_require__(2459)["default"]);
+var _assertClassBrand = (__webpack_require__(1756)["default"]);
 var _classPrivateFieldGet = (__webpack_require__(6668)["default"]);
 var _classPrivateFieldSet = (__webpack_require__(7088)["default"]);
 var _require = __webpack_require__(7075),
@@ -29126,28 +29127,38 @@ var _require7 = __webpack_require__(8105),
   closeWebSocketConnection = _require7.closeWebSocketConnection;
 var _require8 = __webpack_require__(5109),
   PerMessageDeflate = _require8.PerMessageDeflate;
+var _require9 = __webpack_require__(3515),
+  MessageSizeExceededError = _require9.MessageSizeExceededError;
 
 // This code was influenced by ws released under the MIT license.
 // Copyright (c) 2011 Einar Otto Stangvik <einaros@gmail.com>
 // Copyright (c) 2013 Arnout Kazemier and contributors
 // Copyright (c) 2016 Luigi Pinca and contributors
 var _buffers = /*#__PURE__*/new WeakMap();
+var _fragmentsBytes = /*#__PURE__*/new WeakMap();
 var _byteOffset = /*#__PURE__*/new WeakMap();
 var _loop = /*#__PURE__*/new WeakMap();
 var _state = /*#__PURE__*/new WeakMap();
 var _info = /*#__PURE__*/new WeakMap();
 var _fragments = /*#__PURE__*/new WeakMap();
 var _extensions = /*#__PURE__*/new WeakMap();
+var _maxPayloadSize = /*#__PURE__*/new WeakMap();
+var _ByteParser_brand = /*#__PURE__*/new WeakSet();
 var ByteParser = /*#__PURE__*/function (_Writable) {
   /**
    * @param {import('./websocket').WebSocket} ws
    * @param {Map<string, string>|null} extensions
+   * @param {{ maxPayloadSize?: number }} [options]
    */
   function ByteParser(ws, extensions) {
+    var _options$maxPayloadSi;
     var _this;
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     _classCallCheck(this, ByteParser);
     _this = _callSuper(this, ByteParser);
+    _classPrivateMethodInitSpec(_this, _ByteParser_brand);
     _classPrivateFieldInitSpec(_this, _buffers, []);
+    _classPrivateFieldInitSpec(_this, _fragmentsBytes, 0);
     _classPrivateFieldInitSpec(_this, _byteOffset, 0);
     _classPrivateFieldInitSpec(_this, _loop, false);
     _classPrivateFieldInitSpec(_this, _state, parserStates.INFO);
@@ -29155,10 +29166,13 @@ var ByteParser = /*#__PURE__*/function (_Writable) {
     _classPrivateFieldInitSpec(_this, _fragments, []);
     /** @type {Map<string, PerMessageDeflate>} */
     _classPrivateFieldInitSpec(_this, _extensions, void 0);
+    /** @type {number} */
+    _classPrivateFieldInitSpec(_this, _maxPayloadSize, void 0);
     _this.ws = ws;
     _classPrivateFieldSet(_extensions, _this, extensions == null ? new Map() : extensions);
+    _classPrivateFieldSet(_maxPayloadSize, _this, (_options$maxPayloadSi = options.maxPayloadSize) !== null && _options$maxPayloadSi !== void 0 ? _options$maxPayloadSi : 0);
     if (_classPrivateFieldGet(_extensions, _this).has('permessage-deflate')) {
-      _classPrivateFieldGet(_extensions, _this).set('permessage-deflate', new PerMessageDeflate(extensions));
+      _classPrivateFieldGet(_extensions, _this).set('permessage-deflate', new PerMessageDeflate(extensions, options));
     }
     return _this;
   }
@@ -29176,15 +29190,15 @@ var ByteParser = /*#__PURE__*/function (_Writable) {
       _classPrivateFieldSet(_loop, this, true);
       this.run(callback);
     }
-
+  }, {
+    key: "run",
+    value:
     /**
      * Runs whenever a new chunk is received.
      * Callback is called whenever there are no more chunks buffering,
      * or not enough bytes are buffered to parse.
      */
-  }, {
-    key: "run",
-    value: function run(callback) {
+    function run(callback) {
       var _this2 = this;
       while (_classPrivateFieldGet(_loop, this)) {
         if (_classPrivateFieldGet(_state, this) === parserStates.INFO) {
@@ -29258,6 +29272,9 @@ var ByteParser = /*#__PURE__*/function (_Writable) {
           if (payloadLength <= 125) {
             _classPrivateFieldGet(_info, this).payloadLength = payloadLength;
             _classPrivateFieldSet(_state, this, parserStates.READ_DATA);
+            if (!_assertClassBrand(_ByteParser_brand, this, _validatePayloadLength).call(this)) {
+              return;
+            }
           } else if (payloadLength === 126) {
             _classPrivateFieldSet(_state, this, parserStates.PAYLOADLENGTH_16);
           } else if (payloadLength === 127) {
@@ -29278,6 +29295,9 @@ var ByteParser = /*#__PURE__*/function (_Writable) {
           var _buffer = this.consume(2);
           _classPrivateFieldGet(_info, this).payloadLength = _buffer.readUInt16BE(0);
           _classPrivateFieldSet(_state, this, parserStates.READ_DATA);
+          if (!_assertClassBrand(_ByteParser_brand, this, _validatePayloadLength).call(this)) {
+            return;
+          }
         } else if (_classPrivateFieldGet(_state, this) === parserStates.PAYLOADLENGTH_64) {
           if (_classPrivateFieldGet(_byteOffset, this) < 8) {
             return callback();
@@ -29298,6 +29318,9 @@ var ByteParser = /*#__PURE__*/function (_Writable) {
           }
           _classPrivateFieldGet(_info, this).payloadLength = lower;
           _classPrivateFieldSet(_state, this, parserStates.READ_DATA);
+          if (!_assertClassBrand(_ByteParser_brand, this, _validatePayloadLength).call(this)) {
+            return;
+          }
         } else if (_classPrivateFieldGet(_state, this) === parserStates.READ_DATA) {
           if (_classPrivateFieldGet(_byteOffset, this) < _classPrivateFieldGet(_info, this).payloadLength) {
             return callback();
@@ -29308,16 +29331,18 @@ var ByteParser = /*#__PURE__*/function (_Writable) {
             _classPrivateFieldSet(_state, this, parserStates.INFO);
           } else {
             if (!_classPrivateFieldGet(_info, this).compressed) {
-              _classPrivateFieldGet(_fragments, this).push(body);
+              this.writeFragments(body);
+              if (_classPrivateFieldGet(_maxPayloadSize, this) > 0 && _classPrivateFieldGet(_fragmentsBytes, this) > _classPrivateFieldGet(_maxPayloadSize, this)) {
+                failWebsocketConnection(this.ws, new MessageSizeExceededError().message);
+                return;
+              }
 
               // If the frame is not fragmented, a message has been received.
               // If the frame is fragmented, it will terminate with a fin bit set
               // and an opcode of 0 (continuation), therefore we handle that when
               // parsing continuation frames, not here.
               if (!_classPrivateFieldGet(_info, this).fragmented && _classPrivateFieldGet(_info, this).fin) {
-                var fullMessage = Buffer.concat(_classPrivateFieldGet(_fragments, this));
-                websocketMessageReceived(this.ws, _classPrivateFieldGet(_info, this).binaryType, fullMessage);
-                _classPrivateFieldGet(_fragments, this).length = 0;
+                websocketMessageReceived(this.ws, _classPrivateFieldGet(_info, this).binaryType, this.consumeFragments());
               }
               _classPrivateFieldSet(_state, this, parserStates.INFO);
             } else {
@@ -29326,17 +29351,20 @@ var ByteParser = /*#__PURE__*/function (_Writable) {
                   failWebsocketConnection(_this2.ws, error.message);
                   return;
                 }
-                _classPrivateFieldGet(_fragments, _this2).push(data);
+                _this2.writeFragments(data);
+                if (_classPrivateFieldGet(_maxPayloadSize, _this2) > 0 && _classPrivateFieldGet(_fragmentsBytes, _this2) > _classPrivateFieldGet(_maxPayloadSize, _this2)) {
+                  failWebsocketConnection(_this2.ws, new MessageSizeExceededError().message);
+                  return;
+                }
                 if (!_classPrivateFieldGet(_info, _this2).fin) {
                   _classPrivateFieldSet(_state, _this2, parserStates.INFO);
                   _classPrivateFieldSet(_loop, _this2, true);
                   _this2.run(callback);
                   return;
                 }
-                websocketMessageReceived(_this2.ws, _classPrivateFieldGet(_info, _this2).binaryType, Buffer.concat(_classPrivateFieldGet(_fragments, _this2)));
+                websocketMessageReceived(_this2.ws, _classPrivateFieldGet(_info, _this2).binaryType, _this2.consumeFragments());
                 _classPrivateFieldSet(_loop, _this2, true);
                 _classPrivateFieldSet(_state, _this2, parserStates.INFO);
-                _classPrivateFieldGet(_fragments, _this2).length = 0;
                 _this2.run(callback);
               });
               _classPrivateFieldSet(_loop, this, false);
@@ -29383,6 +29411,25 @@ var ByteParser = /*#__PURE__*/function (_Writable) {
       }
       _classPrivateFieldSet(_byteOffset, this, _classPrivateFieldGet(_byteOffset, this) - n);
       return buffer;
+    }
+  }, {
+    key: "writeFragments",
+    value: function writeFragments(fragment) {
+      _classPrivateFieldSet(_fragmentsBytes, this, _classPrivateFieldGet(_fragmentsBytes, this) + fragment.length);
+      _classPrivateFieldGet(_fragments, this).push(fragment);
+    }
+  }, {
+    key: "consumeFragments",
+    value: function consumeFragments() {
+      var fragments = _classPrivateFieldGet(_fragments, this);
+      if (fragments.length === 1) {
+        _classPrivateFieldSet(_fragmentsBytes, this, 0);
+        return fragments.shift();
+      }
+      var output = Buffer.concat(fragments, _classPrivateFieldGet(_fragmentsBytes, this));
+      _classPrivateFieldSet(_fragments, this, []);
+      _classPrivateFieldSet(_fragmentsBytes, this, 0);
+      return output;
     }
   }, {
     key: "parseCloseBody",
@@ -29514,6 +29561,13 @@ var ByteParser = /*#__PURE__*/function (_Writable) {
     }
   }]);
 }(Writable);
+function _validatePayloadLength() {
+  if (_classPrivateFieldGet(_maxPayloadSize, this) > 0 && !isControlFrame(_classPrivateFieldGet(_info, this).opcode) && _classPrivateFieldGet(_info, this).payloadLength > _classPrivateFieldGet(_maxPayloadSize, this)) {
+    failWebsocketConnection(this.ws, 'Payload size exceeds maximum allowed size');
+    return false;
+  }
+  return true;
+}
 module.exports = {
   ByteParser: ByteParser
 };
@@ -30479,10 +30533,14 @@ var WebSocket = /*#__PURE__*/function (_EventTarget) {
   }]);
 }(/*#__PURE__*/_wrapNativeSuper(EventTarget)); // https://websockets.spec.whatwg.org/#dom-websocket-connecting
 function _onConnectionEstablished(response, parsedExtensions) {
+  var _this$kController;
   // processResponse is called when the "response's header list has been received and initialized."
   // once this happens, the connection is open
   this[kResponse] = response;
-  var parser = new ByteParser(this, parsedExtensions);
+  var maxPayloadSize = (_this$kController = this[kController]) === null || _this$kController === void 0 || (_this$kController = _this$kController.dispatcher) === null || _this$kController === void 0 || (_this$kController = _this$kController.webSocketOptions) === null || _this$kController === void 0 ? void 0 : _this$kController.maxPayloadSize;
+  var parser = new ByteParser(this, parsedExtensions, {
+    maxPayloadSize: maxPayloadSize
+  });
   parser.on('drain', onParserDrain);
   parser.on('error', onParserError.bind(this));
   response.socket.ws = this;
@@ -40148,7 +40206,7 @@ function expand_(str, max, isTop) {
       var x = numeric(n[0]);
       var y = numeric(n[1]);
       var width = Math.max(n[0].length, n[1].length);
-      var incr = n.length === 3 && n[2] !== undefined ? Math.abs(numeric(n[2])) : 1;
+      var incr = n.length === 3 && n[2] !== undefined ? Math.max(Math.abs(numeric(n[2])), 1) : 1;
       var test = lte;
       var reverse = y < x;
       if (reverse) {
@@ -40405,9 +40463,9 @@ var unescape_unescape = function unescape(s) {
     _ref$magicalBraces = _ref.magicalBraces,
     magicalBraces = _ref$magicalBraces === void 0 ? true : _ref$magicalBraces;
   if (magicalBraces) {
-    return windowsPathsNoEscape ? s.replace(/\[([^\/\\])\]/g, '$1') : s.replace(/((?!\\).|^)\[([^\/\\])\]/g, '$1$2').replace(/\\([^\/])/g, '$1');
+    return windowsPathsNoEscape ? s.replace(/\[([^/\\])\]/g, '$1') : s.replace(/((?!\\).|^)\[([^/\\])\]/g, '$1$2').replace(/\\([^/])/g, '$1');
   }
-  return windowsPathsNoEscape ? s.replace(/\[([^\/\\{}])\]/g, '$1') : s.replace(/((?!\\).|^)\[([^\/\\{}])\]/g, '$1$2').replace(/\\([^\/{}])/g, '$1');
+  return windowsPathsNoEscape ? s.replace(/\[([^/\\{}])\]/g, '$1') : s.replace(/((?!\\).|^)\[([^/\\{}])\]/g, '$1$2').replace(/\\([^/{}])/g, '$1');
 };
 //# sourceMappingURL=unescape.js.map
 ;// ./node_modules/minimatch/dist/esm/ast.js
@@ -40607,16 +40665,11 @@ var AST = /*#__PURE__*/function () {
   }, {
     key: "toString",
     value: function toString() {
-      if (classPrivateFieldGet2_classPrivateFieldGet2(_toString, this) !== undefined) return classPrivateFieldGet2_classPrivateFieldGet2(_toString, this);
-      if (!this.type) {
-        return _classPrivateFieldSet2(_toString, this, classPrivateFieldGet2_classPrivateFieldGet2(_parts, this).map(function (p) {
-          return String(p);
-        }).join(''));
-      } else {
-        return _classPrivateFieldSet2(_toString, this, this.type + '(' + classPrivateFieldGet2_classPrivateFieldGet2(_parts, this).map(function (p) {
-          return String(p);
-        }).join('|') + ')');
-      }
+      return classPrivateFieldGet2_classPrivateFieldGet2(_toString, this) !== undefined ? classPrivateFieldGet2_classPrivateFieldGet2(_toString, this) : !this.type ? _classPrivateFieldSet2(_toString, this, classPrivateFieldGet2_classPrivateFieldGet2(_parts, this).map(function (p) {
+        return String(p);
+      }).join('')) : _classPrivateFieldSet2(_toString, this, this.type + '(' + classPrivateFieldGet2_classPrivateFieldGet2(_parts, this).map(function (p) {
+        return String(p);
+      }).join('|') + ')');
     }
   }, {
     key: "push",
@@ -41341,7 +41394,7 @@ var minimatch = function minimatch(p, pattern) {
   return new Minimatch(pattern, options).match(p);
 };
 // Optimized checking for the most common glob patterns.
-var starDotExtRE = /^\*+([^+@!?\*\[\(]*)$/;
+var starDotExtRE = /^\*+([^+@!?*[(]*)$/;
 var starDotExtTest = function starDotExtTest(ext) {
   return function (f) {
     return !f.startsWith('.') && f.endsWith(ext);
@@ -41382,7 +41435,7 @@ var starTest = function starTest(f) {
 var starTestDot = function starTestDot(f) {
   return f.length !== 0 && f !== '.' && f !== '..';
 };
-var qmarksRE = /^\?+([^+@!?\*\[\(]*)?$/;
+var qmarksRE = /^\?+([^+@!?*[(]*)?$/;
 var qmarksTestNocase = function qmarksTestNocase(_ref) {
   var _ref2 = _slicedToArray(_ref, 2),
     $0 = _ref2[0],
@@ -41720,6 +41773,7 @@ var Minimatch = /*#__PURE__*/function () {
       // step 2: expand braces
       this.globSet = _toConsumableArray(new Set(this.braceExpand()));
       if (options.debug) {
+        //oxlint-disable-next-line no-console
         this.debug = function () {
           var _console;
           return (_console = console).error.apply(_console, arguments);
@@ -41786,12 +41840,21 @@ var Minimatch = /*#__PURE__*/function () {
     value: function preprocess(globParts) {
       // if we're not in globstar mode, then turn ** into *
       if (this.options.noglobstar) {
-        for (var i = 0; i < globParts.length; i++) {
-          for (var j = 0; j < globParts[i].length; j++) {
-            if (globParts[i][j] === '**') {
-              globParts[i][j] = '*';
+        var _iterator3 = _createForOfIteratorHelper(globParts),
+          _step3;
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var partset = _step3.value;
+            for (var j = 0; j < partset.length; j++) {
+              if (partset[j] === '**') {
+                partset[j] = '*';
+              }
             }
           }
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
         }
       }
       var _this$options$optimiz = this.options.optimizationLevel,
@@ -41879,7 +41942,7 @@ var Minimatch = /*#__PURE__*/function () {
         var dd = 0;
         while (-1 !== (dd = parts.indexOf('..', dd + 1))) {
           var _p = parts[dd - 1];
-          if (_p && _p !== '.' && _p !== '..' && _p !== '**') {
+          if (_p && _p !== '.' && _p !== '..' && _p !== '**' && !(this.isWindows && /^[a-z]:$/i.test(_p))) {
             didSomething = true;
             parts.splice(dd - 1, 2);
             dd -= 2;
@@ -41913,11 +41976,11 @@ var Minimatch = /*#__PURE__*/function () {
       do {
         didSomething = false;
         // <pre>/**/../<p>/<p>/<rest> -> {<pre>/../<p>/<p>/<rest>,<pre>/**/<p>/<p>/<rest>}
-        var _iterator3 = _createForOfIteratorHelper(globParts),
-          _step3;
+        var _iterator4 = _createForOfIteratorHelper(globParts),
+          _step4;
         try {
-          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-            var parts = _step3.value;
+          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+            var parts = _step4.value;
             var gs = -1;
             while (-1 !== (gs = parts.indexOf('**', gs + 1))) {
               var gss = gs;
@@ -41977,9 +42040,9 @@ var Minimatch = /*#__PURE__*/function () {
             }
           }
         } catch (err) {
-          _iterator3.e(err);
+          _iterator4.e(err);
         } finally {
-          _iterator3.f();
+          _iterator4.f();
         }
       } while (didSomething);
       return globParts;
@@ -42171,17 +42234,17 @@ var Minimatch = /*#__PURE__*/function () {
       var re = set.map(function (pattern) {
         var pp = pattern.map(function (p) {
           if (p instanceof RegExp) {
-            var _iterator4 = _createForOfIteratorHelper(p.flags.split('')),
-              _step4;
+            var _iterator5 = _createForOfIteratorHelper(p.flags.split('')),
+              _step5;
             try {
-              for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-                var f = _step4.value;
+              for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+                var f = _step5.value;
                 flags.add(f);
               }
             } catch (err) {
-              _iterator4.e(err);
+              _iterator5.e(err);
             } finally {
-              _iterator4.f();
+              _iterator5.f();
             }
           }
           return typeof p === 'string' ? esm_regExpEscape(p) : p === GLOBSTAR ? GLOBSTAR : p._src;
@@ -42238,7 +42301,7 @@ var Minimatch = /*#__PURE__*/function () {
       try {
         this.regexp = new RegExp(re, _toConsumableArray(flags).join(''));
         /* c8 ignore start */
-      } catch (ex) {
+      } catch (_unused) {
         // should be impossible
         this.regexp = false;
       }
@@ -42254,7 +42317,7 @@ var Minimatch = /*#__PURE__*/function () {
       // preserveMultipleSlashes is set to true.
       if (this.preserveMultipleSlashes) {
         return p.split('/');
-      } else if (this.isWindows && /^\/\/[^\/]+/.test(p)) {
+      } else if (this.isWindows && /^\/\/[^/]+/.test(p)) {
         // add an extra '' for the one we lose
         return [''].concat(_toConsumableArray(p.split(/\/+/)));
       } else {
@@ -42298,22 +42361,30 @@ var Minimatch = /*#__PURE__*/function () {
           filename = ff[i];
         }
       }
-      for (var _i = 0; _i < set.length; _i++) {
-        var pattern = set[_i];
-        var file = ff;
-        if (options.matchBase && pattern.length === 1) {
-          file = [filename];
-        }
-        var hit = this.matchOne(file, pattern, partial);
-        if (hit) {
-          if (options.flipNegate) {
-            return true;
+      var _iterator6 = _createForOfIteratorHelper(set),
+        _step6;
+      try {
+        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+          var pattern = _step6.value;
+          var file = ff;
+          if (options.matchBase && pattern.length === 1) {
+            file = [filename];
           }
-          return !this.negate;
+          var hit = this.matchOne(file, pattern, partial);
+          if (hit) {
+            if (options.flipNegate) {
+              return true;
+            }
+            return !this.negate;
+          }
         }
+        // didn't get any hits.  this is success if it's a negative
+        // pattern, failure otherwise.
+      } catch (err) {
+        _iterator6.e(err);
+      } finally {
+        _iterator6.f();
       }
-      // didn't get any hits.  this is success if it's a negative
-      // pattern, failure otherwise.
       if (options.flipNegate) {
         return false;
       }
@@ -42382,8 +42453,8 @@ function _matchGlobstar(file, pattern, partial, fileIndex, patternIndex) {
   // after the head, or it's not a matc
   if (!body.length) {
     var sawSome = !!fileTailMatch;
-    for (var _i2 = fileIndex; _i2 < file.length - fileTailMatch; _i2++) {
-      var f = String(file[_i2]);
+    for (var _i = fileIndex; _i < file.length - fileTailMatch; _i++) {
+      var f = String(file[_i]);
       sawSome = true;
       if (f === '.' || f === '..' || !this.options.dot && f.startsWith('.')) {
         return false;
@@ -42402,11 +42473,11 @@ function _matchGlobstar(file, pattern, partial, fileIndex, patternIndex) {
   var currentBody = bodySegments[0];
   var nonGsParts = 0;
   var nonGsPartsSums = [0];
-  var _iterator5 = _createForOfIteratorHelper(body),
-    _step5;
+  var _iterator7 = _createForOfIteratorHelper(body),
+    _step7;
   try {
-    for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-      var _b = _step5.value;
+    for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+      var _b = _step7.value;
       if (_b === GLOBSTAR) {
         nonGsPartsSums.push(nonGsParts);
         currentBody = [[], 0];
@@ -42417,14 +42488,14 @@ function _matchGlobstar(file, pattern, partial, fileIndex, patternIndex) {
       }
     }
   } catch (err) {
-    _iterator5.e(err);
+    _iterator7.e(err);
   } finally {
-    _iterator5.f();
+    _iterator7.f();
   }
   var i = bodySegments.length - 1;
   var fileLength = file.length - fileTailMatch;
-  for (var _i3 = 0, _bodySegments = bodySegments; _i3 < _bodySegments.length; _i3++) {
-    var b = _bodySegments[_i3];
+  for (var _i2 = 0, _bodySegments = bodySegments; _i2 < _bodySegments.length; _i2++) {
+    var b = _bodySegments[_i2];
     b[1] = fileLength - (nonGsPartsSums[i--] + b[0].length);
   }
   return !!_assertClassBrand(_Minimatch_brand, this, _matchGlobStarBodySections).call(this, file, bodySegments, fileIndex, 0, partial, 0, !!fileTailMatch);
@@ -42553,7 +42624,9 @@ minimatch.unescape = unescape_unescape;
 //# sourceMappingURL=index.js.map
 // EXTERNAL MODULE: external "node:url"
 var external_node_url_ = __webpack_require__(3136);
-;// ./node_modules/path-scurry/node_modules/lru-cache/dist/esm/index.min.js
+// EXTERNAL MODULE: external "node:diagnostics_channel"
+var external_node_diagnostics_channel_ = __webpack_require__(3053);
+;// ./node_modules/path-scurry/node_modules/lru-cache/dist/esm/node/index.min.js
 
 
 
@@ -42572,98 +42645,52 @@ var external_node_url_ = __webpack_require__(3136);
 
 
 
-var index_min_excluded = ["context", "forceRefresh"];
-var _c, _o, _o2, _c3, _w, _C, _S, _L, _I, _m, _n, _2, _s, index_min_i, _t2, index_min_a, _u, _l, _h, _b, _r, _y, _A, _d, _g, _T, _v, _f, _U, _c2_brand, _R, _z, _N, _p, _W, _M, _P;
-var x = typeof performance == "object" && performance && typeof performance.now == "function" ? performance : Date,
-  I = new Set(),
-  R = typeof process == "object" && process ? process : {},
-  U = function U(c, t, e, i) {
-    typeof R.emitWarning == "function" ? R.emitWarning(c, t, e, i) : console.error("[".concat(e, "] ").concat(t, ": ").concat(c));
+var index_min_excluded = ["context", "status", "forceRefresh"];
+var _u, _o, _o2, _u3, _w, _D, _S, _M, _U, _m, _n, _b, _s, index_min_i, _t, index_min_a, _c, _l, _h, _y, _r, _2, _F, _d, _g, _T, _W, _f, _j, _u2_brand, _x, _E, _N, _p, _R, _I, _k;
+
+var S = (0,external_node_diagnostics_channel_.channel)("lru-cache:metrics"),
+  W = (0,external_node_diagnostics_channel_.tracingChannel)("lru-cache");
+var D = function D() {
+    return S.hasSubscribers || W.hasSubscribers;
   },
-  C = globalThis.AbortController,
-  D = globalThis.AbortSignal;
-if (typeof C > "u") {
-  var _R$env;
-  D = /*#__PURE__*/function () {
-    function D() {
-      _classCallCheck(this, D);
-      _defineProperty(this, "onabort", void 0);
-      _defineProperty(this, "_onabort", []);
-      _defineProperty(this, "reason", void 0);
-      _defineProperty(this, "aborted", !1);
-    }
-    return _createClass(D, [{
-      key: "addEventListener",
-      value: function addEventListener(i, s) {
-        this._onabort.push(s);
-      }
-    }]);
-  }(), C = /*#__PURE__*/function () {
-    function C() {
-      _classCallCheck(this, C);
-      _defineProperty(this, "signal", new D());
-      _t();
-    }
-    return _createClass(C, [{
-      key: "abort",
-      value: function abort(i) {
-        if (!this.signal.aborted) {
-          var _this$signal$onabort, _this$signal;
-          this.signal.reason = i, this.signal.aborted = !0;
-          var _iterator = _createForOfIteratorHelper(this.signal._onabort),
-            _step;
-          try {
-            for (_iterator.s(); !(_step = _iterator.n()).done;) {
-              var s = _step.value;
-              s(i);
-            }
-          } catch (err) {
-            _iterator.e(err);
-          } finally {
-            _iterator.f();
-          }
-          (_this$signal$onabort = (_this$signal = this.signal).onabort) === null || _this$signal$onabort === void 0 || _this$signal$onabort.call(_this$signal, i);
-        }
-      }
-    }]);
-  }();
-  var c = ((_R$env = R.env) === null || _R$env === void 0 ? void 0 : _R$env.LRU_CACHE_IGNORE_AC_WARNING) !== "1",
-    _t = function t() {
-      c && (c = !1, U("AbortController is not defined. If using lru-cache in node 14, load an AbortController polyfill from the `node-abort-controller` package. A minimal polyfill is provided for use by LRUCache.fetch(), but it should not be relied upon in other contexts (eg, passing it to other APIs that use AbortController/AbortSignal might have undesirable effects). You may disable this with LRU_CACHE_IGNORE_AC_WARNING=1 in the env.", "NO_ABORT_CONTROLLER", "ENOTSUP", _t));
-    };
-}
-var G = function G(c) {
-    return !I.has(c);
+  G = typeof performance == "object" && performance && typeof performance.now == "function" ? performance : Date,
+  M = new Set(),
+  C = typeof process == "object" && process ? process : {},
+  P = function P(u, e, t, i) {
+    typeof C.emitWarning == "function" ? C.emitWarning(u, e, t, i) : console.error("[".concat(t, "] ").concat(e, ": ").concat(u));
   },
-  H = Symbol("type"),
-  y = function y(c) {
-    return c && c === Math.floor(c) && c > 0 && isFinite(c);
+  H = function H(u) {
+    return !M.has(u);
   },
-  M = function M(c) {
-    return y(c) ? c <= Math.pow(2, 8) ? Uint8Array : c <= Math.pow(2, 16) ? Uint16Array : c <= Math.pow(2, 32) ? Uint32Array : c <= Number.MAX_SAFE_INTEGER ? z : null : null;
+  $ = Symbol("type"),
+  F = function F(u) {
+    return !!u && u === Math.floor(u) && u > 0 && isFinite(u);
   },
-  z = /*#__PURE__*/function (_Array) {
-    function z(t) {
+  U = function U(u) {
+    return F(u) ? u <= Math.pow(2, 8) ? Uint8Array : u <= Math.pow(2, 16) ? Uint16Array : u <= Math.pow(2, 32) ? Uint32Array : u <= Number.MAX_SAFE_INTEGER ? O : null : null;
+  },
+  O = /*#__PURE__*/function (_Array) {
+    function O(e) {
       var _this;
-      _classCallCheck(this, z);
-      _this = _callSuper(this, z, [t]), _this.fill(0);
+      _classCallCheck(this, O);
+      _this = _callSuper(this, O, [e]), _this.fill(0);
       return _this;
     }
-    _inherits(z, _Array);
-    return _createClass(z);
+    _inherits(O, _Array);
+    return _createClass(O);
   }(/*#__PURE__*/_wrapNativeSuper(Array)),
-  W = (_c = /*#__PURE__*/function () {
-    function c(t, e) {
-      _classCallCheck(this, c);
+  R = (_u = /*#__PURE__*/function () {
+    function u(e, t) {
+      _classCallCheck(this, u);
       _defineProperty(this, "heap", void 0);
       _defineProperty(this, "length", void 0);
-      if (!_assertClassBrand(_c, c, _o)._) throw new TypeError("instantiate Stack using Stack.create(n)");
-      this.heap = new e(t), this.length = 0;
+      if (!_assertClassBrand(_u, u, _o)._) throw new TypeError("instantiate Stack using Stack.create(n)");
+      this.heap = new t(e), this.length = 0;
     }
-    return _createClass(c, [{
+    return _createClass(u, [{
       key: "push",
-      value: function push(t) {
-        this.heap[this.length++] = t;
+      value: function push(e) {
+        this.heap[this.length++] = e;
       }
     }, {
       key: "pop",
@@ -42672,28 +42699,28 @@ var G = function G(c) {
       }
     }], [{
       key: "create",
-      value: function create(t) {
-        var e = M(t);
-        if (!e) return [];
-        _o._ = _assertClassBrand(_c, c, !0);
-        var i = new c(t, e);
-        return _o._ = _assertClassBrand(_c, c, !1), i;
+      value: function create(e) {
+        var t = U(e);
+        if (!t) return [];
+        _o._ = _assertClassBrand(_u, u, !0);
+        var i = new u(e, t);
+        return _o._ = _assertClassBrand(_u, u, !1), i;
       }
     }]);
   }(), _o = {
     _: !1
-  }, _c),
-  L = (_o2 = /*#__PURE__*/new WeakMap(), _c3 = /*#__PURE__*/new WeakMap(), _w = /*#__PURE__*/new WeakMap(), _C = /*#__PURE__*/new WeakMap(), _S = /*#__PURE__*/new WeakMap(), _L = /*#__PURE__*/new WeakMap(), _I = /*#__PURE__*/new WeakMap(), _m = /*#__PURE__*/new WeakMap(), _n = /*#__PURE__*/new WeakMap(), _2 = /*#__PURE__*/new WeakMap(), _s = /*#__PURE__*/new WeakMap(), index_min_i = /*#__PURE__*/new WeakMap(), _t2 = /*#__PURE__*/new WeakMap(), index_min_a = /*#__PURE__*/new WeakMap(), _u = /*#__PURE__*/new WeakMap(), _l = /*#__PURE__*/new WeakMap(), _h = /*#__PURE__*/new WeakMap(), _b = /*#__PURE__*/new WeakMap(), _r = /*#__PURE__*/new WeakMap(), _y = /*#__PURE__*/new WeakMap(), _A = /*#__PURE__*/new WeakMap(), _d = /*#__PURE__*/new WeakMap(), _g = /*#__PURE__*/new WeakMap(), _T = /*#__PURE__*/new WeakMap(), _v = /*#__PURE__*/new WeakMap(), _f = /*#__PURE__*/new WeakMap(), _U = /*#__PURE__*/new WeakMap(), _c2_brand = /*#__PURE__*/new WeakSet(), _R = /*#__PURE__*/new WeakMap(), _z = /*#__PURE__*/new WeakMap(), _N = /*#__PURE__*/new WeakMap(), _p = /*#__PURE__*/new WeakMap(), _W = /*#__PURE__*/new WeakMap(), _M = /*#__PURE__*/new WeakMap(), _P = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function () {
-    function c(_t3) {
-      _classCallCheck(this, c);
-      _classPrivateMethodInitSpec(this, _c2_brand);
+  }, _u),
+  L = (_o2 = /*#__PURE__*/new WeakMap(), _u3 = /*#__PURE__*/new WeakMap(), _w = /*#__PURE__*/new WeakMap(), _D = /*#__PURE__*/new WeakMap(), _S = /*#__PURE__*/new WeakMap(), _M = /*#__PURE__*/new WeakMap(), _U = /*#__PURE__*/new WeakMap(), _m = /*#__PURE__*/new WeakMap(), _n = /*#__PURE__*/new WeakMap(), _b = /*#__PURE__*/new WeakMap(), _s = /*#__PURE__*/new WeakMap(), index_min_i = /*#__PURE__*/new WeakMap(), _t = /*#__PURE__*/new WeakMap(), index_min_a = /*#__PURE__*/new WeakMap(), _c = /*#__PURE__*/new WeakMap(), _l = /*#__PURE__*/new WeakMap(), _h = /*#__PURE__*/new WeakMap(), _y = /*#__PURE__*/new WeakMap(), _r = /*#__PURE__*/new WeakMap(), _2 = /*#__PURE__*/new WeakMap(), _F = /*#__PURE__*/new WeakMap(), _d = /*#__PURE__*/new WeakMap(), _g = /*#__PURE__*/new WeakMap(), _T = /*#__PURE__*/new WeakMap(), _W = /*#__PURE__*/new WeakMap(), _f = /*#__PURE__*/new WeakMap(), _j = /*#__PURE__*/new WeakMap(), _u2_brand = /*#__PURE__*/new WeakSet(), _x = /*#__PURE__*/new WeakMap(), _E = /*#__PURE__*/new WeakMap(), _N = /*#__PURE__*/new WeakMap(), _p = /*#__PURE__*/new WeakMap(), _R = /*#__PURE__*/new WeakMap(), _I = /*#__PURE__*/new WeakMap(), _k = /*#__PURE__*/new WeakMap(), /*#__PURE__*/function () {
+    function u(_e2) {
+      _classCallCheck(this, u);
+      _classPrivateMethodInitSpec(this, _u2_brand);
       _classPrivateFieldInitSpec(this, _o2, void 0);
-      _classPrivateFieldInitSpec(this, _c3, void 0);
+      _classPrivateFieldInitSpec(this, _u3, void 0);
       _classPrivateFieldInitSpec(this, _w, void 0);
-      _classPrivateFieldInitSpec(this, _C, void 0);
+      _classPrivateFieldInitSpec(this, _D, void 0);
       _classPrivateFieldInitSpec(this, _S, void 0);
-      _classPrivateFieldInitSpec(this, _L, void 0);
-      _classPrivateFieldInitSpec(this, _I, void 0);
+      _classPrivateFieldInitSpec(this, _M, void 0);
+      _classPrivateFieldInitSpec(this, _U, void 0);
       _classPrivateFieldInitSpec(this, _m, void 0);
       _defineProperty(this, "ttl", void 0);
       _defineProperty(this, "ttlResolution", void 0);
@@ -42711,90 +42738,94 @@ var G = function G(c) {
       _defineProperty(this, "allowStaleOnFetchRejection", void 0);
       _defineProperty(this, "ignoreFetchAbort", void 0);
       _classPrivateFieldInitSpec(this, _n, void 0);
-      _classPrivateFieldInitSpec(this, _2, void 0);
+      _classPrivateFieldInitSpec(this, _b, void 0);
       _classPrivateFieldInitSpec(this, _s, void 0);
       _classPrivateFieldInitSpec(this, index_min_i, void 0);
-      _classPrivateFieldInitSpec(this, _t2, void 0);
+      _classPrivateFieldInitSpec(this, _t, void 0);
       _classPrivateFieldInitSpec(this, index_min_a, void 0);
-      _classPrivateFieldInitSpec(this, _u, void 0);
+      _classPrivateFieldInitSpec(this, _c, void 0);
       _classPrivateFieldInitSpec(this, _l, void 0);
       _classPrivateFieldInitSpec(this, _h, void 0);
-      _classPrivateFieldInitSpec(this, _b, void 0);
-      _classPrivateFieldInitSpec(this, _r, void 0);
       _classPrivateFieldInitSpec(this, _y, void 0);
-      _classPrivateFieldInitSpec(this, _A, void 0);
+      _classPrivateFieldInitSpec(this, _r, void 0);
+      _classPrivateFieldInitSpec(this, _2, void 0);
+      _classPrivateFieldInitSpec(this, _F, void 0);
       _classPrivateFieldInitSpec(this, _d, void 0);
       _classPrivateFieldInitSpec(this, _g, void 0);
       _classPrivateFieldInitSpec(this, _T, void 0);
-      _classPrivateFieldInitSpec(this, _v, void 0);
+      _classPrivateFieldInitSpec(this, _W, void 0);
       _classPrivateFieldInitSpec(this, _f, void 0);
-      _classPrivateFieldInitSpec(this, _U, void 0);
-      _classPrivateFieldInitSpec(this, _R, function () {});
-      _classPrivateFieldInitSpec(this, _z, function () {});
+      _classPrivateFieldInitSpec(this, _j, void 0);
+      _classPrivateFieldInitSpec(this, _x, function () {});
+      _classPrivateFieldInitSpec(this, _E, function () {});
       _classPrivateFieldInitSpec(this, _N, function () {});
       _classPrivateFieldInitSpec(this, _p, function () {
         return !1;
       });
-      _classPrivateFieldInitSpec(this, _W, function (t) {});
-      _classPrivateFieldInitSpec(this, _M, function (t, e, i) {});
-      _classPrivateFieldInitSpec(this, _P, function (t, e, i, s) {
+      _classPrivateFieldInitSpec(this, _R, function (e) {});
+      _classPrivateFieldInitSpec(this, _I, function (e, t, i) {});
+      _classPrivateFieldInitSpec(this, _k, function (e, t, i, s) {
         if (i || s) throw new TypeError("cannot set size without setting maxSize or maxEntrySize on cache");
         return 0;
       });
       _defineProperty(this, Symbol.toStringTag, "LRUCache");
-      var _t3$max = _t3.max,
-        _e2 = _t3$max === void 0 ? 0 : _t3$max,
-        _i2 = _t3.ttl,
-        _t3$ttlResolution = _t3.ttlResolution,
-        _s2 = _t3$ttlResolution === void 0 ? 1 : _t3$ttlResolution,
-        _n2 = _t3.ttlAutopurge,
-        _o3 = _t3.updateAgeOnGet,
-        _h2 = _t3.updateAgeOnHas,
-        _r2 = _t3.allowStale,
-        _a2 = _t3.dispose,
-        _w2 = _t3.onInsert,
-        _f2 = _t3.disposeAfter,
-        _d2 = _t3.noDisposeOnSet,
-        _g2 = _t3.noUpdateTTL,
-        _t3$maxSize = _t3.maxSize,
-        _A2 = _t3$maxSize === void 0 ? 0 : _t3$maxSize,
-        _t3$maxEntrySize = _t3.maxEntrySize,
-        _p2 = _t3$maxEntrySize === void 0 ? 0 : _t3$maxEntrySize,
-        _3 = _t3.sizeCalculation,
-        _l2 = _t3.fetchMethod,
-        _S2 = _t3.memoMethod,
-        _b2 = _t3.noDeleteOnFetchRejection,
-        _m2 = _t3.noDeleteOnStaleGet,
-        _u2 = _t3.allowStaleOnFetchRejection,
-        T = _t3.allowStaleOnFetchAbort,
-        F = _t3.ignoreFetchAbort,
-        v = _t3.perf;
-      if (v !== void 0 && typeof (v === null || v === void 0 ? void 0 : v.now) != "function") throw new TypeError("perf option must have a now() method if specified");
-      if (_classPrivateFieldSet2(_m, this, v !== null && v !== void 0 ? v : x), _e2 !== 0 && !y(_e2)) throw new TypeError("max option must be a nonnegative integer");
-      var O = _e2 ? M(_e2) : Array;
-      if (!O) throw new Error("invalid max value: " + _e2);
-      if (_classPrivateFieldSet2(_o2, this, _e2), _classPrivateFieldSet2(_c3, this, _A2), this.maxEntrySize = _p2 || classPrivateFieldGet2_classPrivateFieldGet2(_c3, this), this.sizeCalculation = _3, this.sizeCalculation) {
-        if (!classPrivateFieldGet2_classPrivateFieldGet2(_c3, this) && !this.maxEntrySize) throw new TypeError("cannot set sizeCalculation without setting maxSize or maxEntrySize");
+      var _e2$max = _e2.max,
+        _t2 = _e2$max === void 0 ? 0 : _e2$max,
+        _i2 = _e2.ttl,
+        _e2$ttlResolution = _e2.ttlResolution,
+        _s2 = _e2$ttlResolution === void 0 ? 1 : _e2$ttlResolution,
+        _n2 = _e2.ttlAutopurge,
+        _o3 = _e2.updateAgeOnGet,
+        _r2 = _e2.updateAgeOnHas,
+        _h2 = _e2.allowStale,
+        _l2 = _e2.dispose,
+        _c2 = _e2.onInsert,
+        _f2 = _e2.disposeAfter,
+        _g2 = _e2.noDisposeOnSet,
+        _p2 = _e2.noUpdateTTL,
+        _e2$maxSize = _e2.maxSize,
+        _T2 = _e2$maxSize === void 0 ? 0 : _e2$maxSize,
+        _e2$maxEntrySize = _e2.maxEntrySize,
+        _w2 = _e2$maxEntrySize === void 0 ? 0 : _e2$maxEntrySize,
+        _y2 = _e2.sizeCalculation,
+        _a2 = _e2.fetchMethod,
+        _m2 = _e2.memoMethod,
+        _3 = _e2.noDeleteOnFetchRejection,
+        _b2 = _e2.noDeleteOnStaleGet,
+        _d2 = _e2.allowStaleOnFetchRejection,
+        _A2 = _e2.allowStaleOnFetchAbort,
+        _z2 = _e2.ignoreFetchAbort,
+        x = _e2.perf;
+      if (x !== void 0 && typeof (x === null || x === void 0 ? void 0 : x.now) != "function") throw new TypeError("perf option must have a now() method if specified");
+      if (_classPrivateFieldSet2(_m, this, x !== null && x !== void 0 ? x : G), _t2 !== 0 && !F(_t2)) throw new TypeError("max option must be a nonnegative integer");
+      var _v2 = _t2 ? U(_t2) : Array;
+      if (!_v2) throw new Error("invalid max value: " + _t2);
+      if (_classPrivateFieldSet2(_o2, this, _t2), _classPrivateFieldSet2(_u3, this, _T2), this.maxEntrySize = _w2 || classPrivateFieldGet2_classPrivateFieldGet2(_u3, this), this.sizeCalculation = _y2, this.sizeCalculation) {
+        if (!classPrivateFieldGet2_classPrivateFieldGet2(_u3, this) && !this.maxEntrySize) throw new TypeError("cannot set sizeCalculation without setting maxSize or maxEntrySize");
         if (typeof this.sizeCalculation != "function") throw new TypeError("sizeCalculation set to non-function");
       }
-      if (_S2 !== void 0 && typeof _S2 != "function") throw new TypeError("memoMethod must be a function if defined");
-      if (_classPrivateFieldSet2(_I, this, _S2), _l2 !== void 0 && typeof _l2 != "function") throw new TypeError("fetchMethod must be a function if specified");
-      if (_classPrivateFieldSet2(_L, this, _l2), _classPrivateFieldSet2(_v, this, !!_l2), _classPrivateFieldSet2(_s, this, new Map()), _classPrivateFieldSet2(index_min_i, this, new Array(_e2).fill(void 0)), _classPrivateFieldSet2(_t2, this, new Array(_e2).fill(void 0)), _classPrivateFieldSet2(index_min_a, this, new O(_e2)), _classPrivateFieldSet2(_u, this, new O(_e2)), _classPrivateFieldSet2(_l, this, 0), _classPrivateFieldSet2(_h, this, 0), _classPrivateFieldSet2(_b, this, W.create(_e2)), _classPrivateFieldSet2(_n, this, 0), _classPrivateFieldSet2(_2, this, 0), typeof _a2 == "function" && _classPrivateFieldSet2(_w, this, _a2), typeof _w2 == "function" && _classPrivateFieldSet2(_C, this, _w2), typeof _f2 == "function" ? (_classPrivateFieldSet2(_S, this, _f2), _classPrivateFieldSet2(_r, this, [])) : (_classPrivateFieldSet2(_S, this, void 0), _classPrivateFieldSet2(_r, this, void 0)), _classPrivateFieldSet2(_T, this, !!classPrivateFieldGet2_classPrivateFieldGet2(_w, this)), _classPrivateFieldSet2(_U, this, !!classPrivateFieldGet2_classPrivateFieldGet2(_C, this)), _classPrivateFieldSet2(_f, this, !!classPrivateFieldGet2_classPrivateFieldGet2(_S, this)), this.noDisposeOnSet = !!_d2, this.noUpdateTTL = !!_g2, this.noDeleteOnFetchRejection = !!_b2, this.allowStaleOnFetchRejection = !!_u2, this.allowStaleOnFetchAbort = !!T, this.ignoreFetchAbort = !!F, this.maxEntrySize !== 0) {
-        if (classPrivateFieldGet2_classPrivateFieldGet2(_c3, this) !== 0 && !y(classPrivateFieldGet2_classPrivateFieldGet2(_c3, this))) throw new TypeError("maxSize must be a positive integer if specified");
-        if (!y(this.maxEntrySize)) throw new TypeError("maxEntrySize must be a positive integer if specified");
-        _assertClassBrand(_c2_brand, this, _B).call(this);
+      if (_m2 !== void 0 && typeof _m2 != "function") throw new TypeError("memoMethod must be a function if defined");
+      if (_classPrivateFieldSet2(_U, this, _m2), _a2 !== void 0 && typeof _a2 != "function") throw new TypeError("fetchMethod must be a function if specified");
+      if (_classPrivateFieldSet2(_M, this, _a2), _classPrivateFieldSet2(_W, this, !!_a2), _classPrivateFieldSet2(_s, this, new Map()), _classPrivateFieldSet2(index_min_i, this, Array.from({
+        length: _t2
+      }).fill(void 0)), _classPrivateFieldSet2(_t, this, Array.from({
+        length: _t2
+      }).fill(void 0)), _classPrivateFieldSet2(index_min_a, this, new _v2(_t2)), _classPrivateFieldSet2(_c, this, new _v2(_t2)), _classPrivateFieldSet2(_l, this, 0), _classPrivateFieldSet2(_h, this, 0), _classPrivateFieldSet2(_y, this, R.create(_t2)), _classPrivateFieldSet2(_n, this, 0), _classPrivateFieldSet2(_b, this, 0), typeof _l2 == "function" && _classPrivateFieldSet2(_w, this, _l2), typeof _c2 == "function" && _classPrivateFieldSet2(_D, this, _c2), typeof _f2 == "function" ? (_classPrivateFieldSet2(_S, this, _f2), _classPrivateFieldSet2(_r, this, [])) : (_classPrivateFieldSet2(_S, this, void 0), _classPrivateFieldSet2(_r, this, void 0)), _classPrivateFieldSet2(_T, this, !!classPrivateFieldGet2_classPrivateFieldGet2(_w, this)), _classPrivateFieldSet2(_j, this, !!classPrivateFieldGet2_classPrivateFieldGet2(_D, this)), _classPrivateFieldSet2(_f, this, !!classPrivateFieldGet2_classPrivateFieldGet2(_S, this)), this.noDisposeOnSet = !!_g2, this.noUpdateTTL = !!_p2, this.noDeleteOnFetchRejection = !!_3, this.allowStaleOnFetchRejection = !!_d2, this.allowStaleOnFetchAbort = !!_A2, this.ignoreFetchAbort = !!_z2, this.maxEntrySize !== 0) {
+        if (classPrivateFieldGet2_classPrivateFieldGet2(_u3, this) !== 0 && !F(classPrivateFieldGet2_classPrivateFieldGet2(_u3, this))) throw new TypeError("maxSize must be a positive integer if specified");
+        if (!F(this.maxEntrySize)) throw new TypeError("maxEntrySize must be a positive integer if specified");
+        _assertClassBrand(_u2_brand, this, _X).call(this);
       }
-      if (this.allowStale = !!_r2, this.noDeleteOnStaleGet = !!_m2, this.updateAgeOnGet = !!_o3, this.updateAgeOnHas = !!_h2, this.ttlResolution = y(_s2) || _s2 === 0 ? _s2 : 1, this.ttlAutopurge = !!_n2, this.ttl = _i2 || 0, this.ttl) {
-        if (!y(this.ttl)) throw new TypeError("ttl must be a positive integer if specified");
-        _assertClassBrand(_c2_brand, this, _j).call(this);
+      if (this.allowStale = !!_h2, this.noDeleteOnStaleGet = !!_b2, this.updateAgeOnGet = !!_o3, this.updateAgeOnHas = !!_r2, this.ttlResolution = F(_s2) || _s2 === 0 ? _s2 : 1, this.ttlAutopurge = !!_n2, this.ttl = _i2 || 0, this.ttl) {
+        if (!F(this.ttl)) throw new TypeError("ttl must be a positive integer if specified");
+        _assertClassBrand(_u2_brand, this, _H).call(this);
       }
-      if (classPrivateFieldGet2_classPrivateFieldGet2(_o2, this) === 0 && this.ttl === 0 && classPrivateFieldGet2_classPrivateFieldGet2(_c3, this) === 0) throw new TypeError("At least one of max, maxSize, or ttl is required");
-      if (!this.ttlAutopurge && !classPrivateFieldGet2_classPrivateFieldGet2(_o2, this) && !classPrivateFieldGet2_classPrivateFieldGet2(_c3, this)) {
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_o2, this) === 0 && this.ttl === 0 && classPrivateFieldGet2_classPrivateFieldGet2(_u3, this) === 0) throw new TypeError("At least one of max, maxSize, or ttl is required");
+      if (!this.ttlAutopurge && !classPrivateFieldGet2_classPrivateFieldGet2(_o2, this) && !classPrivateFieldGet2_classPrivateFieldGet2(_u3, this)) {
         var E = "LRU_CACHE_UNBOUNDED";
-        G(E) && (I.add(E), U("TTL caching without ttlAutopurge, max, or maxSize can result in unbounded memory consumption.", "UnboundedCacheWarning", E, c));
+        H(E) && (M.add(E), P("TTL caching without ttlAutopurge, max, or maxSize can result in unbounded memory consumption.", "UnboundedCacheWarning", E, u));
       }
     }
-    return _createClass(c, [{
+    return _createClass(u, [{
       key: "perf",
       get: function get() {
         return classPrivateFieldGet2_classPrivateFieldGet2(_m, this);
@@ -42807,12 +42838,12 @@ var G = function G(c) {
     }, {
       key: "maxSize",
       get: function get() {
-        return classPrivateFieldGet2_classPrivateFieldGet2(_c3, this);
+        return classPrivateFieldGet2_classPrivateFieldGet2(_u3, this);
       }
     }, {
       key: "calculatedSize",
       get: function get() {
-        return classPrivateFieldGet2_classPrivateFieldGet2(_2, this);
+        return classPrivateFieldGet2_classPrivateFieldGet2(_b, this);
       }
     }, {
       key: "size",
@@ -42822,12 +42853,12 @@ var G = function G(c) {
     }, {
       key: "fetchMethod",
       get: function get() {
-        return classPrivateFieldGet2_classPrivateFieldGet2(_L, this);
+        return classPrivateFieldGet2_classPrivateFieldGet2(_M, this);
       }
     }, {
       key: "memoMethod",
       get: function get() {
-        return classPrivateFieldGet2_classPrivateFieldGet2(_I, this);
+        return classPrivateFieldGet2_classPrivateFieldGet2(_U, this);
       }
     }, {
       key: "dispose",
@@ -42837,7 +42868,7 @@ var G = function G(c) {
     }, {
       key: "onInsert",
       get: function get() {
-        return classPrivateFieldGet2_classPrivateFieldGet2(_C, this);
+        return classPrivateFieldGet2_classPrivateFieldGet2(_D, this);
       }
     }, {
       key: "disposeAfter",
@@ -42846,32 +42877,32 @@ var G = function G(c) {
       }
     }, {
       key: "getRemainingTTL",
-      value: function getRemainingTTL(t) {
-        return classPrivateFieldGet2_classPrivateFieldGet2(_s, this).has(t) ? 1 / 0 : 0;
+      value: function getRemainingTTL(e) {
+        return classPrivateFieldGet2_classPrivateFieldGet2(_s, this).has(e) ? 1 / 0 : 0;
       }
     }, {
       key: "entries",
       value: /*#__PURE__*/_regenerator().m(function entries() {
-        var _iterator2, _step2, t, _t4, _t5;
+        var _iterator, _step, e, _t3, _t4;
         return _regenerator().w(function (_context) {
           while (1) switch (_context.p = _context.n) {
             case 0:
-              _iterator2 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _F).call(this));
+              _iterator = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _A).call(this));
               _context.p = 1;
-              _iterator2.s();
+              _iterator.s();
             case 2:
-              if ((_step2 = _iterator2.n()).done) {
+              if ((_step = _iterator.n()).done) {
                 _context.n = 4;
                 break;
               }
-              t = _step2.value;
-              _t4 = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t] !== void 0 && classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t] !== void 0 && !_assertClassBrand(_c2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t]);
-              if (!_t4) {
+              e = _step.value;
+              _t3 = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e] !== void 0 && classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e] !== void 0 && !_assertClassBrand(_u2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e]);
+              if (!_t3) {
                 _context.n = 3;
                 break;
               }
               _context.n = 3;
-              return [classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t], classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t]];
+              return [classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e], classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e]];
             case 3:
               _context.n = 2;
               break;
@@ -42880,11 +42911,11 @@ var G = function G(c) {
               break;
             case 5:
               _context.p = 5;
-              _t5 = _context.v;
-              _iterator2.e(_t5);
+              _t4 = _context.v;
+              _iterator.e(_t4);
             case 6:
               _context.p = 6;
-              _iterator2.f();
+              _iterator.f();
               return _context.f(6);
             case 7:
               return _context.a(2);
@@ -42894,26 +42925,26 @@ var G = function G(c) {
     }, {
       key: "rentries",
       value: /*#__PURE__*/_regenerator().m(function rentries() {
-        var _iterator3, _step3, t, _t6, _t7;
+        var _iterator2, _step2, e, _t5, _t6;
         return _regenerator().w(function (_context2) {
           while (1) switch (_context2.p = _context2.n) {
             case 0:
-              _iterator3 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _O).call(this));
+              _iterator2 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _z).call(this));
               _context2.p = 1;
-              _iterator3.s();
+              _iterator2.s();
             case 2:
-              if ((_step3 = _iterator3.n()).done) {
+              if ((_step2 = _iterator2.n()).done) {
                 _context2.n = 4;
                 break;
               }
-              t = _step3.value;
-              _t6 = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t] !== void 0 && classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t] !== void 0 && !_assertClassBrand(_c2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t]);
-              if (!_t6) {
+              e = _step2.value;
+              _t5 = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e] !== void 0 && classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e] !== void 0 && !_assertClassBrand(_u2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e]);
+              if (!_t5) {
                 _context2.n = 3;
                 break;
               }
               _context2.n = 3;
-              return [classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t], classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t]];
+              return [classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e], classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e]];
             case 3:
               _context2.n = 2;
               break;
@@ -42922,11 +42953,11 @@ var G = function G(c) {
               break;
             case 5:
               _context2.p = 5;
-              _t7 = _context2.v;
-              _iterator3.e(_t7);
+              _t6 = _context2.v;
+              _iterator2.e(_t6);
             case 6:
               _context2.p = 6;
-              _iterator3.f();
+              _iterator2.f();
               return _context2.f(6);
             case 7:
               return _context2.a(2);
@@ -42936,27 +42967,27 @@ var G = function G(c) {
     }, {
       key: "keys",
       value: /*#__PURE__*/_regenerator().m(function keys() {
-        var _iterator4, _step4, t, e, _t8, _t9;
+        var _iterator3, _step3, e, t, _t7, _t8;
         return _regenerator().w(function (_context3) {
           while (1) switch (_context3.p = _context3.n) {
             case 0:
-              _iterator4 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _F).call(this));
+              _iterator3 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _A).call(this));
               _context3.p = 1;
-              _iterator4.s();
+              _iterator3.s();
             case 2:
-              if ((_step4 = _iterator4.n()).done) {
+              if ((_step3 = _iterator3.n()).done) {
                 _context3.n = 4;
                 break;
               }
-              t = _step4.value;
-              e = classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t];
-              _t8 = e !== void 0 && !_assertClassBrand(_c2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t]);
-              if (!_t8) {
+              e = _step3.value;
+              t = classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e];
+              _t7 = t !== void 0 && !_assertClassBrand(_u2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e]);
+              if (!_t7) {
                 _context3.n = 3;
                 break;
               }
               _context3.n = 3;
-              return e;
+              return t;
             case 3:
               _context3.n = 2;
               break;
@@ -42965,11 +42996,11 @@ var G = function G(c) {
               break;
             case 5:
               _context3.p = 5;
-              _t9 = _context3.v;
-              _iterator4.e(_t9);
+              _t8 = _context3.v;
+              _iterator3.e(_t8);
             case 6:
               _context3.p = 6;
-              _iterator4.f();
+              _iterator3.f();
               return _context3.f(6);
             case 7:
               return _context3.a(2);
@@ -42979,27 +43010,27 @@ var G = function G(c) {
     }, {
       key: "rkeys",
       value: /*#__PURE__*/_regenerator().m(function rkeys() {
-        var _iterator5, _step5, t, e, _t0, _t1;
+        var _iterator4, _step4, e, t, _t9, _t0;
         return _regenerator().w(function (_context4) {
           while (1) switch (_context4.p = _context4.n) {
             case 0:
-              _iterator5 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _O).call(this));
+              _iterator4 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _z).call(this));
               _context4.p = 1;
-              _iterator5.s();
+              _iterator4.s();
             case 2:
-              if ((_step5 = _iterator5.n()).done) {
+              if ((_step4 = _iterator4.n()).done) {
                 _context4.n = 4;
                 break;
               }
-              t = _step5.value;
-              e = classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t];
-              _t0 = e !== void 0 && !_assertClassBrand(_c2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t]);
-              if (!_t0) {
+              e = _step4.value;
+              t = classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e];
+              _t9 = t !== void 0 && !_assertClassBrand(_u2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e]);
+              if (!_t9) {
                 _context4.n = 3;
                 break;
               }
               _context4.n = 3;
-              return e;
+              return t;
             case 3:
               _context4.n = 2;
               break;
@@ -43008,11 +43039,11 @@ var G = function G(c) {
               break;
             case 5:
               _context4.p = 5;
-              _t1 = _context4.v;
-              _iterator5.e(_t1);
+              _t0 = _context4.v;
+              _iterator4.e(_t0);
             case 6:
               _context4.p = 6;
-              _iterator5.f();
+              _iterator4.f();
               return _context4.f(6);
             case 7:
               return _context4.a(2);
@@ -43022,26 +43053,26 @@ var G = function G(c) {
     }, {
       key: "values",
       value: /*#__PURE__*/_regenerator().m(function values() {
-        var _iterator6, _step6, t, _t10, _t11;
+        var _iterator5, _step5, e, _t1, _t10;
         return _regenerator().w(function (_context5) {
           while (1) switch (_context5.p = _context5.n) {
             case 0:
-              _iterator6 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _F).call(this));
+              _iterator5 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _A).call(this));
               _context5.p = 1;
-              _iterator6.s();
+              _iterator5.s();
             case 2:
-              if ((_step6 = _iterator6.n()).done) {
+              if ((_step5 = _iterator5.n()).done) {
                 _context5.n = 4;
                 break;
               }
-              t = _step6.value;
-              _t10 = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t] !== void 0 && !_assertClassBrand(_c2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t]);
-              if (!_t10) {
+              e = _step5.value;
+              _t1 = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e] !== void 0 && !_assertClassBrand(_u2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e]);
+              if (!_t1) {
                 _context5.n = 3;
                 break;
               }
               _context5.n = 3;
-              return classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t];
+              return classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e];
             case 3:
               _context5.n = 2;
               break;
@@ -43050,11 +43081,11 @@ var G = function G(c) {
               break;
             case 5:
               _context5.p = 5;
-              _t11 = _context5.v;
-              _iterator6.e(_t11);
+              _t10 = _context5.v;
+              _iterator5.e(_t10);
             case 6:
               _context5.p = 6;
-              _iterator6.f();
+              _iterator5.f();
               return _context5.f(6);
             case 7:
               return _context5.a(2);
@@ -43064,26 +43095,26 @@ var G = function G(c) {
     }, {
       key: "rvalues",
       value: /*#__PURE__*/_regenerator().m(function rvalues() {
-        var _iterator7, _step7, t, _t12, _t13;
+        var _iterator6, _step6, e, _t11, _t12;
         return _regenerator().w(function (_context6) {
           while (1) switch (_context6.p = _context6.n) {
             case 0:
-              _iterator7 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _O).call(this));
+              _iterator6 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _z).call(this));
               _context6.p = 1;
-              _iterator7.s();
+              _iterator6.s();
             case 2:
-              if ((_step7 = _iterator7.n()).done) {
+              if ((_step6 = _iterator6.n()).done) {
                 _context6.n = 4;
                 break;
               }
-              t = _step7.value;
-              _t12 = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t] !== void 0 && !_assertClassBrand(_c2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t]);
-              if (!_t12) {
+              e = _step6.value;
+              _t11 = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e] !== void 0 && !_assertClassBrand(_u2_brand, this, _e).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e]);
+              if (!_t11) {
                 _context6.n = 3;
                 break;
               }
               _context6.n = 3;
-              return classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[t];
+              return classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[e];
             case 3:
               _context6.n = 2;
               break;
@@ -43092,11 +43123,11 @@ var G = function G(c) {
               break;
             case 5:
               _context6.p = 5;
-              _t13 = _context6.v;
-              _iterator7.e(_t13);
+              _t12 = _context6.v;
+              _iterator6.e(_t12);
             case 6:
               _context6.p = 6;
-              _iterator7.f();
+              _iterator6.f();
               return _context6.f(6);
             case 7:
               return _context6.a(2);
@@ -43110,16 +43141,35 @@ var G = function G(c) {
       }
     }, {
       key: "find",
-      value: function find(t) {
-        var e = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        var _iterator8 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _F).call(this)),
+      value: function find(e) {
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var _iterator7 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _A).call(this)),
+          _step7;
+        try {
+          for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
+            var i = _step7.value;
+            var s = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[i],
+              n = _assertClassBrand(_u2_brand, this, _e).call(this, s) ? s.__staleWhileFetching : s;
+            if (n !== void 0 && e(n, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[i], this)) return _assertClassBrand(_u2_brand, this, _C).call(this, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[i], t);
+          }
+        } catch (err) {
+          _iterator7.e(err);
+        } finally {
+          _iterator7.f();
+        }
+      }
+    }, {
+      key: "forEach",
+      value: function forEach(e) {
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this;
+        var _iterator8 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _A).call(this)),
           _step8;
         try {
           for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
             var i = _step8.value;
-            var s = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[i],
-              n = _assertClassBrand(_c2_brand, this, _e).call(this, s) ? s.__staleWhileFetching : s;
-            if (n !== void 0 && t(n, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[i], this)) return this.get(classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[i], e);
+            var s = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[i],
+              n = _assertClassBrand(_u2_brand, this, _e).call(this, s) ? s.__staleWhileFetching : s;
+            n !== void 0 && e.call(t, n, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[i], this);
           }
         } catch (err) {
           _iterator8.e(err);
@@ -43128,17 +43178,17 @@ var G = function G(c) {
         }
       }
     }, {
-      key: "forEach",
-      value: function forEach(t) {
-        var e = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this;
-        var _iterator9 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _F).call(this)),
+      key: "rforEach",
+      value: function rforEach(e) {
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this;
+        var _iterator9 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _z).call(this)),
           _step9;
         try {
           for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
             var i = _step9.value;
-            var s = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[i],
-              n = _assertClassBrand(_c2_brand, this, _e).call(this, s) ? s.__staleWhileFetching : s;
-            n !== void 0 && t.call(e, n, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[i], this);
+            var s = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[i],
+              n = _assertClassBrand(_u2_brand, this, _e).call(this, s) ? s.__staleWhileFetching : s;
+            n !== void 0 && e.call(t, n, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[i], this);
           }
         } catch (err) {
           _iterator9.e(err);
@@ -43147,708 +43197,769 @@ var G = function G(c) {
         }
       }
     }, {
-      key: "rforEach",
-      value: function rforEach(t) {
-        var e = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this;
-        var _iterator0 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _O).call(this)),
+      key: "purgeStale",
+      value: function purgeStale() {
+        var e = !1;
+        var _iterator0 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _z).call(this, {
+            allowStale: !0
+          })),
           _step0;
         try {
           for (_iterator0.s(); !(_step0 = _iterator0.n()).done;) {
-            var i = _step0.value;
-            var s = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[i],
-              n = _assertClassBrand(_c2_brand, this, _e).call(this, s) ? s.__staleWhileFetching : s;
-            n !== void 0 && t.call(e, n, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[i], this);
+            var t = _step0.value;
+            classPrivateFieldGet2_classPrivateFieldGet2(_p, this).call(this, t) && (_assertClassBrand(_u2_brand, this, _v).call(this, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t], "expire"), e = !0);
           }
         } catch (err) {
           _iterator0.e(err);
         } finally {
           _iterator0.f();
         }
+        return e;
       }
     }, {
-      key: "purgeStale",
-      value: function purgeStale() {
-        var t = !1;
-        var _iterator1 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _O).call(this, {
+      key: "info",
+      value: function info(e) {
+        var t = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(e);
+        if (t === void 0) return;
+        var i = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[t],
+          s = _assertClassBrand(_u2_brand, this, _e).call(this, i) ? i.__staleWhileFetching : i;
+        if (s === void 0) return;
+        var n = {
+          value: s
+        };
+        if (classPrivateFieldGet2_classPrivateFieldGet2(_d, this) && classPrivateFieldGet2_classPrivateFieldGet2(_F, this)) {
+          var o = classPrivateFieldGet2_classPrivateFieldGet2(_d, this)[t],
+            r = classPrivateFieldGet2_classPrivateFieldGet2(_F, this)[t];
+          if (o && r) {
+            var h = o - (classPrivateFieldGet2_classPrivateFieldGet2(_m, this).now() - r);
+            n.ttl = h, n.start = Date.now();
+          }
+        }
+        return classPrivateFieldGet2_classPrivateFieldGet2(_2, this) && (n.size = classPrivateFieldGet2_classPrivateFieldGet2(_2, this)[t]), n;
+      }
+    }, {
+      key: "dump",
+      value: function dump() {
+        var e = [];
+        var _iterator1 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _A).call(this, {
             allowStale: !0
           })),
           _step1;
         try {
           for (_iterator1.s(); !(_step1 = _iterator1.n()).done;) {
-            var e = _step1.value;
-            classPrivateFieldGet2_classPrivateFieldGet2(_p, this).call(this, e) && (_assertClassBrand(_c2_brand, this, _E).call(this, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e], "expire"), t = !0);
+            var t = _step1.value;
+            var i = classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t],
+              s = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[t],
+              n = _assertClassBrand(_u2_brand, this, _e).call(this, s) ? s.__staleWhileFetching : s;
+            if (n === void 0 || i === void 0) continue;
+            var o = {
+              value: n
+            };
+            if (classPrivateFieldGet2_classPrivateFieldGet2(_d, this) && classPrivateFieldGet2_classPrivateFieldGet2(_F, this)) {
+              o.ttl = classPrivateFieldGet2_classPrivateFieldGet2(_d, this)[t];
+              var r = classPrivateFieldGet2_classPrivateFieldGet2(_m, this).now() - classPrivateFieldGet2_classPrivateFieldGet2(_F, this)[t];
+              o.start = Math.floor(Date.now() - r);
+            }
+            classPrivateFieldGet2_classPrivateFieldGet2(_2, this) && (o.size = classPrivateFieldGet2_classPrivateFieldGet2(_2, this)[t]), e.unshift([i, o]);
           }
         } catch (err) {
           _iterator1.e(err);
         } finally {
           _iterator1.f();
         }
-        return t;
+        return e;
       }
     }, {
-      key: "info",
-      value: function info(t) {
-        var e = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(t);
-        if (e === void 0) return;
-        var i = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[e],
-          s = _assertClassBrand(_c2_brand, this, _e).call(this, i) ? i.__staleWhileFetching : i;
-        if (s === void 0) return;
-        var n = {
-          value: s
-        };
-        if (classPrivateFieldGet2_classPrivateFieldGet2(_d, this) && classPrivateFieldGet2_classPrivateFieldGet2(_A, this)) {
-          var o = classPrivateFieldGet2_classPrivateFieldGet2(_d, this)[e],
-            h = classPrivateFieldGet2_classPrivateFieldGet2(_A, this)[e];
-          if (o && h) {
-            var r = o - (classPrivateFieldGet2_classPrivateFieldGet2(_m, this).now() - h);
-            n.ttl = r, n.start = Date.now();
-          }
-        }
-        return classPrivateFieldGet2_classPrivateFieldGet2(_y, this) && (n.size = classPrivateFieldGet2_classPrivateFieldGet2(_y, this)[e]), n;
-      }
-    }, {
-      key: "dump",
-      value: function dump() {
-        var t = [];
-        var _iterator10 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _F).call(this, {
-            allowStale: !0
-          })),
+      key: "load",
+      value: function load(e) {
+        this.clear();
+        var _iterator10 = _createForOfIteratorHelper(e),
           _step10;
         try {
           for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-            var e = _step10.value;
-            var i = classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e],
-              s = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[e],
-              n = _assertClassBrand(_c2_brand, this, _e).call(this, s) ? s.__staleWhileFetching : s;
-            if (n === void 0 || i === void 0) continue;
-            var o = {
-              value: n
-            };
-            if (classPrivateFieldGet2_classPrivateFieldGet2(_d, this) && classPrivateFieldGet2_classPrivateFieldGet2(_A, this)) {
-              o.ttl = classPrivateFieldGet2_classPrivateFieldGet2(_d, this)[e];
-              var h = classPrivateFieldGet2_classPrivateFieldGet2(_m, this).now() - classPrivateFieldGet2_classPrivateFieldGet2(_A, this)[e];
-              o.start = Math.floor(Date.now() - h);
+            var _step10$value = _slicedToArray(_step10.value, 2),
+              t = _step10$value[0],
+              i = _step10$value[1];
+            if (i.start) {
+              var s = Date.now() - i.start;
+              i.start = classPrivateFieldGet2_classPrivateFieldGet2(_m, this).now() - s;
             }
-            classPrivateFieldGet2_classPrivateFieldGet2(_y, this) && (o.size = classPrivateFieldGet2_classPrivateFieldGet2(_y, this)[e]), t.unshift([i, o]);
+            _assertClassBrand(_u2_brand, this, _O).call(this, t, i.value, i);
           }
         } catch (err) {
           _iterator10.e(err);
         } finally {
           _iterator10.f();
         }
-        return t;
-      }
-    }, {
-      key: "load",
-      value: function load(t) {
-        this.clear();
-        var _iterator11 = _createForOfIteratorHelper(t),
-          _step11;
-        try {
-          for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
-            var _step11$value = _slicedToArray(_step11.value, 2),
-              e = _step11$value[0],
-              i = _step11$value[1];
-            if (i.start) {
-              var s = Date.now() - i.start;
-              i.start = classPrivateFieldGet2_classPrivateFieldGet2(_m, this).now() - s;
-            }
-            this.set(e, i.value, i);
-          }
-        } catch (err) {
-          _iterator11.e(err);
-        } finally {
-          _iterator11.f();
-        }
       }
     }, {
       key: "set",
-      value: function set(t, e) {
-        var _this$n, _this$n2, _classPrivateFieldGet2;
+      value: function set(e, t) {
         var i = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-        if (e === void 0) return this["delete"](t), this;
-        var _i$ttl = i.ttl,
-          s = _i$ttl === void 0 ? this.ttl : _i$ttl,
-          n = i.start,
-          _i$noDisposeOnSet = i.noDisposeOnSet,
-          o = _i$noDisposeOnSet === void 0 ? this.noDisposeOnSet : _i$noDisposeOnSet,
-          _i$sizeCalculation = i.sizeCalculation,
-          h = _i$sizeCalculation === void 0 ? this.sizeCalculation : _i$sizeCalculation,
-          r = i.status,
-          _i$noUpdateTTL = i.noUpdateTTL,
-          a = _i$noUpdateTTL === void 0 ? this.noUpdateTTL : _i$noUpdateTTL,
-          w = classPrivateFieldGet2_classPrivateFieldGet2(_P, this).call(this, t, e, i.size || 0, h);
-        if (this.maxEntrySize && w > this.maxEntrySize) return r && (r.set = "miss", r.maxEntrySizeExceeded = !0), _assertClassBrand(_c2_brand, this, _E).call(this, t, "set"), this;
-        var f = classPrivateFieldGet2_classPrivateFieldGet2(_n, this) === 0 ? void 0 : classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(t);
-        if (f === void 0) f = classPrivateFieldGet2_classPrivateFieldGet2(_n, this) === 0 ? classPrivateFieldGet2_classPrivateFieldGet2(_h, this) : classPrivateFieldGet2_classPrivateFieldGet2(_b, this).length !== 0 ? classPrivateFieldGet2_classPrivateFieldGet2(_b, this).pop() : classPrivateFieldGet2_classPrivateFieldGet2(_n, this) === classPrivateFieldGet2_classPrivateFieldGet2(_o2, this) ? _assertClassBrand(_c2_brand, this, _x).call(this, !1) : classPrivateFieldGet2_classPrivateFieldGet2(_n, this), classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[f] = t, classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[f] = e, classPrivateFieldGet2_classPrivateFieldGet2(_s, this).set(t, f), classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[classPrivateFieldGet2_classPrivateFieldGet2(_h, this)] = f, classPrivateFieldGet2_classPrivateFieldGet2(_u, this)[f] = classPrivateFieldGet2_classPrivateFieldGet2(_h, this), _classPrivateFieldSet2(_h, this, f), _classPrivateFieldSet2(_n, this, (_this$n = classPrivateFieldGet2_classPrivateFieldGet2(_n, this), _this$n2 = _this$n++, _this$n)), _this$n2, classPrivateFieldGet2_classPrivateFieldGet2(_M, this).call(this, f, w, r), r && (r.set = "add"), a = !1, classPrivateFieldGet2_classPrivateFieldGet2(_U, this) && ((_classPrivateFieldGet2 = classPrivateFieldGet2_classPrivateFieldGet2(_C, this)) === null || _classPrivateFieldGet2 === void 0 ? void 0 : _classPrivateFieldGet2.call(this, e, t, "add"));else {
-          var _this$onInsert;
-          _assertClassBrand(_c2_brand, this, _D).call(this, f);
-          var d = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[f];
-          if (e !== d) {
-            var _classPrivateFieldGet5, _classPrivateFieldGet6;
-            if (classPrivateFieldGet2_classPrivateFieldGet2(_v, this) && _assertClassBrand(_c2_brand, this, _e).call(this, d)) {
-              var _classPrivateFieldGet3, _classPrivateFieldGet4;
-              d.__abortController.abort(new Error("replaced"));
-              var g = d.__staleWhileFetching;
-              g !== void 0 && !o && (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) && (_classPrivateFieldGet3 = classPrivateFieldGet2_classPrivateFieldGet2(_w, this)) !== null && _classPrivateFieldGet3 !== void 0 && _classPrivateFieldGet3.call(this, g, t, "set"), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && ((_classPrivateFieldGet4 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) === null || _classPrivateFieldGet4 === void 0 ? void 0 : _classPrivateFieldGet4.push([g, t, "set"])));
-            } else o || (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) && (_classPrivateFieldGet5 = classPrivateFieldGet2_classPrivateFieldGet2(_w, this)) !== null && _classPrivateFieldGet5 !== void 0 && _classPrivateFieldGet5.call(this, d, t, "set"), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && ((_classPrivateFieldGet6 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) === null || _classPrivateFieldGet6 === void 0 ? void 0 : _classPrivateFieldGet6.push([d, t, "set"])));
-            if (classPrivateFieldGet2_classPrivateFieldGet2(_W, this).call(this, f), classPrivateFieldGet2_classPrivateFieldGet2(_M, this).call(this, f, w, r), classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[f] = e, r) {
-              r.set = "replace";
-              var _g3 = d && _assertClassBrand(_c2_brand, this, _e).call(this, d) ? d.__staleWhileFetching : d;
-              _g3 !== void 0 && (r.oldValue = _g3);
-            }
-          } else r && (r.set = "update");
-          classPrivateFieldGet2_classPrivateFieldGet2(_U, this) && ((_this$onInsert = this.onInsert) === null || _this$onInsert === void 0 ? void 0 : _this$onInsert.call(this, e, t, e === d ? "update" : "replace"));
-        }
-        if (s !== 0 && !classPrivateFieldGet2_classPrivateFieldGet2(_d, this) && _assertClassBrand(_c2_brand, this, _j).call(this), classPrivateFieldGet2_classPrivateFieldGet2(_d, this) && (a || classPrivateFieldGet2_classPrivateFieldGet2(_N, this).call(this, f, s, n), r && classPrivateFieldGet2_classPrivateFieldGet2(_z, this).call(this, r, f)), !o && classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) {
-          var _d3 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this),
-            _g4;
-          for (; _g4 = _d3 === null || _d3 === void 0 ? void 0 : _d3.shift();) {
-            var _classPrivateFieldGet7;
-            (_classPrivateFieldGet7 = classPrivateFieldGet2_classPrivateFieldGet2(_S, this)) === null || _classPrivateFieldGet7 === void 0 || _classPrivateFieldGet7.call.apply(_classPrivateFieldGet7, [this].concat(_toConsumableArray(_g4)));
-          }
-        }
-        return this;
+        var _i$status = i.status,
+          s = _i$status === void 0 ? S.hasSubscribers ? {} : void 0 : _i$status;
+        i.status = s, s && (s.op = "set", s.key = e, t !== void 0 && (s.value = t));
+        var n = _assertClassBrand(_u2_brand, this, _O).call(this, e, t, i);
+        return s && S.hasSubscribers && S.publish(s), n;
       }
     }, {
       key: "pop",
       value: function pop() {
         try {
           for (; classPrivateFieldGet2_classPrivateFieldGet2(_n, this);) {
-            var t = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[classPrivateFieldGet2_classPrivateFieldGet2(_l, this)];
-            if (_assertClassBrand(_c2_brand, this, _x).call(this, !0), _assertClassBrand(_c2_brand, this, _e).call(this, t)) {
-              if (t.__staleWhileFetching) return t.__staleWhileFetching;
-            } else if (t !== void 0) return t;
+            var e = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[classPrivateFieldGet2_classPrivateFieldGet2(_l, this)];
+            if (_assertClassBrand(_u2_brand, this, _G).call(this, !0), _assertClassBrand(_u2_brand, this, _e).call(this, e)) {
+              if (e.__staleWhileFetching) return e.__staleWhileFetching;
+            } else if (e !== void 0) return e;
           }
         } finally {
           if (classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) {
-            var _t14 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this),
-              e;
-            for (; e = _t14 === null || _t14 === void 0 ? void 0 : _t14.shift();) {
-              var _classPrivateFieldGet8;
-              (_classPrivateFieldGet8 = classPrivateFieldGet2_classPrivateFieldGet2(_S, this)) === null || _classPrivateFieldGet8 === void 0 || _classPrivateFieldGet8.call.apply(_classPrivateFieldGet8, [this].concat(_toConsumableArray(e)));
+            var _e3 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this),
+              t;
+            for (; t = _e3 === null || _e3 === void 0 ? void 0 : _e3.shift();) {
+              var _classPrivateFieldGet2;
+              (_classPrivateFieldGet2 = classPrivateFieldGet2_classPrivateFieldGet2(_S, this)) === null || _classPrivateFieldGet2 === void 0 || _classPrivateFieldGet2.call.apply(_classPrivateFieldGet2, [this].concat(_toConsumableArray(t)));
             }
           }
         }
       }
     }, {
       key: "has",
-      value: function has(t) {
-        var e = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        var _e$updateAgeOnHas = e.updateAgeOnHas,
-          i = _e$updateAgeOnHas === void 0 ? this.updateAgeOnHas : _e$updateAgeOnHas,
-          s = e.status,
-          n = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(t);
-        if (n !== void 0) {
-          var o = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[n];
-          if (_assertClassBrand(_c2_brand, this, _e).call(this, o) && o.__staleWhileFetching === void 0) return !1;
-          if (classPrivateFieldGet2_classPrivateFieldGet2(_p, this).call(this, n)) s && (s.has = "stale", classPrivateFieldGet2_classPrivateFieldGet2(_z, this).call(this, s, n));else return i && classPrivateFieldGet2_classPrivateFieldGet2(_R, this).call(this, n), s && (s.has = "hit", classPrivateFieldGet2_classPrivateFieldGet2(_z, this).call(this, s, n)), !0;
-        } else s && (s.has = "miss");
-        return !1;
+      value: function has(e) {
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var _t$status = t.status,
+          i = _t$status === void 0 ? S.hasSubscribers ? {} : void 0 : _t$status;
+        t.status = i, i && (i.op = "has", i.key = e);
+        var s = _assertClassBrand(_u2_brand, this, _Y).call(this, e, t);
+        return S.hasSubscribers && S.publish(i), s;
       }
     }, {
       key: "peek",
-      value: function peek(t) {
-        var e = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        var _e$allowStale = e.allowStale,
-          i = _e$allowStale === void 0 ? this.allowStale : _e$allowStale,
-          s = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(t);
-        if (s === void 0 || !i && classPrivateFieldGet2_classPrivateFieldGet2(_p, this).call(this, s)) return;
-        var n = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[s];
-        return _assertClassBrand(_c2_brand, this, _e).call(this, n) ? n.__staleWhileFetching : n;
+      value: function peek(e) {
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var _t$status2 = t.status,
+          i = _t$status2 === void 0 ? D() ? {} : void 0 : _t$status2;
+        i && (i.op = "peek", i.key = e), t.status = i;
+        var s = _assertClassBrand(_u2_brand, this, _J).call(this, e, t);
+        return S.hasSubscribers && S.publish(i), s;
       }
     }, {
       key: "fetch",
-      value: function () {
-        var _fetch = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(t) {
-          var e,
-            _e$allowStale2,
-            i,
-            _e$updateAgeOnGet,
-            s,
-            _e$noDeleteOnStaleGet,
-            n,
-            _e$ttl,
-            o,
-            _e$noDisposeOnSet,
-            h,
-            _e$size,
-            r,
-            _e$sizeCalculation,
-            a,
-            _e$noUpdateTTL,
-            w,
-            _e$noDeleteOnFetchRej,
-            f,
-            _e$allowStaleOnFetchR,
-            d,
-            _e$ignoreFetchAbort,
-            g,
-            _e$allowStaleOnFetchA,
-            A,
-            p,
-            _e$forceRefresh,
-            _,
-            l,
-            S,
-            b,
-            m,
-            u,
-            _u3,
-            E,
-            T,
-            F,
-            O,
-            _args7 = arguments;
-          return _regenerator().w(function (_context7) {
-            while (1) switch (_context7.n) {
-              case 0:
-                e = _args7.length > 1 && _args7[1] !== undefined ? _args7[1] : {};
-                _e$allowStale2 = e.allowStale, i = _e$allowStale2 === void 0 ? this.allowStale : _e$allowStale2, _e$updateAgeOnGet = e.updateAgeOnGet, s = _e$updateAgeOnGet === void 0 ? this.updateAgeOnGet : _e$updateAgeOnGet, _e$noDeleteOnStaleGet = e.noDeleteOnStaleGet, n = _e$noDeleteOnStaleGet === void 0 ? this.noDeleteOnStaleGet : _e$noDeleteOnStaleGet, _e$ttl = e.ttl, o = _e$ttl === void 0 ? this.ttl : _e$ttl, _e$noDisposeOnSet = e.noDisposeOnSet, h = _e$noDisposeOnSet === void 0 ? this.noDisposeOnSet : _e$noDisposeOnSet, _e$size = e.size, r = _e$size === void 0 ? 0 : _e$size, _e$sizeCalculation = e.sizeCalculation, a = _e$sizeCalculation === void 0 ? this.sizeCalculation : _e$sizeCalculation, _e$noUpdateTTL = e.noUpdateTTL, w = _e$noUpdateTTL === void 0 ? this.noUpdateTTL : _e$noUpdateTTL, _e$noDeleteOnFetchRej = e.noDeleteOnFetchRejection, f = _e$noDeleteOnFetchRej === void 0 ? this.noDeleteOnFetchRejection : _e$noDeleteOnFetchRej, _e$allowStaleOnFetchR = e.allowStaleOnFetchRejection, d = _e$allowStaleOnFetchR === void 0 ? this.allowStaleOnFetchRejection : _e$allowStaleOnFetchR, _e$ignoreFetchAbort = e.ignoreFetchAbort, g = _e$ignoreFetchAbort === void 0 ? this.ignoreFetchAbort : _e$ignoreFetchAbort, _e$allowStaleOnFetchA = e.allowStaleOnFetchAbort, A = _e$allowStaleOnFetchA === void 0 ? this.allowStaleOnFetchAbort : _e$allowStaleOnFetchA, p = e.context, _e$forceRefresh = e.forceRefresh, _ = _e$forceRefresh === void 0 ? !1 : _e$forceRefresh, l = e.status, S = e.signal;
-                if (classPrivateFieldGet2_classPrivateFieldGet2(_v, this)) {
-                  _context7.n = 1;
-                  break;
-                }
-                return _context7.a(2, (l && (l.fetch = "get"), this.get(t, {
-                  allowStale: i,
-                  updateAgeOnGet: s,
-                  noDeleteOnStaleGet: n,
-                  status: l
-                })));
-              case 1:
-                b = {
-                  allowStale: i,
-                  updateAgeOnGet: s,
-                  noDeleteOnStaleGet: n,
-                  ttl: o,
-                  noDisposeOnSet: h,
-                  size: r,
-                  sizeCalculation: a,
-                  noUpdateTTL: w,
-                  noDeleteOnFetchRejection: f,
-                  allowStaleOnFetchRejection: d,
-                  allowStaleOnFetchAbort: A,
-                  ignoreFetchAbort: g,
-                  status: l,
-                  signal: S
-                }, m = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(t);
-                if (!(m === void 0)) {
-                  _context7.n = 2;
-                  break;
-                }
-                l && (l.fetch = "miss");
-                u = _assertClassBrand(_c2_brand, this, _G).call(this, t, m, b, p);
-                return _context7.a(2, u.__returned = u);
-              case 2:
-                _u3 = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[m];
-                if (!_assertClassBrand(_c2_brand, this, _e).call(this, _u3)) {
-                  _context7.n = 3;
-                  break;
-                }
-                E = i && _u3.__staleWhileFetching !== void 0;
-                return _context7.a(2, (l && (l.fetch = "inflight", E && (l.returnedStale = !0)), E ? _u3.__staleWhileFetching : _u3.__returned = _u3));
-              case 3:
-                T = classPrivateFieldGet2_classPrivateFieldGet2(_p, this).call(this, m);
-                if (!(!_ && !T)) {
-                  _context7.n = 4;
-                  break;
-                }
-                return _context7.a(2, (l && (l.fetch = "hit"), _assertClassBrand(_c2_brand, this, _D).call(this, m), s && classPrivateFieldGet2_classPrivateFieldGet2(_R, this).call(this, m), l && classPrivateFieldGet2_classPrivateFieldGet2(_z, this).call(this, l, m), _u3));
-              case 4:
-                F = _assertClassBrand(_c2_brand, this, _G).call(this, t, m, b, p), O = F.__staleWhileFetching !== void 0 && i;
-                return _context7.a(2, (l && (l.fetch = T ? "stale" : "refresh", O && T && (l.returnedStale = !0)), O ? F.__staleWhileFetching : F.__returned = F));
-              case 5:
-                return _context7.a(2);
-            }
-          }, _callee, this);
-        }));
-        function fetch(_x2) {
-          return _fetch.apply(this, arguments);
-        }
-        return fetch;
-      }()
+      value: function fetch(e) {
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var i = W.hasSubscribers,
+          _t$status3 = t.status,
+          s = _t$status3 === void 0 ? D() ? {} : void 0 : _t$status3;
+        t.status = s, s && t.context && (s.context = t.context);
+        var n = _assertClassBrand(_u2_brand, this, _B).call(this, e, t);
+        return s && D() && i && (s.trace = !0, W.tracePromise(function () {
+          return n;
+        }, s)["catch"](function () {})), n;
+      }
     }, {
       key: "forceFetch",
-      value: function () {
-        var _forceFetch = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(t) {
-          var e,
-            i,
-            _args8 = arguments;
-          return _regenerator().w(function (_context8) {
-            while (1) switch (_context8.n) {
-              case 0:
-                e = _args8.length > 1 && _args8[1] !== undefined ? _args8[1] : {};
-                _context8.n = 1;
-                return this.fetch(t, e);
-              case 1:
-                i = _context8.v;
-                if (!(i === void 0)) {
-                  _context8.n = 2;
-                  break;
-                }
-                throw new Error("fetch() returned undefined");
-              case 2:
-                return _context8.a(2, i);
-            }
-          }, _callee2, this);
-        }));
-        function forceFetch(_x3) {
-          return _forceFetch.apply(this, arguments);
-        }
-        return forceFetch;
-      }()
+      value: function forceFetch(e) {
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var i = W.hasSubscribers,
+          _t$status4 = t.status,
+          s = _t$status4 === void 0 ? D() ? {} : void 0 : _t$status4;
+        t.status = s, s && t.context && (s.context = t.context);
+        var n = _assertClassBrand(_u2_brand, this, _K).call(this, e, t);
+        return s && D() && i && (s.trace = !0, W.tracePromise(function () {
+          return n;
+        }, s)["catch"](function () {})), n;
+      }
     }, {
       key: "memo",
-      value: function memo(t) {
-        var e = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        var i = classPrivateFieldGet2_classPrivateFieldGet2(_I, this);
-        if (!i) throw new Error("no memoMethod provided to constructor");
-        var s = e.context,
-          n = e.forceRefresh,
-          o = _objectWithoutProperties(e, index_min_excluded),
-          h = this.get(t, o);
-        if (!n && h !== void 0) return h;
-        var r = i(t, h, {
-          options: o,
-          context: s
-        });
-        return this.set(t, r, o), r;
+      value: function memo(e) {
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var _t$status5 = t.status,
+          i = _t$status5 === void 0 ? S.hasSubscribers ? {} : void 0 : _t$status5;
+        t.status = i, i && (i.op = "memo", i.key = e, t.context && (i.context = t.context));
+        var s = _assertClassBrand(_u2_brand, this, _Q).call(this, e, t);
+        return i && (i.value = s), S.hasSubscribers && S.publish(i), s;
       }
     }, {
       key: "get",
-      value: function get(t) {
-        var e = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-        var _e$allowStale3 = e.allowStale,
-          i = _e$allowStale3 === void 0 ? this.allowStale : _e$allowStale3,
-          _e$updateAgeOnGet2 = e.updateAgeOnGet,
-          s = _e$updateAgeOnGet2 === void 0 ? this.updateAgeOnGet : _e$updateAgeOnGet2,
-          _e$noDeleteOnStaleGet2 = e.noDeleteOnStaleGet,
-          n = _e$noDeleteOnStaleGet2 === void 0 ? this.noDeleteOnStaleGet : _e$noDeleteOnStaleGet2,
-          o = e.status,
-          h = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(t);
-        if (h !== void 0) {
-          var r = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[h],
-            a = _assertClassBrand(_c2_brand, this, _e).call(this, r);
-          return o && classPrivateFieldGet2_classPrivateFieldGet2(_z, this).call(this, o, h), classPrivateFieldGet2_classPrivateFieldGet2(_p, this).call(this, h) ? (o && (o.get = "stale"), a ? (o && i && r.__staleWhileFetching !== void 0 && (o.returnedStale = !0), i ? r.__staleWhileFetching : void 0) : (n || _assertClassBrand(_c2_brand, this, _E).call(this, t, "expire"), o && i && (o.returnedStale = !0), i ? r : void 0)) : (o && (o.get = "hit"), a ? r.__staleWhileFetching : (_assertClassBrand(_c2_brand, this, _D).call(this, h), s && classPrivateFieldGet2_classPrivateFieldGet2(_R, this).call(this, h), r));
-        } else o && (o.get = "miss");
+      value: function get(e) {
+        var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var _t$status6 = t.status,
+          i = _t$status6 === void 0 ? S.hasSubscribers ? {} : void 0 : _t$status6;
+        t.status = i, i && (i.op = "get", i.key = e);
+        var s = _assertClassBrand(_u2_brand, this, _C).call(this, e, t);
+        return i && (s !== void 0 && (i.value = s), S.hasSubscribers && S.publish(i)), s;
       }
     }, {
       key: "delete",
-      value: function _delete(t) {
-        return _assertClassBrand(_c2_brand, this, _E).call(this, t, "delete");
+      value: function _delete(e) {
+        return _assertClassBrand(_u2_brand, this, _v).call(this, e, "delete");
       }
     }, {
       key: "clear",
       value: function clear() {
-        return _assertClassBrand(_c2_brand, this, _V).call(this, "delete");
+        return _assertClassBrand(_u2_brand, this, _q).call(this, "delete");
       }
     }], [{
       key: "unsafeExposeInternals",
-      value: function unsafeExposeInternals(t) {
+      value: function unsafeExposeInternals(e) {
         return {
-          starts: classPrivateFieldGet2_classPrivateFieldGet2(_A, t),
-          ttls: classPrivateFieldGet2_classPrivateFieldGet2(_d, t),
-          autopurgeTimers: classPrivateFieldGet2_classPrivateFieldGet2(_g, t),
-          sizes: classPrivateFieldGet2_classPrivateFieldGet2(_y, t),
-          keyMap: classPrivateFieldGet2_classPrivateFieldGet2(_s, t),
-          keyList: classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, t),
-          valList: classPrivateFieldGet2_classPrivateFieldGet2(_t2, t),
-          next: classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, t),
-          prev: classPrivateFieldGet2_classPrivateFieldGet2(_u, t),
+          starts: classPrivateFieldGet2_classPrivateFieldGet2(_F, e),
+          ttls: classPrivateFieldGet2_classPrivateFieldGet2(_d, e),
+          autopurgeTimers: classPrivateFieldGet2_classPrivateFieldGet2(_g, e),
+          sizes: classPrivateFieldGet2_classPrivateFieldGet2(_2, e),
+          keyMap: classPrivateFieldGet2_classPrivateFieldGet2(_s, e),
+          keyList: classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, e),
+          valList: classPrivateFieldGet2_classPrivateFieldGet2(_t, e),
+          next: classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, e),
+          prev: classPrivateFieldGet2_classPrivateFieldGet2(_c, e),
           get head() {
-            return classPrivateFieldGet2_classPrivateFieldGet2(_l, t);
+            return classPrivateFieldGet2_classPrivateFieldGet2(_l, e);
           },
           get tail() {
-            return classPrivateFieldGet2_classPrivateFieldGet2(_h, t);
+            return classPrivateFieldGet2_classPrivateFieldGet2(_h, e);
           },
-          free: classPrivateFieldGet2_classPrivateFieldGet2(_b, t),
-          isBackgroundFetch: function isBackgroundFetch(e) {
-            return _assertClassBrand(_c2_brand, t, _e).call(t, e);
+          free: classPrivateFieldGet2_classPrivateFieldGet2(_y, e),
+          isBackgroundFetch: function isBackgroundFetch(t) {
+            return _assertClassBrand(_u2_brand, e, _e).call(e, t);
           },
-          backgroundFetch: function backgroundFetch(e, i, s, n) {
-            return _assertClassBrand(_c2_brand, t, _G).call(t, e, i, s, n);
+          backgroundFetch: function backgroundFetch(t, i, s, n) {
+            return _assertClassBrand(_u2_brand, e, _P).call(e, t, i, s, n);
           },
-          moveToTail: function moveToTail(e) {
-            return _assertClassBrand(_c2_brand, t, _D).call(t, e);
+          moveToTail: function moveToTail(t) {
+            return _assertClassBrand(_u2_brand, e, _L).call(e, t);
           },
-          indexes: function indexes(e) {
-            return _assertClassBrand(_c2_brand, t, _F).call(t, e);
+          indexes: function indexes(t) {
+            return _assertClassBrand(_u2_brand, e, _A).call(e, t);
           },
-          rindexes: function rindexes(e) {
-            return _assertClassBrand(_c2_brand, t, _O).call(t, e);
+          rindexes: function rindexes(t) {
+            return _assertClassBrand(_u2_brand, e, _z).call(e, t);
           },
-          isStale: function isStale(e) {
-            return classPrivateFieldGet2_classPrivateFieldGet2(_p, t).call(t, e);
+          isStale: function isStale(t) {
+            return classPrivateFieldGet2_classPrivateFieldGet2(_p, e).call(e, t);
           }
         };
       }
     }]);
   }());
-function _j() {
+function _H() {
   var _this2 = this;
-  var t = new z(classPrivateFieldGet2_classPrivateFieldGet2(_o2, this)),
-    e = new z(classPrivateFieldGet2_classPrivateFieldGet2(_o2, this));
-  _classPrivateFieldSet2(_d, this, t), _classPrivateFieldSet2(_A, this, e);
-  var i = this.ttlAutopurge ? new Array(classPrivateFieldGet2_classPrivateFieldGet2(_o2, this)) : void 0;
-  _classPrivateFieldSet2(_g, this, i), _classPrivateFieldSet2(_N, this, function (h, r) {
-    var a = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : classPrivateFieldGet2_classPrivateFieldGet2(_m, _this2).now();
-    e[h] = r !== 0 ? a : 0, t[h] = r, s(h, r);
-  }), _classPrivateFieldSet2(_R, this, function (h) {
-    e[h] = t[h] !== 0 ? classPrivateFieldGet2_classPrivateFieldGet2(_m, _this2).now() : 0, s(h, t[h]);
+  var e = new O(classPrivateFieldGet2_classPrivateFieldGet2(_o2, this)),
+    t = new O(classPrivateFieldGet2_classPrivateFieldGet2(_o2, this));
+  _classPrivateFieldSet2(_d, this, e), _classPrivateFieldSet2(_F, this, t);
+  var i = this.ttlAutopurge ? Array.from({
+    length: classPrivateFieldGet2_classPrivateFieldGet2(_o2, this)
+  }) : void 0;
+  _classPrivateFieldSet2(_g, this, i), _classPrivateFieldSet2(_N, this, function (r, h) {
+    var l = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : classPrivateFieldGet2_classPrivateFieldGet2(_m, _this2).now();
+    t[r] = h !== 0 ? l : 0, e[r] = h, s(r, h);
+  }), _classPrivateFieldSet2(_x, this, function (r) {
+    t[r] = e[r] !== 0 ? classPrivateFieldGet2_classPrivateFieldGet2(_m, _this2).now() : 0, s(r, e[r]);
   });
-  var s = this.ttlAutopurge ? function (h, r) {
-    if (i !== null && i !== void 0 && i[h] && (clearTimeout(i[h]), i[h] = void 0), r && r !== 0 && i) {
-      var a = setTimeout(function () {
-        classPrivateFieldGet2_classPrivateFieldGet2(_p, _this2).call(_this2, h) && _assertClassBrand(_c2_brand, _this2, _E).call(_this2, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, _this2)[h], "expire");
-      }, r + 1);
-      a.unref && a.unref(), i[h] = a;
+  var s = this.ttlAutopurge ? function (r, h) {
+    if (i !== null && i !== void 0 && i[r] && (clearTimeout(i[r]), i[r] = void 0), h && h !== 0 && i) {
+      var l = setTimeout(function () {
+        classPrivateFieldGet2_classPrivateFieldGet2(_p, _this2).call(_this2, r) && _assertClassBrand(_u2_brand, _this2, _v).call(_this2, classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, _this2)[r], "expire");
+      }, h + 1);
+      l.unref && l.unref(), i[r] = l;
     }
   } : function () {};
-  _classPrivateFieldSet2(_z, this, function (h, r) {
-    if (t[r]) {
-      var a = t[r],
-        w = e[r];
-      if (!a || !w) return;
-      h.ttl = a, h.start = w, h.now = n || o();
-      var f = h.now - w;
-      h.remainingTTL = a - f;
+  _classPrivateFieldSet2(_E, this, function (r, h) {
+    if (e[h]) {
+      var l = e[h],
+        c = t[h];
+      if (!l || !c) return;
+      r.ttl = l, r.start = c, r.now = n || o();
+      var f = r.now - c;
+      r.remainingTTL = l - f;
     }
   });
   var n = 0,
     o = function o() {
-      var h = classPrivateFieldGet2_classPrivateFieldGet2(_m, _this2).now();
+      var r = classPrivateFieldGet2_classPrivateFieldGet2(_m, _this2).now();
       if (_this2.ttlResolution > 0) {
-        n = h;
-        var r = setTimeout(function () {
+        n = r;
+        var h = setTimeout(function () {
           return n = 0;
         }, _this2.ttlResolution);
-        r.unref && r.unref();
+        h.unref && h.unref();
       }
-      return h;
+      return r;
     };
-  this.getRemainingTTL = function (h) {
-    var r = classPrivateFieldGet2_classPrivateFieldGet2(_s, _this2).get(h);
-    if (r === void 0) return 0;
-    var a = t[r],
-      w = e[r];
-    if (!a || !w) return 1 / 0;
-    var f = (n || o()) - w;
-    return a - f;
-  }, _classPrivateFieldSet2(_p, this, function (h) {
-    var r = e[h],
-      a = t[h];
-    return !!a && !!r && (n || o()) - r > a;
+  this.getRemainingTTL = function (r) {
+    var h = classPrivateFieldGet2_classPrivateFieldGet2(_s, _this2).get(r);
+    if (h === void 0) return 0;
+    var l = e[h],
+      c = t[h];
+    if (!l || !c) return 1 / 0;
+    var f = (n || o()) - c;
+    return l - f;
+  }, _classPrivateFieldSet2(_p, this, function (r) {
+    var h = t[r],
+      l = e[r];
+    return !!l && !!h && (n || o()) - h > l;
   });
 }
-function _B() {
+function _X() {
   var _this3 = this;
-  var t = new z(classPrivateFieldGet2_classPrivateFieldGet2(_o2, this));
-  _classPrivateFieldSet2(_2, this, 0), _classPrivateFieldSet2(_y, this, t), _classPrivateFieldSet2(_W, this, function (e) {
-    _classPrivateFieldSet2(_2, _this3, classPrivateFieldGet2_classPrivateFieldGet2(_2, _this3) - t[e]), t[e] = 0;
-  }), _classPrivateFieldSet2(_P, this, function (e, i, s, n) {
-    if (_assertClassBrand(_c2_brand, _this3, _e).call(_this3, i)) return 0;
-    if (!y(s)) if (n) {
+  var e = new O(classPrivateFieldGet2_classPrivateFieldGet2(_o2, this));
+  _classPrivateFieldSet2(_b, this, 0), _classPrivateFieldSet2(_2, this, e), _classPrivateFieldSet2(_R, this, function (t) {
+    _classPrivateFieldSet2(_b, _this3, classPrivateFieldGet2_classPrivateFieldGet2(_b, _this3) - e[t]), e[t] = 0;
+  }), _classPrivateFieldSet2(_k, this, function (t, i, s, n) {
+    if (_assertClassBrand(_u2_brand, _this3, _e).call(_this3, i)) return 0;
+    if (!F(s)) if (n) {
       if (typeof n != "function") throw new TypeError("sizeCalculation must be a function");
-      if (s = n(i, e), !y(s)) throw new TypeError("sizeCalculation return invalid (expect positive integer)");
+      if (s = n(i, t), !F(s)) throw new TypeError("sizeCalculation return invalid (expect positive integer)");
     } else throw new TypeError("invalid size value (must be positive integer). When maxSize or maxEntrySize is used, sizeCalculation or size must be set.");
     return s;
-  }), _classPrivateFieldSet2(_M, this, function (e, i, s) {
-    if (t[e] = i, classPrivateFieldGet2_classPrivateFieldGet2(_c3, _this3)) {
-      var n = classPrivateFieldGet2_classPrivateFieldGet2(_c3, _this3) - t[e];
-      for (; classPrivateFieldGet2_classPrivateFieldGet2(_2, _this3) > n;) _assertClassBrand(_c2_brand, _this3, _x).call(_this3, !0);
+  }), _classPrivateFieldSet2(_I, this, function (t, i, s) {
+    if (e[t] = i, classPrivateFieldGet2_classPrivateFieldGet2(_u3, _this3)) {
+      var n = classPrivateFieldGet2_classPrivateFieldGet2(_u3, _this3) - e[t];
+      for (; classPrivateFieldGet2_classPrivateFieldGet2(_b, _this3) > n;) _assertClassBrand(_u2_brand, _this3, _G).call(_this3, !0);
     }
-    _classPrivateFieldSet2(_2, _this3, classPrivateFieldGet2_classPrivateFieldGet2(_2, _this3) + t[e]), s && (s.entrySize = i, s.totalCalculatedSize = classPrivateFieldGet2_classPrivateFieldGet2(_2, _this3));
+    _classPrivateFieldSet2(_b, _this3, classPrivateFieldGet2_classPrivateFieldGet2(_b, _this3) + e[t]), s && (s.entrySize = i, s.totalCalculatedSize = classPrivateFieldGet2_classPrivateFieldGet2(_b, _this3));
   });
 }
-function _F() {
+function _A() {
   var _this4 = this;
   var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     _ref$allowStale = _ref.allowStale,
-    t = _ref$allowStale === void 0 ? this.allowStale : _ref$allowStale;
-  return /*#__PURE__*/_regenerator().m(function _callee3() {
-    var e, _t15, _t16;
-    return _regenerator().w(function (_context9) {
-      while (1) switch (_context9.n) {
+    e = _ref$allowStale === void 0 ? this.allowStale : _ref$allowStale;
+  return /*#__PURE__*/_regenerator().m(function _callee() {
+    var t, _t13, _t14;
+    return _regenerator().w(function (_context7) {
+      while (1) switch (_context7.n) {
         case 0:
           if (!classPrivateFieldGet2_classPrivateFieldGet2(_n, _this4)) {
-            _context9.n = 5;
+            _context7.n = 5;
             break;
           }
-          e = classPrivateFieldGet2_classPrivateFieldGet2(_h, _this4);
+          t = classPrivateFieldGet2_classPrivateFieldGet2(_h, _this4);
         case 1:
-          _t15 = !_assertClassBrand(_c2_brand, _this4, _H).call(_this4, e);
-          if (_t15) {
-            _context9.n = 3;
+          _t13 = _assertClassBrand(_u2_brand, _this4, _V).call(_this4, t);
+          if (!_t13) {
+            _context7.n = 3;
             break;
           }
-          _t16 = t || !classPrivateFieldGet2_classPrivateFieldGet2(_p, _this4).call(_this4, e);
-          if (!_t16) {
-            _context9.n = 2;
+          _t14 = e || !classPrivateFieldGet2_classPrivateFieldGet2(_p, _this4).call(_this4, t);
+          if (!_t14) {
+            _context7.n = 2;
             break;
           }
-          _context9.n = 2;
-          return e;
+          _context7.n = 2;
+          return t;
         case 2:
-          _t15 = e === classPrivateFieldGet2_classPrivateFieldGet2(_l, _this4);
+          _t13 = t !== classPrivateFieldGet2_classPrivateFieldGet2(_l, _this4);
         case 3:
-          if (_t15) {
-            _context9.n = 5;
+          if (!_t13) {
+            _context7.n = 5;
             break;
           }
-          e = classPrivateFieldGet2_classPrivateFieldGet2(_u, _this4)[e];
+          t = classPrivateFieldGet2_classPrivateFieldGet2(_c, _this4)[t];
         case 4:
-          _context9.n = 1;
+          _context7.n = 1;
           break;
         case 5:
-          return _context9.a(2);
+          return _context7.a(2);
       }
-    }, _callee3);
+    }, _callee);
   })();
 }
-function _O() {
+function _z() {
   var _this5 = this;
   var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
     _ref2$allowStale = _ref2.allowStale,
-    t = _ref2$allowStale === void 0 ? this.allowStale : _ref2$allowStale;
-  return /*#__PURE__*/_regenerator().m(function _callee4() {
-    var e, _t17, _t18;
-    return _regenerator().w(function (_context0) {
-      while (1) switch (_context0.n) {
+    e = _ref2$allowStale === void 0 ? this.allowStale : _ref2$allowStale;
+  return /*#__PURE__*/_regenerator().m(function _callee2() {
+    var t, _t15, _t16;
+    return _regenerator().w(function (_context8) {
+      while (1) switch (_context8.n) {
         case 0:
           if (!classPrivateFieldGet2_classPrivateFieldGet2(_n, _this5)) {
-            _context0.n = 5;
+            _context8.n = 5;
             break;
           }
-          e = classPrivateFieldGet2_classPrivateFieldGet2(_l, _this5);
+          t = classPrivateFieldGet2_classPrivateFieldGet2(_l, _this5);
         case 1:
-          _t17 = !_assertClassBrand(_c2_brand, _this5, _H).call(_this5, e);
-          if (_t17) {
-            _context0.n = 3;
+          _t15 = _assertClassBrand(_u2_brand, _this5, _V).call(_this5, t);
+          if (!_t15) {
+            _context8.n = 3;
             break;
           }
-          _t18 = t || !classPrivateFieldGet2_classPrivateFieldGet2(_p, _this5).call(_this5, e);
-          if (!_t18) {
-            _context0.n = 2;
+          _t16 = e || !classPrivateFieldGet2_classPrivateFieldGet2(_p, _this5).call(_this5, t);
+          if (!_t16) {
+            _context8.n = 2;
             break;
           }
-          _context0.n = 2;
-          return e;
+          _context8.n = 2;
+          return t;
         case 2:
-          _t17 = e === classPrivateFieldGet2_classPrivateFieldGet2(_h, _this5);
+          _t15 = t !== classPrivateFieldGet2_classPrivateFieldGet2(_h, _this5);
         case 3:
-          if (_t17) {
-            _context0.n = 5;
+          if (!_t15) {
+            _context8.n = 5;
             break;
           }
-          e = classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, _this5)[e];
+          t = classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, _this5)[t];
         case 4:
-          _context0.n = 1;
+          _context8.n = 1;
           break;
         case 5:
-          return _context0.a(2);
+          return _context8.a(2);
       }
-    }, _callee4);
+    }, _callee2);
   })();
 }
-function _H(t) {
-  return t !== void 0 && classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t]) === t;
+function _V(e) {
+  return e !== void 0 && classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e]) === e;
 }
-function _x(t) {
+function _O(e, t) {
+  var _classPrivateFieldGet3;
+  var _this$n, _this$n2;
+  var i = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var _i$ttl = i.ttl,
+    s = _i$ttl === void 0 ? this.ttl : _i$ttl,
+    n = i.start,
+    _i$noDisposeOnSet = i.noDisposeOnSet,
+    o = _i$noDisposeOnSet === void 0 ? this.noDisposeOnSet : _i$noDisposeOnSet,
+    _i$sizeCalculation = i.sizeCalculation,
+    r = _i$sizeCalculation === void 0 ? this.sizeCalculation : _i$sizeCalculation,
+    h = i.status;
+  if (t === void 0) return h && (h.set = "deleted"), this["delete"](e), this;
+  var _i$noUpdateTTL = i.noUpdateTTL,
+    l = _i$noUpdateTTL === void 0 ? this.noUpdateTTL : _i$noUpdateTTL;
+  h && !_assertClassBrand(_u2_brand, this, _e).call(this, t) && (h.value = t);
+  var c = classPrivateFieldGet2_classPrivateFieldGet2(_k, this).call(this, e, t, i.size || 0, r, h);
+  if (this.maxEntrySize && c > this.maxEntrySize) return _assertClassBrand(_u2_brand, this, _v).call(this, e, "set"), h && (h.set = "miss", h.maxEntrySizeExceeded = !0), this;
+  var f = classPrivateFieldGet2_classPrivateFieldGet2(_n, this) === 0 ? void 0 : classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(e);
+  if (f === void 0) f = classPrivateFieldGet2_classPrivateFieldGet2(_n, this) === 0 ? classPrivateFieldGet2_classPrivateFieldGet2(_h, this) : classPrivateFieldGet2_classPrivateFieldGet2(_y, this).length !== 0 ? classPrivateFieldGet2_classPrivateFieldGet2(_y, this).pop() : classPrivateFieldGet2_classPrivateFieldGet2(_n, this) === classPrivateFieldGet2_classPrivateFieldGet2(_o2, this) ? _assertClassBrand(_u2_brand, this, _G).call(this, !1) : classPrivateFieldGet2_classPrivateFieldGet2(_n, this), classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[f] = e, classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[f] = t, classPrivateFieldGet2_classPrivateFieldGet2(_s, this).set(e, f), classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[classPrivateFieldGet2_classPrivateFieldGet2(_h, this)] = f, classPrivateFieldGet2_classPrivateFieldGet2(_c, this)[f] = classPrivateFieldGet2_classPrivateFieldGet2(_h, this), _classPrivateFieldSet2(_h, this, f), _classPrivateFieldSet2(_n, this, (_this$n = classPrivateFieldGet2_classPrivateFieldGet2(_n, this), _this$n2 = _this$n++, _this$n)), _this$n2, classPrivateFieldGet2_classPrivateFieldGet2(_I, this).call(this, f, c, h), h && (h.set = "add"), l = !1, classPrivateFieldGet2_classPrivateFieldGet2(_j, this) && ((_classPrivateFieldGet3 = classPrivateFieldGet2_classPrivateFieldGet2(_D, this)) === null || _classPrivateFieldGet3 === void 0 ? void 0 : _classPrivateFieldGet3.call(this, t, e, "add"));else {
+    var _this$onInsert;
+    _assertClassBrand(_u2_brand, this, _L).call(this, f);
+    var g = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[f];
+    if (t !== g) {
+      var _classPrivateFieldGet6, _classPrivateFieldGet7;
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_W, this) && _assertClassBrand(_u2_brand, this, _e).call(this, g)) {
+        var _classPrivateFieldGet4, _classPrivateFieldGet5;
+        g.__abortController.abort(new Error("replaced"));
+        var p = g.__staleWhileFetching;
+        p !== void 0 && !o && (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) && (_classPrivateFieldGet4 = classPrivateFieldGet2_classPrivateFieldGet2(_w, this)) !== null && _classPrivateFieldGet4 !== void 0 && _classPrivateFieldGet4.call(this, p, e, "set"), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && ((_classPrivateFieldGet5 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) === null || _classPrivateFieldGet5 === void 0 ? void 0 : _classPrivateFieldGet5.push([p, e, "set"])));
+      } else o || (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) && (_classPrivateFieldGet6 = classPrivateFieldGet2_classPrivateFieldGet2(_w, this)) !== null && _classPrivateFieldGet6 !== void 0 && _classPrivateFieldGet6.call(this, g, e, "set"), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && ((_classPrivateFieldGet7 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) === null || _classPrivateFieldGet7 === void 0 ? void 0 : _classPrivateFieldGet7.push([g, e, "set"])));
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_R, this).call(this, f), classPrivateFieldGet2_classPrivateFieldGet2(_I, this).call(this, f, c, h), classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[f] = t, h) {
+        h.set = "replace";
+        var _p3 = g && _assertClassBrand(_u2_brand, this, _e).call(this, g) ? g.__staleWhileFetching : g;
+        _p3 !== void 0 && (h.oldValue = _p3);
+      }
+    } else h && (h.set = "update");
+    classPrivateFieldGet2_classPrivateFieldGet2(_j, this) && ((_this$onInsert = this.onInsert) === null || _this$onInsert === void 0 ? void 0 : _this$onInsert.call(this, t, e, t === g ? "update" : "replace"));
+  }
+  if (s !== 0 && !classPrivateFieldGet2_classPrivateFieldGet2(_d, this) && _assertClassBrand(_u2_brand, this, _H).call(this), classPrivateFieldGet2_classPrivateFieldGet2(_d, this) && (l || classPrivateFieldGet2_classPrivateFieldGet2(_N, this).call(this, f, s, n), h && classPrivateFieldGet2_classPrivateFieldGet2(_E, this).call(this, h, f)), !o && classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) {
+    var _g3 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this),
+      _p4;
+    for (; _p4 = _g3 === null || _g3 === void 0 ? void 0 : _g3.shift();) {
+      var _classPrivateFieldGet8;
+      (_classPrivateFieldGet8 = classPrivateFieldGet2_classPrivateFieldGet2(_S, this)) === null || _classPrivateFieldGet8 === void 0 || _classPrivateFieldGet8.call.apply(_classPrivateFieldGet8, [this].concat(_toConsumableArray(_p4)));
+    }
+  }
+  return this;
+}
+function _G(e) {
   var _classPrivateFieldGet9, _classPrivateFieldGet0, _classPrivateFieldGet1;
   var _this$n3, _this$n4;
-  var e = classPrivateFieldGet2_classPrivateFieldGet2(_l, this),
-    i = classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e],
-    s = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[e];
-  return classPrivateFieldGet2_classPrivateFieldGet2(_v, this) && _assertClassBrand(_c2_brand, this, _e).call(this, s) ? s.__abortController.abort(new Error("evicted")) : (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) || classPrivateFieldGet2_classPrivateFieldGet2(_f, this)) && (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) && (_classPrivateFieldGet9 = classPrivateFieldGet2_classPrivateFieldGet2(_w, this)) !== null && _classPrivateFieldGet9 !== void 0 && _classPrivateFieldGet9.call(this, s, i, "evict"), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && ((_classPrivateFieldGet0 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) === null || _classPrivateFieldGet0 === void 0 ? void 0 : _classPrivateFieldGet0.push([s, i, "evict"]))), classPrivateFieldGet2_classPrivateFieldGet2(_W, this).call(this, e), (_classPrivateFieldGet1 = classPrivateFieldGet2_classPrivateFieldGet2(_g, this)) !== null && _classPrivateFieldGet1 !== void 0 && _classPrivateFieldGet1[e] && (clearTimeout(classPrivateFieldGet2_classPrivateFieldGet2(_g, this)[e]), classPrivateFieldGet2_classPrivateFieldGet2(_g, this)[e] = void 0), t && (classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[e] = void 0, classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[e] = void 0, classPrivateFieldGet2_classPrivateFieldGet2(_b, this).push(e)), classPrivateFieldGet2_classPrivateFieldGet2(_n, this) === 1 ? (_classPrivateFieldSet2(_l, this, _classPrivateFieldSet2(_h, this, 0)), classPrivateFieldGet2_classPrivateFieldGet2(_b, this).length = 0) : _classPrivateFieldSet2(_l, this, classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[e]), classPrivateFieldGet2_classPrivateFieldGet2(_s, this)["delete"](i), _classPrivateFieldSet2(_n, this, (_this$n3 = classPrivateFieldGet2_classPrivateFieldGet2(_n, this), _this$n4 = _this$n3--, _this$n3)), _this$n4, e;
+  var t = classPrivateFieldGet2_classPrivateFieldGet2(_l, this),
+    i = classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t],
+    s = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[t];
+  return classPrivateFieldGet2_classPrivateFieldGet2(_W, this) && _assertClassBrand(_u2_brand, this, _e).call(this, s) ? s.__abortController.abort(new Error("evicted")) : (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) || classPrivateFieldGet2_classPrivateFieldGet2(_f, this)) && (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) && (_classPrivateFieldGet9 = classPrivateFieldGet2_classPrivateFieldGet2(_w, this)) !== null && _classPrivateFieldGet9 !== void 0 && _classPrivateFieldGet9.call(this, s, i, "evict"), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && ((_classPrivateFieldGet0 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) === null || _classPrivateFieldGet0 === void 0 ? void 0 : _classPrivateFieldGet0.push([s, i, "evict"]))), classPrivateFieldGet2_classPrivateFieldGet2(_R, this).call(this, t), (_classPrivateFieldGet1 = classPrivateFieldGet2_classPrivateFieldGet2(_g, this)) !== null && _classPrivateFieldGet1 !== void 0 && _classPrivateFieldGet1[t] && (clearTimeout(classPrivateFieldGet2_classPrivateFieldGet2(_g, this)[t]), classPrivateFieldGet2_classPrivateFieldGet2(_g, this)[t] = void 0), e && (classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[t] = void 0, classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[t] = void 0, classPrivateFieldGet2_classPrivateFieldGet2(_y, this).push(t)), classPrivateFieldGet2_classPrivateFieldGet2(_n, this) === 1 ? (_classPrivateFieldSet2(_l, this, _classPrivateFieldSet2(_h, this, 0)), classPrivateFieldGet2_classPrivateFieldGet2(_y, this).length = 0) : _classPrivateFieldSet2(_l, this, classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[t]), classPrivateFieldGet2_classPrivateFieldGet2(_s, this)["delete"](i), _classPrivateFieldSet2(_n, this, (_this$n3 = classPrivateFieldGet2_classPrivateFieldGet2(_n, this), _this$n4 = _this$n3--, _this$n3)), _this$n4, t;
 }
-function _G(t, e, i, s) {
+function _Y(e) {
+  var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var _t$updateAgeOnHas = t.updateAgeOnHas,
+    i = _t$updateAgeOnHas === void 0 ? this.updateAgeOnHas : _t$updateAgeOnHas,
+    s = t.status,
+    n = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(e);
+  if (n !== void 0) {
+    var o = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[n];
+    if (_assertClassBrand(_u2_brand, this, _e).call(this, o) && o.__staleWhileFetching === void 0) return !1;
+    if (classPrivateFieldGet2_classPrivateFieldGet2(_p, this).call(this, n)) s && (s.has = "stale", classPrivateFieldGet2_classPrivateFieldGet2(_E, this).call(this, s, n));else return i && classPrivateFieldGet2_classPrivateFieldGet2(_x, this).call(this, n), s && (s.has = "hit", classPrivateFieldGet2_classPrivateFieldGet2(_E, this).call(this, s, n)), !0;
+  } else s && (s.has = "miss");
+  return !1;
+}
+function _J(e, t) {
+  var i = t.status,
+    _t$allowStale = t.allowStale,
+    s = _t$allowStale === void 0 ? this.allowStale : _t$allowStale,
+    n = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(e);
+  if (n === void 0 || !s && classPrivateFieldGet2_classPrivateFieldGet2(_p, this).call(this, n)) {
+    i && (i.peek = n === void 0 ? "miss" : "stale");
+    return;
+  }
+  var o = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[n],
+    r = _assertClassBrand(_u2_brand, this, _e).call(this, o) ? o.__staleWhileFetching : o;
+  return i && (r !== void 0 ? (i.peek = "hit", i.value = r) : i.peek = "miss"), r;
+}
+function _P(e, t, i, s) {
   var _this6 = this;
-  var n = e === void 0 ? void 0 : classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[e];
-  if (_assertClassBrand(_c2_brand, this, _e).call(this, n)) return n;
-  var o = new C(),
-    h = i.signal;
-  h === null || h === void 0 || h.addEventListener("abort", function () {
-    return o.abort(h.reason);
+  var n = t === void 0 ? void 0 : classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[t];
+  if (_assertClassBrand(_u2_brand, this, _e).call(this, n)) return n;
+  var o = new AbortController(),
+    r = i.signal;
+  r === null || r === void 0 || r.addEventListener("abort", function () {
+    return o.abort(r.reason);
   }, {
     signal: o.signal
   });
-  var r = {
+  var h = {
       signal: o.signal,
       options: i,
       context: s
     },
-    a = function a(p) {
-      var _ = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : !1;
-      var l = o.signal.aborted,
-        S = i.ignoreFetchAbort && p !== void 0,
-        b = i.ignoreFetchAbort || !!(i.allowStaleOnFetchAbort && p !== void 0);
-      if (i.status && (l && !_ ? (i.status.fetchAborted = !0, i.status.fetchError = o.signal.reason, S && (i.status.fetchAbortIgnored = !0)) : i.status.fetchResolved = !0), l && !S && !_) return f(o.signal.reason, b);
-      var m = g,
-        u = classPrivateFieldGet2_classPrivateFieldGet2(_t2, _this6)[e];
-      return (u === g || S && _ && u === void 0) && (p === void 0 ? m.__staleWhileFetching !== void 0 ? classPrivateFieldGet2_classPrivateFieldGet2(_t2, _this6)[e] = m.__staleWhileFetching : _assertClassBrand(_c2_brand, _this6, _E).call(_this6, t, "fetch") : (i.status && (i.status.fetchUpdated = !0), _this6.set(t, p, r.options))), p;
+    l = function l(w) {
+      var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : !1;
+      var a = o.signal.aborted,
+        m = i.ignoreFetchAbort && w !== void 0,
+        _ = i.ignoreFetchAbort || !!(i.allowStaleOnFetchAbort && w !== void 0);
+      if (i.status && (a && !y ? (i.status.fetchAborted = !0, i.status.fetchError = o.signal.reason, m && (i.status.fetchAbortIgnored = !0)) : i.status.fetchResolved = !0), a && !m && !y) return f(o.signal.reason, _);
+      var b = p,
+        d = classPrivateFieldGet2_classPrivateFieldGet2(_t, _this6)[t];
+      return (d === p || d === void 0 && m && y) && (w === void 0 ? b.__staleWhileFetching !== void 0 ? classPrivateFieldGet2_classPrivateFieldGet2(_t, _this6)[t] = b.__staleWhileFetching : _assertClassBrand(_u2_brand, _this6, _v).call(_this6, e, "fetch") : (i.status && (i.status.fetchUpdated = !0), _assertClassBrand(_u2_brand, _this6, _O).call(_this6, e, w, h.options))), w;
     },
-    w = function w(p) {
-      return i.status && (i.status.fetchRejected = !0, i.status.fetchError = p), f(p, !1);
+    c = function c(w) {
+      return i.status && (i.status.fetchRejected = !0, i.status.fetchError = w), f(w, !1);
     },
-    f = function f(p, _) {
-      var l = o.signal.aborted,
-        S = l && i.allowStaleOnFetchAbort,
-        b = S || i.allowStaleOnFetchRejection,
-        m = b || i.noDeleteOnFetchRejection,
-        u = g;
-      if (classPrivateFieldGet2_classPrivateFieldGet2(_t2, _this6)[e] === g && (!m || !_ && u.__staleWhileFetching === void 0 ? _assertClassBrand(_c2_brand, _this6, _E).call(_this6, t, "fetch") : S || (classPrivateFieldGet2_classPrivateFieldGet2(_t2, _this6)[e] = u.__staleWhileFetching)), b) return i.status && u.__staleWhileFetching !== void 0 && (i.status.returnedStale = !0), u.__staleWhileFetching;
-      if (u.__returned === u) throw p;
+    f = function f(w, y) {
+      var a = o.signal.aborted,
+        m = a && i.allowStaleOnFetchAbort,
+        _ = m || i.allowStaleOnFetchRejection,
+        b = _ || i.noDeleteOnFetchRejection,
+        d = p;
+      if (classPrivateFieldGet2_classPrivateFieldGet2(_t, _this6)[t] === p && (!b || !y && d.__staleWhileFetching === void 0 ? _assertClassBrand(_u2_brand, _this6, _v).call(_this6, e, "fetch") : m || (classPrivateFieldGet2_classPrivateFieldGet2(_t, _this6)[t] = d.__staleWhileFetching)), _) return i.status && d.__staleWhileFetching !== void 0 && (i.status.returnedStale = !0), d.__staleWhileFetching;
+      if (d.__returned === d) throw w;
     },
-    d = function d(p, _) {
+    g = function g(w, y) {
       var _classPrivateFieldGet10;
-      var l = (_classPrivateFieldGet10 = classPrivateFieldGet2_classPrivateFieldGet2(_L, _this6)) === null || _classPrivateFieldGet10 === void 0 ? void 0 : _classPrivateFieldGet10.call(_this6, t, n, r);
-      l && l instanceof Promise && l.then(function (S) {
-        return p(S === void 0 ? void 0 : S);
-      }, _), o.signal.addEventListener("abort", function () {
-        (!i.ignoreFetchAbort || i.allowStaleOnFetchAbort) && (p(void 0), i.allowStaleOnFetchAbort && (p = function p(S) {
-          return a(S, !0);
+      var a = (_classPrivateFieldGet10 = classPrivateFieldGet2_classPrivateFieldGet2(_M, _this6)) === null || _classPrivateFieldGet10 === void 0 ? void 0 : _classPrivateFieldGet10.call(_this6, e, n, h);
+      a && a instanceof Promise && a.then(function (m) {
+        return w(m === void 0 ? void 0 : m);
+      }, y), o.signal.addEventListener("abort", function () {
+        (!i.ignoreFetchAbort || i.allowStaleOnFetchAbort) && (w(void 0), i.allowStaleOnFetchAbort && (w = function w(m) {
+          return l(m, !0);
         }));
       });
     };
   i.status && (i.status.fetchDispatched = !0);
-  var g = new Promise(d).then(a, w),
-    A = Object.assign(g, {
+  var p = new Promise(g).then(l, c),
+    T = Object.assign(p, {
       __abortController: o,
       __staleWhileFetching: n,
       __returned: void 0
     });
-  return e === void 0 ? (this.set(t, A, _objectSpread2(_objectSpread2({}, r.options), {}, {
+  return t === void 0 ? (_assertClassBrand(_u2_brand, this, _O).call(this, e, T, _objectSpread2(_objectSpread2({}, h.options), {}, {
     status: void 0
-  })), e = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(t)) : classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[e] = A, A;
+  })), t = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(e)) : classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[t] = T, T;
 }
-function _e(t) {
-  if (!classPrivateFieldGet2_classPrivateFieldGet2(_v, this)) return !1;
-  var e = t;
-  return !!e && e instanceof Promise && e.hasOwnProperty("__staleWhileFetching") && e.__abortController instanceof C;
+function _e(e) {
+  if (!classPrivateFieldGet2_classPrivateFieldGet2(_W, this)) return !1;
+  var t = e;
+  return !!t && t instanceof Promise && t.hasOwnProperty("__staleWhileFetching") && t.__abortController instanceof AbortController;
 }
-function _k(t, e) {
-  classPrivateFieldGet2_classPrivateFieldGet2(_u, this)[e] = t, classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[t] = e;
+function _B(_x2) {
+  return _B2.apply(this, arguments);
 }
-function _D(t) {
-  t !== classPrivateFieldGet2_classPrivateFieldGet2(_h, this) && (t === classPrivateFieldGet2_classPrivateFieldGet2(_l, this) ? _classPrivateFieldSet2(_l, this, classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[t]) : _assertClassBrand(_c2_brand, this, _k).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_u, this)[t], classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[t]), _assertClassBrand(_c2_brand, this, _k).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_h, this), t), _classPrivateFieldSet2(_h, this, t));
+function _B2() {
+  _B2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(e) {
+    var t,
+      _t$allowStale3,
+      i,
+      _t$updateAgeOnGet2,
+      s,
+      _t$noDeleteOnStaleGet2,
+      n,
+      _t$ttl,
+      o,
+      _t$noDisposeOnSet,
+      r,
+      _t$size,
+      h,
+      _t$sizeCalculation,
+      l,
+      _t$noUpdateTTL,
+      c,
+      _t$noDeleteOnFetchRej,
+      f,
+      _t$allowStaleOnFetchR,
+      g,
+      _t$ignoreFetchAbort,
+      p,
+      _t$allowStaleOnFetchA,
+      T,
+      w,
+      _t$forceRefresh,
+      y,
+      a,
+      m,
+      _,
+      b,
+      d,
+      _d3,
+      E,
+      A,
+      z,
+      v,
+      _args9 = arguments;
+    return _regenerator().w(function (_context9) {
+      while (1) switch (_context9.n) {
+        case 0:
+          t = _args9.length > 1 && _args9[1] !== undefined ? _args9[1] : {};
+          _t$allowStale3 = t.allowStale, i = _t$allowStale3 === void 0 ? this.allowStale : _t$allowStale3, _t$updateAgeOnGet2 = t.updateAgeOnGet, s = _t$updateAgeOnGet2 === void 0 ? this.updateAgeOnGet : _t$updateAgeOnGet2, _t$noDeleteOnStaleGet2 = t.noDeleteOnStaleGet, n = _t$noDeleteOnStaleGet2 === void 0 ? this.noDeleteOnStaleGet : _t$noDeleteOnStaleGet2, _t$ttl = t.ttl, o = _t$ttl === void 0 ? this.ttl : _t$ttl, _t$noDisposeOnSet = t.noDisposeOnSet, r = _t$noDisposeOnSet === void 0 ? this.noDisposeOnSet : _t$noDisposeOnSet, _t$size = t.size, h = _t$size === void 0 ? 0 : _t$size, _t$sizeCalculation = t.sizeCalculation, l = _t$sizeCalculation === void 0 ? this.sizeCalculation : _t$sizeCalculation, _t$noUpdateTTL = t.noUpdateTTL, c = _t$noUpdateTTL === void 0 ? this.noUpdateTTL : _t$noUpdateTTL, _t$noDeleteOnFetchRej = t.noDeleteOnFetchRejection, f = _t$noDeleteOnFetchRej === void 0 ? this.noDeleteOnFetchRejection : _t$noDeleteOnFetchRej, _t$allowStaleOnFetchR = t.allowStaleOnFetchRejection, g = _t$allowStaleOnFetchR === void 0 ? this.allowStaleOnFetchRejection : _t$allowStaleOnFetchR, _t$ignoreFetchAbort = t.ignoreFetchAbort, p = _t$ignoreFetchAbort === void 0 ? this.ignoreFetchAbort : _t$ignoreFetchAbort, _t$allowStaleOnFetchA = t.allowStaleOnFetchAbort, T = _t$allowStaleOnFetchA === void 0 ? this.allowStaleOnFetchAbort : _t$allowStaleOnFetchA, w = t.context, _t$forceRefresh = t.forceRefresh, y = _t$forceRefresh === void 0 ? !1 : _t$forceRefresh, a = t.status, m = t.signal;
+          if (!(a && (a.op = "fetch", a.key = e, y && (a.forceRefresh = !0)), !classPrivateFieldGet2_classPrivateFieldGet2(_W, this))) {
+            _context9.n = 1;
+            break;
+          }
+          return _context9.a(2, (a && (a.fetch = "get"), _assertClassBrand(_u2_brand, this, _C).call(this, e, {
+            allowStale: i,
+            updateAgeOnGet: s,
+            noDeleteOnStaleGet: n,
+            status: a
+          })));
+        case 1:
+          _ = {
+            allowStale: i,
+            updateAgeOnGet: s,
+            noDeleteOnStaleGet: n,
+            ttl: o,
+            noDisposeOnSet: r,
+            size: h,
+            sizeCalculation: l,
+            noUpdateTTL: c,
+            noDeleteOnFetchRejection: f,
+            allowStaleOnFetchRejection: g,
+            allowStaleOnFetchAbort: T,
+            ignoreFetchAbort: p,
+            status: a,
+            signal: m
+          }, b = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(e);
+          if (!(b === void 0)) {
+            _context9.n = 2;
+            break;
+          }
+          a && (a.fetch = "miss");
+          d = _assertClassBrand(_u2_brand, this, _P).call(this, e, b, _, w);
+          return _context9.a(2, d.__returned = d);
+        case 2:
+          _d3 = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[b];
+          if (!_assertClassBrand(_u2_brand, this, _e).call(this, _d3)) {
+            _context9.n = 3;
+            break;
+          }
+          E = i && _d3.__staleWhileFetching !== void 0;
+          return _context9.a(2, (a && (a.fetch = "inflight", E && (a.returnedStale = !0)), E ? _d3.__staleWhileFetching : _d3.__returned = _d3));
+        case 3:
+          A = classPrivateFieldGet2_classPrivateFieldGet2(_p, this).call(this, b);
+          if (!(!y && !A)) {
+            _context9.n = 4;
+            break;
+          }
+          return _context9.a(2, (a && (a.fetch = "hit"), _assertClassBrand(_u2_brand, this, _L).call(this, b), s && classPrivateFieldGet2_classPrivateFieldGet2(_x, this).call(this, b), a && classPrivateFieldGet2_classPrivateFieldGet2(_E, this).call(this, a, b), _d3));
+        case 4:
+          z = _assertClassBrand(_u2_brand, this, _P).call(this, e, b, _, w), v = z.__staleWhileFetching !== void 0 && i;
+          return _context9.a(2, (a && (a.fetch = A ? "stale" : "refresh", v && A && (a.returnedStale = !0)), v ? z.__staleWhileFetching : z.__returned = z));
+        case 5:
+          return _context9.a(2);
+      }
+    }, _callee3, this);
+  }));
+  return _B2.apply(this, arguments);
 }
-function _E(t, e) {
+function _K(_x3) {
+  return _K2.apply(this, arguments);
+}
+function _K2() {
+  _K2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(e) {
+    var t,
+      i,
+      _args0 = arguments;
+    return _regenerator().w(function (_context0) {
+      while (1) switch (_context0.n) {
+        case 0:
+          t = _args0.length > 1 && _args0[1] !== undefined ? _args0[1] : {};
+          _context0.n = 1;
+          return _assertClassBrand(_u2_brand, this, _B).call(this, e, t);
+        case 1:
+          i = _context0.v;
+          if (!(i === void 0)) {
+            _context0.n = 2;
+            break;
+          }
+          throw new Error("fetch() returned undefined");
+        case 2:
+          return _context0.a(2, i);
+      }
+    }, _callee4, this);
+  }));
+  return _K2.apply(this, arguments);
+}
+function _Q(e) {
+  var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var i = classPrivateFieldGet2_classPrivateFieldGet2(_U, this);
+  if (!i) throw new Error("no memoMethod provided to constructor");
+  var s = t.context,
+    n = t.status,
+    o = t.forceRefresh,
+    r = _objectWithoutProperties(t, index_min_excluded);
+  n && o && (n.forceRefresh = !0);
+  var h = _assertClassBrand(_u2_brand, this, _C).call(this, e, r),
+    l = o || h === void 0;
+  if (n && (n.memo = l ? "miss" : "hit", l || (n.value = h)), !l) return h;
+  var c = i(e, h, {
+    options: r,
+    context: s
+  });
+  return n && (n.value = c), _assertClassBrand(_u2_brand, this, _O).call(this, e, c, r), c;
+}
+function _C(e) {
+  var t = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var _t$allowStale2 = t.allowStale,
+    i = _t$allowStale2 === void 0 ? this.allowStale : _t$allowStale2,
+    _t$updateAgeOnGet = t.updateAgeOnGet,
+    s = _t$updateAgeOnGet === void 0 ? this.updateAgeOnGet : _t$updateAgeOnGet,
+    _t$noDeleteOnStaleGet = t.noDeleteOnStaleGet,
+    n = _t$noDeleteOnStaleGet === void 0 ? this.noDeleteOnStaleGet : _t$noDeleteOnStaleGet,
+    o = t.status,
+    r = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(e);
+  if (r === void 0) {
+    o && (o.get = "miss");
+    return;
+  }
+  var h = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[r],
+    l = _assertClassBrand(_u2_brand, this, _e).call(this, h);
+  return o && classPrivateFieldGet2_classPrivateFieldGet2(_E, this).call(this, o, r), classPrivateFieldGet2_classPrivateFieldGet2(_p, this).call(this, r) ? l ? (o && (o.get = "stale-fetching"), i && h.__staleWhileFetching !== void 0 ? (o && (o.returnedStale = !0), h.__staleWhileFetching) : void 0) : (n || _assertClassBrand(_u2_brand, this, _v).call(this, e, "expire"), o && (o.get = "stale"), i ? (o && (o.returnedStale = !0), h) : void 0) : (o && (o.get = l ? "fetching" : "hit"), _assertClassBrand(_u2_brand, this, _L).call(this, r), s && classPrivateFieldGet2_classPrivateFieldGet2(_x, this).call(this, r), l ? h.__staleWhileFetching : h);
+}
+function _$(e, t) {
+  classPrivateFieldGet2_classPrivateFieldGet2(_c, this)[t] = e, classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[e] = t;
+}
+function _L(e) {
+  e !== classPrivateFieldGet2_classPrivateFieldGet2(_h, this) && (e === classPrivateFieldGet2_classPrivateFieldGet2(_l, this) ? _classPrivateFieldSet2(_l, this, classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[e]) : _assertClassBrand(_u2_brand, this, _$).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_c, this)[e], classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[e]), _assertClassBrand(_u2_brand, this, _$).call(this, classPrivateFieldGet2_classPrivateFieldGet2(_h, this), e), _classPrivateFieldSet2(_h, this, e));
+}
+function _v(e, t) {
   var _classPrivateFieldGet15;
+  S.hasSubscribers && S.publish({
+    op: "delete",
+    "delete": t,
+    key: e
+  });
   var i = !1;
   if (classPrivateFieldGet2_classPrivateFieldGet2(_n, this) !== 0) {
     var _classPrivateFieldGet11, _classPrivateFieldGet12;
-    var s = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(t);
-    if (s !== void 0) if ((_classPrivateFieldGet11 = classPrivateFieldGet2_classPrivateFieldGet2(_g, this)) !== null && _classPrivateFieldGet11 !== void 0 && _classPrivateFieldGet11[s] && (clearTimeout((_classPrivateFieldGet12 = classPrivateFieldGet2_classPrivateFieldGet2(_g, this)) === null || _classPrivateFieldGet12 === void 0 ? void 0 : _classPrivateFieldGet12[s]), classPrivateFieldGet2_classPrivateFieldGet2(_g, this)[s] = void 0), i = !0, classPrivateFieldGet2_classPrivateFieldGet2(_n, this) === 1) _assertClassBrand(_c2_brand, this, _V).call(this, e);else {
+    var s = classPrivateFieldGet2_classPrivateFieldGet2(_s, this).get(e);
+    if (s !== void 0) if ((_classPrivateFieldGet11 = classPrivateFieldGet2_classPrivateFieldGet2(_g, this)) !== null && _classPrivateFieldGet11 !== void 0 && _classPrivateFieldGet11[s] && (clearTimeout((_classPrivateFieldGet12 = classPrivateFieldGet2_classPrivateFieldGet2(_g, this)) === null || _classPrivateFieldGet12 === void 0 ? void 0 : _classPrivateFieldGet12[s]), classPrivateFieldGet2_classPrivateFieldGet2(_g, this)[s] = void 0), i = !0, classPrivateFieldGet2_classPrivateFieldGet2(_n, this) === 1) _assertClassBrand(_u2_brand, this, _q).call(this, t);else {
       var _this$n5, _this$n6, _classPrivateFieldGet13, _classPrivateFieldGet14;
-      classPrivateFieldGet2_classPrivateFieldGet2(_W, this).call(this, s);
-      var n = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[s];
-      if (_assertClassBrand(_c2_brand, this, _e).call(this, n) ? n.__abortController.abort(new Error("deleted")) : (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) || classPrivateFieldGet2_classPrivateFieldGet2(_f, this)) && (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) && (_classPrivateFieldGet13 = classPrivateFieldGet2_classPrivateFieldGet2(_w, this)) !== null && _classPrivateFieldGet13 !== void 0 && _classPrivateFieldGet13.call(this, n, t, e), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && ((_classPrivateFieldGet14 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) === null || _classPrivateFieldGet14 === void 0 ? void 0 : _classPrivateFieldGet14.push([n, t, e]))), classPrivateFieldGet2_classPrivateFieldGet2(_s, this)["delete"](t), classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[s] = void 0, classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[s] = void 0, s === classPrivateFieldGet2_classPrivateFieldGet2(_h, this)) _classPrivateFieldSet2(_h, this, classPrivateFieldGet2_classPrivateFieldGet2(_u, this)[s]);else if (s === classPrivateFieldGet2_classPrivateFieldGet2(_l, this)) _classPrivateFieldSet2(_l, this, classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[s]);else {
-        var o = classPrivateFieldGet2_classPrivateFieldGet2(_u, this)[s];
+      classPrivateFieldGet2_classPrivateFieldGet2(_R, this).call(this, s);
+      var n = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[s];
+      if (_assertClassBrand(_u2_brand, this, _e).call(this, n) ? n.__abortController.abort(new Error("deleted")) : (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) || classPrivateFieldGet2_classPrivateFieldGet2(_f, this)) && (classPrivateFieldGet2_classPrivateFieldGet2(_T, this) && (_classPrivateFieldGet13 = classPrivateFieldGet2_classPrivateFieldGet2(_w, this)) !== null && _classPrivateFieldGet13 !== void 0 && _classPrivateFieldGet13.call(this, n, e, t), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && ((_classPrivateFieldGet14 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) === null || _classPrivateFieldGet14 === void 0 ? void 0 : _classPrivateFieldGet14.push([n, e, t]))), classPrivateFieldGet2_classPrivateFieldGet2(_s, this)["delete"](e), classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[s] = void 0, classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[s] = void 0, s === classPrivateFieldGet2_classPrivateFieldGet2(_h, this)) _classPrivateFieldSet2(_h, this, classPrivateFieldGet2_classPrivateFieldGet2(_c, this)[s]);else if (s === classPrivateFieldGet2_classPrivateFieldGet2(_l, this)) _classPrivateFieldSet2(_l, this, classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[s]);else {
+        var o = classPrivateFieldGet2_classPrivateFieldGet2(_c, this)[s];
         classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[o] = classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[s];
-        var h = classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[s];
-        classPrivateFieldGet2_classPrivateFieldGet2(_u, this)[h] = classPrivateFieldGet2_classPrivateFieldGet2(_u, this)[s];
+        var r = classPrivateFieldGet2_classPrivateFieldGet2(index_min_a, this)[s];
+        classPrivateFieldGet2_classPrivateFieldGet2(_c, this)[r] = classPrivateFieldGet2_classPrivateFieldGet2(_c, this)[s];
       }
-      _classPrivateFieldSet2(_n, this, (_this$n5 = classPrivateFieldGet2_classPrivateFieldGet2(_n, this), _this$n6 = _this$n5--, _this$n5)), _this$n6, classPrivateFieldGet2_classPrivateFieldGet2(_b, this).push(s);
+      _classPrivateFieldSet2(_n, this, (_this$n5 = classPrivateFieldGet2_classPrivateFieldGet2(_n, this), _this$n6 = _this$n5--, _this$n5)), _this$n6, classPrivateFieldGet2_classPrivateFieldGet2(_y, this).push(s);
     }
   }
   if (classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && (_classPrivateFieldGet15 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) !== null && _classPrivateFieldGet15 !== void 0 && _classPrivateFieldGet15.length) {
@@ -43861,47 +43972,47 @@ function _E(t, e) {
   }
   return i;
 }
-function _V(t) {
-  var _iterator12 = _createForOfIteratorHelper(_assertClassBrand(_c2_brand, this, _O).call(this, {
+function _q(e) {
+  var _iterator11 = _createForOfIteratorHelper(_assertClassBrand(_u2_brand, this, _z).call(this, {
       allowStale: !0
     })),
-    _step12;
+    _step11;
   try {
-    for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
-      var _e4 = _step12.value;
-      var _i3 = classPrivateFieldGet2_classPrivateFieldGet2(_t2, this)[_e4];
-      if (_assertClassBrand(_c2_brand, this, _e).call(this, _i3)) _i3.__abortController.abort(new Error("deleted"));else {
+    for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+      var _t18 = _step11.value;
+      var _i3 = classPrivateFieldGet2_classPrivateFieldGet2(_t, this)[_t18];
+      if (_assertClassBrand(_u2_brand, this, _e).call(this, _i3)) _i3.__abortController.abort(new Error("deleted"));else {
         var _classPrivateFieldGet20, _classPrivateFieldGet21;
-        var s = classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[_e4];
-        classPrivateFieldGet2_classPrivateFieldGet2(_T, this) && (_classPrivateFieldGet20 = classPrivateFieldGet2_classPrivateFieldGet2(_w, this)) !== null && _classPrivateFieldGet20 !== void 0 && _classPrivateFieldGet20.call(this, _i3, s, t), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && ((_classPrivateFieldGet21 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) === null || _classPrivateFieldGet21 === void 0 ? void 0 : _classPrivateFieldGet21.push([_i3, s, t]));
+        var s = classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this)[_t18];
+        classPrivateFieldGet2_classPrivateFieldGet2(_T, this) && (_classPrivateFieldGet20 = classPrivateFieldGet2_classPrivateFieldGet2(_w, this)) !== null && _classPrivateFieldGet20 !== void 0 && _classPrivateFieldGet20.call(this, _i3, s, e), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && ((_classPrivateFieldGet21 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) === null || _classPrivateFieldGet21 === void 0 ? void 0 : _classPrivateFieldGet21.push([_i3, s, e]));
       }
     }
   } catch (err) {
-    _iterator12.e(err);
+    _iterator11.e(err);
   } finally {
-    _iterator12.f();
+    _iterator11.f();
   }
-  if (classPrivateFieldGet2_classPrivateFieldGet2(_s, this).clear(), classPrivateFieldGet2_classPrivateFieldGet2(_t2, this).fill(void 0), classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this).fill(void 0), classPrivateFieldGet2_classPrivateFieldGet2(_d, this) && classPrivateFieldGet2_classPrivateFieldGet2(_A, this)) {
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_s, this).clear(), classPrivateFieldGet2_classPrivateFieldGet2(_t, this).fill(void 0), classPrivateFieldGet2_classPrivateFieldGet2(index_min_i, this).fill(void 0), classPrivateFieldGet2_classPrivateFieldGet2(_d, this) && classPrivateFieldGet2_classPrivateFieldGet2(_F, this)) {
     var _classPrivateFieldGet17, _classPrivateFieldGet18;
-    classPrivateFieldGet2_classPrivateFieldGet2(_d, this).fill(0), classPrivateFieldGet2_classPrivateFieldGet2(_A, this).fill(0);
-    var _iterator13 = _createForOfIteratorHelper((_classPrivateFieldGet18 = classPrivateFieldGet2_classPrivateFieldGet2(_g, this)) !== null && _classPrivateFieldGet18 !== void 0 ? _classPrivateFieldGet18 : []),
-      _step13;
+    classPrivateFieldGet2_classPrivateFieldGet2(_d, this).fill(0), classPrivateFieldGet2_classPrivateFieldGet2(_F, this).fill(0);
+    var _iterator12 = _createForOfIteratorHelper((_classPrivateFieldGet18 = classPrivateFieldGet2_classPrivateFieldGet2(_g, this)) !== null && _classPrivateFieldGet18 !== void 0 ? _classPrivateFieldGet18 : []),
+      _step12;
     try {
-      for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
-        var e = _step13.value;
-        e !== void 0 && clearTimeout(e);
+      for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+        var t = _step12.value;
+        t !== void 0 && clearTimeout(t);
       }
     } catch (err) {
-      _iterator13.e(err);
+      _iterator12.e(err);
     } finally {
-      _iterator13.f();
+      _iterator12.f();
     }
     (_classPrivateFieldGet17 = classPrivateFieldGet2_classPrivateFieldGet2(_g, this)) === null || _classPrivateFieldGet17 === void 0 || _classPrivateFieldGet17.fill(void 0);
   }
-  if (classPrivateFieldGet2_classPrivateFieldGet2(_y, this) && classPrivateFieldGet2_classPrivateFieldGet2(_y, this).fill(0), _classPrivateFieldSet2(_l, this, 0), _classPrivateFieldSet2(_h, this, 0), classPrivateFieldGet2_classPrivateFieldGet2(_b, this).length = 0, _classPrivateFieldSet2(_2, this, 0), _classPrivateFieldSet2(_n, this, 0), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) {
-    var _e3 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this),
+  if (classPrivateFieldGet2_classPrivateFieldGet2(_2, this) && classPrivateFieldGet2_classPrivateFieldGet2(_2, this).fill(0), _classPrivateFieldSet2(_l, this, 0), _classPrivateFieldSet2(_h, this, 0), classPrivateFieldGet2_classPrivateFieldGet2(_y, this).length = 0, _classPrivateFieldSet2(_b, this, 0), _classPrivateFieldSet2(_n, this, 0), classPrivateFieldGet2_classPrivateFieldGet2(_f, this) && classPrivateFieldGet2_classPrivateFieldGet2(_r, this)) {
+    var _t17 = classPrivateFieldGet2_classPrivateFieldGet2(_r, this),
       i;
-    for (; i = _e3 === null || _e3 === void 0 ? void 0 : _e3.shift();) {
+    for (; i = _t17 === null || _t17 === void 0 ? void 0 : _t17.shift();) {
       var _classPrivateFieldGet19;
       (_classPrivateFieldGet19 = classPrivateFieldGet2_classPrivateFieldGet2(_S, this)) === null || _classPrivateFieldGet19 === void 0 || _classPrivateFieldGet19.call.apply(_classPrivateFieldGet19, [this].concat(_toConsumableArray(i)));
     }
